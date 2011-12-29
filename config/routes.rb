@@ -1,12 +1,13 @@
 Bu::Application.routes.draw do
-  resources :users
+
+  get "my" => "my#index"
+  get "my/index"
 
   get "users" => "users#index"
-
   get "users/login" => "users#login"
-
   get "users/login/:name" => "users#login"
 
+  resources :users
 
   resources :groups
 

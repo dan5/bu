@@ -18,7 +18,8 @@ class UsersController < ApplicationController
   def create
     @user = User.find_by_name(params[:user][:name])
     if @user
-      redirect_to @user, notice: 'Login successful.'
+      #redirect_to @user, notice: 'Login successful.'
+      redirect_to '/my', notice: 'Login successful.'
     else
       @user = User.new(params[:user])
       respond_to do |format|
