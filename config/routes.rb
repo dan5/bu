@@ -1,4 +1,6 @@
 Bu::Application.routes.draw do
+  get "users/index"
+
   get "users/login"
 
   resources :groups
