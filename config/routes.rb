@@ -1,4 +1,6 @@
 Bu::Application.routes.draw do
+  get "users/login"
+
   resources :groups
 
   # The priority is based upon order of creation:
