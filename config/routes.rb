@@ -9,6 +9,8 @@ Bu::Application.routes.draw do
 
   resources :users
 
+  resources :events
+
   resources :groups
 
   # The priority is based upon order of creation:

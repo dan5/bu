@@ -7,6 +7,8 @@
 %p
   %b Owner user:
   = @group.owner_user_id
+%p
+  = link_to 'New event', "/events/new"
 
 = link_to 'Edit', edit_group_path(@group)
 \|
