@@ -1,5 +1,7 @@
 Bu::Application.routes.draw do
 
+  root :to => 'welcome#index'
+
   get "my" => "my#index"
   get "my/index"
 

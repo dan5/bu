@@ -13,7 +13,7 @@
     %tr
       %td= group.name
       %td= group.description
-      %td= group.owner.name
+      %td= group.owner ? group.owner.name : 'none'
       %td= link_to 'Show', group
       %td= link_to 'Edit', edit_group_path(group)
       %td= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete
