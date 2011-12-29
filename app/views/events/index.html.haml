@@ -1,0 +1,31 @@
+%h1 Listing events
+
+%table
+  %tr
+    %th Group
+    %th Title
+    %th Place
+    %th Address
+    %th Limit
+    %th Started at
+    %th Ended at
+    %th
+    %th
+    %th
+
+  - @events.each do |event|
+    %tr
+      %td= event.group_id
+      %td= event.title
+      %td= event.place
+      %td= event.address
+      %td= event.limit
+      %td= event.started_at
+      %td= event.ended_at
+      %td= link_to 'Show', event
+      %td= link_to 'Edit', edit_event_path(event)
+      %td= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Event', new_event_path

@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Group:
+  = @event.group_id
+%p
+  %b Title:
+  = @event.title
+%p
+  %b Place:
+  = @event.place
+%p
+  %b Address:
+  = @event.address
+%p
+  %b Limit:
+  = @event.limit
+%p
+  %b Started at:
+  = @event.started_at
+%p
+  %b Ended at:
+  = @event.ended_at
+
+= link_to 'Edit', edit_event_path(@event)
+\|
+= link_to 'Back', events_path
