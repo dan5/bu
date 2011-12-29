@@ -18,16 +18,15 @@ class UsersController < ApplicationController
   def create
     @user = User.find_by_name(params[:user][:name])
     if @user
-      #redirect_to @user, notice: 'Login successful.'
+      session[:name] = @user.name
       redirect_to '/my', notice: 'Login successful.'
     else
       @user = User.new(params[:user])
-      respond_to do |format|
-        if @user.save
-          format.html { redirect_to @user, notice: 'User was successfully created.' }
-        else
-          format.html { render action: "new" }
-        end
+      if @user.save
+        session[:name] = @user.name
+        redirect_to @user, notice: 'User was successfully created.'
+      else
+        render action: "new"
       end
     end
   end

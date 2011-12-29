@@ -18,10 +18,12 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
+    #user.id == @group.owner.id or raise
   end
 
   # POST /groups
   def create
+    params[:group][:owner_user_id] = user.id
     @group = Group.new(params[:group])
 
     if @group.save
@@ -34,6 +36,8 @@ class GroupsController < ApplicationController
   # PUT /groups/1
   def update
     @group = Group.find(params[:id])
+    user.id == @group.owner.id or raise
+    params[:group].delete(:owner_user_id)
 
     if @group.update_attributes(params[:group])
       redirect_to @group, notice: 'Group was successfully updated.'
@@ -45,6 +49,7 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   def destroy
     @group = Group.find(params[:id])
+    user.id == @group.owner.id or raise
     @group.destroy
 
     redirect_to groups_url
