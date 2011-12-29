@@ -1,14 +1,12 @@
-%p#notice= notice
-
+%h1
+  = @group.name
+%p#notice
+  = notice
+%p
+  = @group.description
 %p
   %b Owner user:
   = @group.owner_user_id
-%p
-  %b Name:
-  = @group.name
-%p
-  %b Description:
-  = @group.description
 
 = link_to 'Edit', edit_group_path(@group)
 \|
