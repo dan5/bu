@@ -2,17 +2,22 @@
   = @group.name
 %p#notice
   = notice
+
 %p
   = @group.description
 %p
   %b Owner:
   = @group.owner.name
-%p
-  = link_to 'New event', "/events/new"
 
-%h2 events
-%p todo:
-
+.events
+  %h2 events
+  %p
+    = link_to 'New event', "/events/new"
+  %ul
+    - @group.events.each do |event|
+      %li
+        = event.title
+        = event.place
 
 = link_to 'Edit', edit_group_path(@group)
 \|
