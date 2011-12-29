@@ -16,9 +16,6 @@
   %ul
     - @group.events.each do |event|
       %li
-        = event.title
+        = link_to event.title, event
+        = '...'
         = event.place
-
-= link_to 'Edit', edit_group_path(@group)
-\|
-= link_to 'Back', groups_path
