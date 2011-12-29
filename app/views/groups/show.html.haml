@@ -5,10 +5,14 @@
 %p
   = @group.description
 %p
-  %b Owner user:
-  = @group.owner_user_id
+  %b Owner:
+  = @group.owner.name
 %p
   = link_to 'New event', "/events/new"
+
+%h2 events
+%p todo:
+
 
 = link_to 'Edit', edit_group_path(@group)
 \|

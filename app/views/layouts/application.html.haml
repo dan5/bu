@@ -1,0 +1,19 @@
+</body>
+</html>
+!!! XML
+!!! 1.1
+%html{"xml:lang" => "ja", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    <title>Bu</title>
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+
+  %body
+    .topmenu
+      = link_to 'my', '/my'
+      = link_to 'groups', '/groups'
+      = link_to 'logout'
+    = yield
+    .footer
+      %p= "bu: bububub"
