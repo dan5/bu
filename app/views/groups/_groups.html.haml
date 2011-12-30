@@ -1,0 +1,6 @@
+%table
+  - @groups.each do |group|
+    %tr
+      %td +
+      %td= link_to group.name, group
+      %td= group.description

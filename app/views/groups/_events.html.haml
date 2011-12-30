@@ -1,8 +1,13 @@
-%ul
+%table
   - @events.each do |event|
-    %li
+    %tr
+      %td .
       - t = event.started_at
-      = link_to "#{t.year}.#{t.month}.#{t.day}", event
-      = event.group.name
-      == :
-      = event.title
+      %td== #{t.month}/#{t.day}
+      %td= link_to event.group.name, event.group
+      %td= link_to event.title, event
+      %td 未入力
+      %td
+        = link_to '出席'
+        = link_to '欠席'
+        = link_to '微妙'

@@ -27,5 +27,9 @@
       %li
         = user.name
         == ...
-        owner or 常連 or 初参加 or 幽霊部員
+        = %w(owner 常連 初参加 幽霊部員).sample
     
+.admin
+  = link_to 'Edit', edit_group_path(@group)
+  /
+  = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete

@@ -6,9 +6,5 @@
 = render '/groups/events'
 
 %h2 参加している部活
-%ul
-  - @user.groups.each do |group|
-    %li
-      = link_to group.name, group
-      == ...
-      = group.description
+- @groups = @user.groups
+= render '/groups/groups'
