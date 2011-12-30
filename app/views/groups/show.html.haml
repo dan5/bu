@@ -11,11 +11,6 @@
 
 .events
   %h2 events
-  %p
-    = link_to 'New event', "/events/new"
-  %ul
-    - @group.events.each do |event|
-      %li
-        = link_to event.title, event
-        = '...'
-        = event.place
+  %p= link_to 'New event', "/events/new"
+  - @events = @group.events
+  = render 'events'

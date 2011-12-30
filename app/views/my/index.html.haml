@@ -3,19 +3,13 @@
 %p
   = @user.name
 %h2 events
-%ul
-  - @user.groups.map(&:events).flatten.each do |event|
-    %li
-      - t = event.started_at
-      = link_to "#{t.year}.#{t.month}.#{t.day}", event
-      = event.group.name
-      = ':'
-      = event.title
+- @events = @user.groups.map(&:events).flatten.each
+= render '/groups/events'
 
 %h2 groups
 %ul
   - @user.groups.each do |group|
     %li
-      = link_to "group.name", group
-      = '...'
+      = link_to group.name, group
+      == ...
       = group.description
