@@ -10,4 +10,8 @@ class Group < ActiveRecord::Base
   def owner=(user)
     self.owner_user_id = user.id
   end
+
+  def member?(user)
+    !!(user and users.find_by_id(user.id))
+  end
 end

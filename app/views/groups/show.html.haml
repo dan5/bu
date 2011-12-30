@@ -9,13 +9,18 @@
   %b Owner:
   = @group.owner.name
 
-%p= link_to 'この部活に参加する', ""
+- is_member = @group.member?(@user)
+- unless is_member
+  %p= link_to 'この部活に参加する', "#{@group.id}/join"
 
 .events
   %h2 活動スケジュール
   - @events = @group.events
   = render 'events'
-  %p= link_to '新しいスケジュールを追加', "/events/new"
+
+.events_new
+  - if is_member
+    %p= link_to '新しいスケジュールを追加', "/events/new"
 
 .users
   %h2 部員

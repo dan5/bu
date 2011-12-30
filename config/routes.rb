@@ -14,6 +14,7 @@ Bu::Application.routes.draw do
 
   resources :events
 
+  get "groups/:id/join" => "groups#join"
   resources :groups
 
   # The priority is based upon order of creation:

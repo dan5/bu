@@ -1,4 +1,16 @@
 class GroupsController < ApplicationController
+  def join
+    #return render :text => request.path
+    @group = Group.find(params[:id])
+    if @user
+      @group.users << @user
+      redirect_to @group, notice: 'Joined.'
+    else
+      redirect_to '/users/new'
+      session[:redirect_path] = request.path
+    end
+  end
+
   # GET /groups
   def index
     @groups = Group.all

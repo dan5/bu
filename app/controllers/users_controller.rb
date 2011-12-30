@@ -23,8 +23,9 @@ class UsersController < ApplicationController
   def create
     @user = User.find_by_name(params[:user][:name])
     if @user or @user = User.create(params[:user])
+      path = session.delete(:redirect_path) || '/my'
+      redirect_to path, notice: 'Login successful.'
       session[:name] = @user.name
-      redirect_to '/my', notice: 'Login successful.'
     else
       render action: "new"
     end
