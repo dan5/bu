@@ -1,14 +1,21 @@
 class EventsController < ApplicationController
-  def attend
-    only_logged_user or return
+  def delete
     event = Event.find(params[:id])
+    only_group_member(event.group) or return
+    @user.atnd(event).destroy
+    redirect_to :back
+  end
+
+  def attend
+    event = Event.find(params[:id])
+    only_group_member(event.group) or return
     atnd = @user.attend(event)
     redirect_to :back
   end
 
   def absent
-    only_logged_user or return
     event = Event.find(params[:id])
+    only_group_member(event.group) or return
     atnd = @user.be_absent(event)
     redirect_to :back
   end
@@ -16,17 +23,9 @@ class EventsController < ApplicationController
   def maybe
     only_logged_user or return
     event = Event.find(params[:id])
+    only_group_member(event.group) or return
     atnd = @user.be_maybe(event)
     redirect_to :back
-  end
-
-  def only_logged_user
-    if @user
-      return true
-    else
-      redirect_to '/users/new'
-      return false
-    end
   end
 
   # GET /events

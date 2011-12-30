@@ -1,17 +1,18 @@
 %table
   - @events.each do |event|
     %tr
-      %td .
+      %td *
       - t = event.started_at
       %td== #{t.month}/#{t.day}
-      %td= link_to event.group.name, event.group
+      - unless controller_name == 'groups'
+        %td= link_to event.group.name, event.group
       %td= link_to event.title, event
       - if @user.nil?
       - elsif atnd = @user.atnd(event)
         %td= atnd.state
-      - else
-        %td
-          未入力
+        %td= link_to '取り消し', event_path(event, 'delete')
+      - elsif event.group.member?(@user)
+        %td 未入力
         %td
           = link_to '出席', event_path(event, 'attend')
           = link_to '欠席', event_path(event, 'absent')

@@ -15,6 +15,7 @@ Bu::Application.routes.draw do
   get "events/:id.attend" => "events#attend"
   get "events/:id.absent" => "events#absent"
   get "events/:id.maybe"  => "events#maybe"
+  get "events/:id.delete" => "events#delete"
   resources :events
 
   get "groups/:id/join" => "groups#join"
