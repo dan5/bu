@@ -6,8 +6,13 @@
       %td== #{t.month}/#{t.day}
       %td= link_to event.group.name, event.group
       %td= link_to event.title, event
-      %td 未入力
-      %td
-        = link_to '出席'
-        = link_to '欠席'
-        = link_to '微妙'
+      - if @user.nil?
+      - elsif atnd = @user.atnd(event)
+        %td= atnd.state
+      - else
+        %td
+          未入力
+        %td
+          = link_to '出席', event_path(event, 'attend')
+          = link_to '欠席', event_path(event, 'absent')
+          = link_to '微妙', event_path(event, 'maybe')

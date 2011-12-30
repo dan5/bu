@@ -2,7 +2,7 @@
 %p#notice= notice
 
 %h2 活動スケジュール
-- @events = @user.groups.map(&:events).flatten.each
+- @events = @user.groups.map(&:events).flatten.sort_by(&:started_at).reverse
 = render '/groups/events'
 
 %h2 参加している部活

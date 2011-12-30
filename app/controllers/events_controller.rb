@@ -1,4 +1,34 @@
 class EventsController < ApplicationController
+  def attend
+    only_logged_user or return
+    event = Event.find(params[:id])
+    atnd = @user.attend(event)
+    redirect_to :back
+  end
+
+  def absent
+    only_logged_user or return
+    event = Event.find(params[:id])
+    atnd = @user.be_absent(event)
+    redirect_to :back
+  end
+
+  def maybe
+    only_logged_user or return
+    event = Event.find(params[:id])
+    atnd = @user.be_maybe(event)
+    redirect_to :back
+  end
+
+  def only_logged_user
+    if @user
+      return true
+    else
+      redirect_to '/users/new'
+      return false
+    end
+  end
+
   # GET /events
   # GET /events.json
   def index
