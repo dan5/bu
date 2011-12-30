@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  def logout
+    session[:name] = nil
+    redirect_to '/', notice: 'Logout successful.'
+  end
+
   # GET /users
   def index
     @users = User.all
@@ -17,17 +22,11 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.find_by_name(params[:user][:name])
-    if @user
+    if @user or @user = User.create(params[:user])
       session[:name] = @user.name
       redirect_to '/my', notice: 'Login successful.'
     else
-      @user = User.new(params[:user])
-      if @user.save
-        session[:name] = @user.name
-        redirect_to @user, notice: 'User was successfully created.'
-      else
-        render action: "new"
-      end
+      render action: "new"
     end
   end
 end

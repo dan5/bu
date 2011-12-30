@@ -7,13 +7,10 @@
           %li= msg
 
   .field
-    = f.label :owner_user_id
-    = f.number_field :owner_user_id
-  .field
-    = f.label :name
+    %p= f.label :name
     = f.text_field :name
   .field
-    = f.label :description
+    %p= f.label :description
     = f.text_area :description
   .actions
     = f.submit 'Save'

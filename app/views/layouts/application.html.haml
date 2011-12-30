@@ -12,9 +12,11 @@
   %body
     .topmenu
       = link_to 'home', '/'
-      = link_to 'my', '/my'
-      = link_to 'groups', '/groups'
-      = link_to 'login', '/users'
+      - if @user
+        = link_to 'my', '/my'
+        = link_to "logout(#{@user.name})", '/users/logout'
+      - else
+        = link_to 'login', '/users/new'
     = yield
     .footer
-      %p bu:
+      %p bu: @dan5ya

@@ -9,8 +9,20 @@
   %b Owner:
   = @group.owner.name
 
+%p= link_to 'この部活に参加する', ""
+
 .events
-  %h2 events
-  %p= link_to 'New event', "/events/new"
+  %h2 活動スケジュール
   - @events = @group.events
   = render 'events'
+  %p= link_to '新しいスケジュールを追加', "/events/new"
+
+.users
+  %h2 部員
+  %ul
+    - @group.users.each do |user|
+      %li
+        = user.name
+        == ...
+        owner or 常連 or 初参加 or 幽霊部員
+    

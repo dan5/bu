@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
-    #user.id == @group.owner.id or raise
+    owner_only!
   end
 
   # POST /groups
@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
   # PUT /groups/1
   def update
     @group = Group.find(params[:id])
-    user.id == @group.owner.id or raise
+    owner_only!
     params[:group].delete(:owner_user_id)
 
     if @group.update_attributes(params[:group])
@@ -49,9 +49,15 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   def destroy
     @group = Group.find(params[:id])
-    user.id == @group.owner.id or raise
+    owner_only!
     @group.destroy
 
     redirect_to groups_url
+  end
+
+  private
+
+  def owner_only!
+    user.id == @group.owner.id or raise "You are not owner!"
   end
 end

@@ -8,6 +8,7 @@ Bu::Application.routes.draw do
   get "users" => "users#index"
   get "users/login" => "users#login"
   get "users/login/:name" => "users#login"
+  get "users/logout" => "users#logout"
 
   resources :users
 

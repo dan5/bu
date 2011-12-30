@@ -1,12 +1,10 @@
 %h1 My page
 
-%p
-  = @user.name
-%h2 events
+%h2 活動スケジュール
 - @events = @user.groups.map(&:events).flatten.each
 = render '/groups/events'
 
-%h2 groups
+%h2 参加している部活
 %ul
   - @user.groups.each do |group|
     %li

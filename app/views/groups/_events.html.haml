@@ -1,0 +1,8 @@
+%ul
+  - @events.each do |event|
+    %li
+      - t = event.started_at
+      = link_to "#{t.year}.#{t.month}.#{t.day}", event
+      = event.group.name
+      == :
+      = event.title
