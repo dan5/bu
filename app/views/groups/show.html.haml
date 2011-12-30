@@ -13,7 +13,7 @@
 
 .events
   %h2 活動スケジュール
-  - @events = @group.events
+  - @events = @group.events.reverse
   = render 'events'
 
 .events_new
