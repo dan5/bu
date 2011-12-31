@@ -1,23 +1,34 @@
+%h2= link_to @event.group.name, @event.group
+%h1= @event.title
+
 %p#notice= notice
 
-%p
-  %b Group:
-  = @event.group_id
-%p
-  %b Title:
-  = @event.title
-%p
-  %b Place:
-  = @event.place
-%p
-  %b Address:
-  = @event.address
-%p
-  %b Limit:
-  = @event.limit
-%p
-  %b Started at:
-  = @event.started_at
-%p
-  %b Ended at:
-  = @event.ended_at
+%hr
+
+%table
+  %tr
+    %td datatime:
+    %td
+      = @event.started_at
+      == ...
+      = @event.ended_at
+  %tr
+    %td Limit:
+    %td= @event.limit
+
+  %tr
+    %td Place:
+    %td= @event.place
+  %tr
+    %td Address:
+    %td= @event.address
+
+%hr
+
+
+%hr
+
+.menu
+  = link_to @event.group.name, @event.group
+  |
+  = link_to 'Edit', edit_event_path(@event)

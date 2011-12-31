@@ -6,23 +6,27 @@
         - @event.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :title
-    = f.text_field :title
-  .field
-    = f.label :place
-    = f.text_field :place
-  .field
-    = f.label :address
-    = f.text_field :address
-  .field
-    = f.label :limit
-    = f.number_field :limit
-  .field
-    = f.label :started_at
-    = f.datetime_select :started_at
-  .field
-    = f.label :ended_at
-    = f.datetime_select :ended_at
+  %table
+    %tr.field
+      %td= f.label :title
+      %td= f.text_field :title
+    %tr.field
+      %td= f.label :place
+      %td= f.text_field :place
+    %tr.field
+      %td= f.label :address
+      %td= f.text_field :address
+    %tr.field
+      %td= f.label :limit
+      %td= f.number_field :limit
+    %tr.field
+      %td= f.label :started_at
+      %td= f.datetime_select :started_at
+    %tr.field
+      %td= f.label :ended_at
+      %td= f.datetime_select :ended_at
+    %tr.field
+      %td=# f.label :description
+      %td=# f.text_area :description
   .actions
     = f.submit 'Save'
