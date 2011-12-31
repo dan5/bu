@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
     #return render :text => request.path
     @group = Group.find(params[:id])
     if @user
-      @group.users << @user
+      @group.users << @user unless @group.member?(@user)
       redirect_to @group, notice: 'Joined.'
     else
       redirect_to '/users/new'
