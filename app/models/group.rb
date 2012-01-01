@@ -1,8 +1,14 @@
 class Group < ActiveRecord::Base
+  class NoGroupMember < Exception ; end
+
   has_many :events
   has_many :user_groups
   has_many :users, :through => :user_groups
 
+  def owner?(user)
+    owner.id == user.id
+  end
+  
   def owner
     User.find_by_id(owner_user_id) # 例外を発生させない
   end

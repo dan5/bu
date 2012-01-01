@@ -1,29 +1,32 @@
 class EventsController < ApplicationController
+  before_filter {
+    excludes = %w(show new index)
+    unless excludes.include?(action_name)
+      event = Event.find(params[:id])
+      only_group_member(event.group)
+    end
+  }
+
   def delete
     event = Event.find(params[:id])
-    only_group_member(event.group) or return
     @user.atnd(event).destroy
     redirect_to :back
   end
 
   def attend
     event = Event.find(params[:id])
-    only_group_member(event.group) or return
     atnd = @user.attend(event)
     redirect_to :back
   end
 
   def absent
     event = Event.find(params[:id])
-    only_group_member(event.group) or return
     atnd = @user.be_absent(event)
     redirect_to :back
   end
 
   def maybe
-    only_logged_user or return
     event = Event.find(params[:id])
-    only_group_member(event.group) or return
     atnd = @user.be_maybe(event)
     redirect_to :back
   end

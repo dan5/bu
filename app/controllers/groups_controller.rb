@@ -1,6 +1,5 @@
 class GroupsController < ApplicationController
   def join
-    #return render :text => request.path
     @group = Group.find(params[:id])
     if @user
       @group.users << @user unless @group.member?(@user)
@@ -24,6 +23,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/new
   def new
+    only_logged_user
     @group = Group.new
   end
 
@@ -35,13 +35,17 @@ class GroupsController < ApplicationController
 
   # POST /groups
   def create
-    params[:group][:owner_user_id] = user.id
+    only_logged_user
+    params[:group][:owner_user_id] = @user.id
     @group = Group.new(params[:group])
 
-    if @group.save
-      redirect_to @group, notice: 'Group was successfully created.'
-    else
-      render action: "new"
+    Group.transaction do
+      if @group.save
+        @group.users << @user
+        redirect_to @group, notice: 'Group was successfully created.'
+      else
+        render action: "new"
+      end
     end
   end
 
@@ -70,6 +74,6 @@ class GroupsController < ApplicationController
   private
 
   def owner_only!
-    user.id == @group.owner.id or raise "You are not owner!"
+    @group.owner?(user) or raise "You are not owner!"
   end
 end

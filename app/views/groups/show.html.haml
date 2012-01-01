@@ -4,7 +4,7 @@
 %p
   = @group.description
 %p
-  %b Owner:
+  %b 部長:
   = @group.owner.name
 
 - is_member = @group.member?(@user)
@@ -22,12 +22,12 @@
 
 .users
   %h2 部員
-  %ul
+  %table
     - @group.users.each do |user|
-      %li
-        = user.name
-        == ...
-        = %w(owner 常連 初参加 幽霊部員).sample
+      %tr
+        %td +
+        %td= user.name
+        %td= %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample
     
 .admin
   = link_to 'Edit', edit_group_path(@group)
