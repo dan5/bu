@@ -1,9 +1,14 @@
 class EventsController < ApplicationController
   before_filter {
-    excludes = %w(show new index)
-    unless excludes.include?(action_name)
-      event = Event.find(params[:id])
-      only_group_member(event.group)
+    if action_name == 'create'
+      group = Group.find(session[:group_id])
+      only_group_member(group)
+    else
+      excludes = %w(show new index)
+      unless excludes.include?(action_name)
+        event = Event.find(params[:id])
+        only_group_member(event.group)
+      end
     end
   }
 
