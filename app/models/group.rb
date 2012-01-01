@@ -1,5 +1,6 @@
 class Group < ActiveRecord::Base
-  class NoGroupMember < Exception ; end
+  class NotGroupMember < Exception ; end
+  class NotGroupOwner < Exception ; end
 
   has_many :events
   has_many :user_groups

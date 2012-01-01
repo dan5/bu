@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   before_filter :user
 
   rescue_from User::UnAuthorized, :with => -> { redirect_to '/users/new' }
-  rescue_from Group::NoGroupMember, :with => -> { render :text => 'no group member' }
+  rescue_from Group::NotGroupMember, :with => -> { render :text => 'not group member' }
+  rescue_from Group::NotGroupOwner, :with => -> { render :text => 'not group owner' }
 
   private
 
@@ -14,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def only_group_member(group = nil)
     group ||= Group.find(params[:id])
-    group.member?(@user) or raise(Group::NoGroupMember)
+    group.member?(@user) or raise(Group::NotGroupMember)
   end
 
   def only_logged_user
