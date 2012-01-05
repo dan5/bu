@@ -2,8 +2,8 @@ Bu::Application.routes.draw do
 
   root :to => 'welcome#index'
 
+  get "cron/update"
   get "my" => "my#index"
-  get "my/index"
 
   get "users" => "users#index"
   get "users/login" => "users#login"

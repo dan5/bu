@@ -8,6 +8,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :limit
       t.datetime :started_at
       t.datetime :ended_at
+      t.boolean :ended, :default => false
 
       t.timestamps
     end
