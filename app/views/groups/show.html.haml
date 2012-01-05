@@ -4,24 +4,24 @@
 %p
   = @group.description
 %p
-  %b 部長:
+  %b owner(部長):
   = @group.owner.name
 
 - is_member = @group.member?(@user)
 - unless is_member
-  %p= link_to 'この部活に参加する', "#{@group.id}/join"
+  %p= link_to 'join this group(この部活に参加する)', "#{@group.id}/join"
 
 .events
-  %h2 活動スケジュール
+  %h2 Events(活動スケジュール)
   - @events = @group.events.reverse
   = render 'events'
 
 .events_new
   - if is_member
-    %p= link_to '新しいスケジュールを追加', "/events/new"
+    %p= link_to 'new events(新しいスケジュールを追加)', "/events/new"
 
 .users
-  %h2 部員
+  %h2 Users(部員)
   %table
     - @group.users.each do |user|
       %tr
