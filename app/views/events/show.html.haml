@@ -3,6 +3,22 @@
 
 %p#notice= notice
 
+.update
+  atnd:
+  - if @user.nil?
+  - elsif atnd = @user.atnd(@event)
+    %span.atnd= atnd.state.capitalize
+    = link_to 'cancel(出欠入力を取り消す)', event_path(@event, 'delete')
+  - elsif @event.group.member?(@user)
+    Unknown
+    %span.update
+      = link_to 'attend(出席)', event_path(@event, 'attend')
+      = link_to 'absent(欠席)', event_path(@event, 'absent')
+      = link_to 'maybe(微妙)', event_path(@event, 'maybe')
+  - else
+    You are not a member of
+    = link_to @event.group.name, @event.group
+
 %hr
 
 %table
@@ -29,14 +45,19 @@
 %hr
 
 .users
-  %h2 部員
+  %h2 Users(出欠を入力した部員)
+  %h3 Attendees
   %table
-    - @event.group.users.each do |user|
+    - @event.users.sort_by {|e| e.atnd(@event).state_level }.each do |user|
       %tr
         %td +
         %td= user.name
-        %td= (atnd = user.atnd(@event)) ? atnd.state : "未入力"
-
+        - if atnd = user.atnd(@event)
+          %td.atnd_other= atnd.state.capitalize
+        - else
+          %td Unknown
+  %h3 Maybees
+  %h3 Absentees
 %hr
 
 .menu

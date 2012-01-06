@@ -5,3 +5,29 @@
  *= require_self
  *= require_tree . 
 */
+
+/*.actions input {
+  border-style:solid;
+  border-width:1px;
+  border-color:#04a;
+  background:#FFFFFF;
+  color:#04a
+}*/
+
+.atnd {
+  font-weight: bold;
+  color: #4a4;
+}
+
+.atnd_other {
+  color: #4a4;
+}
+.update a:link {
+  color: #c42;
+  text-decoration: none;
+}
+
+.update a:hover {
+  color: #fff;
+  background-color: #a40;
+}

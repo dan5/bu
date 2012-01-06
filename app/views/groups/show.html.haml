@@ -9,7 +9,7 @@
 
 - is_member = @group.member?(@user)
 - unless is_member
-  %p= link_to 'join this group(この部活に参加する)', "#{@group.id}/join"
+  %p.update= link_to 'join this group(この部活に参加する)', "#{@group.id}/join"
 
 .events
   %h2 Events(活動スケジュール)
