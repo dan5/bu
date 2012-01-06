@@ -3,24 +3,6 @@
 
 %p#notice= notice
 
-.update
-  atnd:
-  - if @user.nil?
-  - elsif atnd = @user.atnd(@event)
-    %span.atnd= atnd.state.capitalize
-    = link_to 'cancel(出欠入力を取り消す)', event_path(@event, 'delete')
-  - elsif @event.group.member?(@user)
-    Unknown
-    %span.update
-      = link_to 'attend(出席)', event_path(@event, 'attend')
-      = link_to 'absent(欠席)', event_path(@event, 'absent')
-      = link_to 'maybe(微妙)', event_path(@event, 'maybe')
-  - else
-    You are not a member of
-    = link_to @event.group.name, @event.group
-
-%hr
-
 %table
   %tr
     %td datatime:
@@ -44,20 +26,48 @@
 
 %hr
 
+.state
+  - if @user.nil?
+    %h2= link_to 'Please login...', '/users/new'
+  - elsif atnd = @user.atnd(@event)
+    %h2.update= link_to 'cancel(出欠入力を取り消す)', event_path(@event, 'delete')
+    your state :
+    %span.atnd= atnd.state.capitalize
+  - elsif @event.group.member?(@user)
+    %h2 Set your state
+    .update.atnd
+      = link_to 'attend(出席)', event_path(@event, 'attend')
+      = link_to 'absent(欠席)', event_path(@event, 'absent')
+      = link_to 'maybe(微妙)', event_path(@event, 'maybe')
+  - else
+    %h2
+      You are not a member of
+      = link_to @event.group.name, @event.group
+
+
+%hr
+
 .users
-  %h2 Users(出欠を入力した部員)
-  %h3 Attendees
+  %h3 Attendees(参加者)
   %table
-    - @event.users.sort_by {|e| e.atnd(@event).state_level }.each do |user|
+    - @event.attendees.each do |user|
       %tr
         %td +
         %td= user.name
-        - if atnd = user.atnd(@event)
-          %td.atnd_other= atnd.state.capitalize
-        - else
-          %td Unknown
-  %h3 Maybees
-  %h3 Absentees
+        %td= user.status
+        %td コメント。。。
+  %h3 Maybees(微妙な人たち)
+  %ul
+    - @event.maybees.each do |user|
+      %li== #{user.name} : コメント。。。
+  %h3 Absentees(欠席者)
+  %ul
+    - @event.absentees.each do |user|
+      %li= user.name
+%hr
+
+%h2 Comments
+
 %hr
 
 .menu
