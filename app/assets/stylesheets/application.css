@@ -38,3 +38,19 @@
   color: #fff;
   background-color: #a40;
 }
+
+div.description {
+  margin: 8px 0;
+  padding: 8px;
+  color: #000;
+  background-color: #eee;
+}
+
+div.bottom_menu {
+  margin-top: 16px;
+}
+
+div.footer a:link {
+  color: #777;
+  text-decoration: none;
+}

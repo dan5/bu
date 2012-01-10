@@ -2,5 +2,6 @@
 
 = render 'form'
 
-- group_id = session[:group_id]
-= link_to 'Back', group_id ? Group.find(group_id) : events_path
+.bottom_menu
+  - group_id = session[:group_id]
+  = link_to 'Back', group_id ? Group.find(group_id) : events_path

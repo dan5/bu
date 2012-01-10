@@ -20,9 +20,8 @@
     %td Address:
     %td= @event.address
 
-%p @todo: イベントの説明を表示
-
-%hr
+.description
+  != simple_html_compiler(@event.description)
 
 .state
   %h2 Your state（あなたの出欠）
@@ -89,7 +88,7 @@
       = f.submit 'post'
 !== -->
 
-.menu
+.bottom_menu
   = link_to @event.group.name, @event.group
   |
   = link_to 'Edit', edit_event_path(@event)
