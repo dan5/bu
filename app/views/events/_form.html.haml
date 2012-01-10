@@ -26,7 +26,7 @@
       %td= f.label :ended_at
       %td= f.datetime_select :ended_at
     %tr.field
-      %td=# f.label :description
-      %td=# f.text_area :description
+      %td.top= f.label :description
+      %td= f.text_area :description
   .actions
     = f.submit 'Save'

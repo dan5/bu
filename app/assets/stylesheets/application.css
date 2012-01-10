@@ -14,9 +14,11 @@
   color:#04a
 }*/
 
-.center {
-  text-align: center;
-}
+.top { vertical-align: top; }
+.bottom { vertical-align: bottom; }
+.left { text-align: left; }
+.right { text-align: right; }
+.center { text-align: center; }
 
 .atnd {
   font-weight: bold;
