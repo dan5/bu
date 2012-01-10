@@ -8,12 +8,19 @@
         %td= link_to event.group.name, event.group
       %td= link_to event.title, event
       - if @user.nil?
-      - elsif atnd = @user.atnd(event)
-        %td.atnd= atnd.state.capitalize
-        %td.update= link_to 'cancel(取り消し)', event_path(event, 'delete')
-      - elsif event.group.member?(@user)
-        %td Unknown
-        %td.update.atnd
-          = link_to 'attend(出席)', event_path(event, 'attend')
-          = link_to 'absent(欠席)', event_path(event, 'absent')
-          = link_to 'maybe(微妙)', event_path(event, 'maybe')
+      - else
+        - atnd = @user.atnd(event)
+        - if atnd
+          %td.atnd= atnd.state.capitalize
+        - else
+          %td Unknown
+
+        - if event.ended?
+          %td ended(終了)
+        - elsif atnd
+          %td.update= link_to 'cancel(取り消し)', event_path(event, 'delete')
+        - elsif event.group.member?(@user)
+          %td.update.atnd
+            = link_to 'attend(出席)', event_path(event, 'attend')
+            = link_to 'absent(欠席)', event_path(event, 'absent')
+            = link_to 'maybe(微妙)', event_path(event, 'maybe')

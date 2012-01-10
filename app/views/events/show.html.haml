@@ -27,15 +27,15 @@
 %hr
 
 .state
+  %h2 Your state
   - if @user.nil?
-    %h2= link_to 'Please login...', '/users/new'
+    = link_to 'Please login...', '/users/new'
   - elsif atnd = @user.atnd(@event)
-    %h2.update= link_to 'cancel(出欠入力を取り消す)', event_path(@event, 'delete')
-    your state :
-    %span.atnd= atnd.state.capitalize
+    %span.atnd== #{atnd.state.capitalize}:
+    %span.update= link_to 'cancel(出欠入力を取り消す)', event_path(@event, 'delete')
   - elsif @event.group.member?(@user)
-    %h2 Set your state
-    .update.atnd
+    Set your state:
+    %span.update.atnd
       = link_to 'attend(出席)', event_path(@event, 'attend')
       = link_to 'absent(欠席)', event_path(@event, 'absent')
       = link_to 'maybe(微妙)', event_path(@event, 'maybe')
