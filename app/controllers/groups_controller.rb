@@ -27,6 +27,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     session[:group_id] = @group.id
+    @events = @group.events.sort_by(&:started_at).reverse
   end
 
   # GET /groups/new

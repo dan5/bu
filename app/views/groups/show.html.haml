@@ -13,7 +13,6 @@
 
 .events
   %h2 Events(活動スケジュール)
-  - @events = @group.events.reverse
   = render 'events'
 
 .events_new
@@ -23,11 +22,24 @@
 .users
   %h2 Users(部員)
   %table
+    %tr
+      %th
+      %th
+      %th
+      - @events.each do |event|
+        %td= link_to month_day(event), event
     - @group.users.each do |user|
       %tr
         %td +
         %td= user.name
-        %td= %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample
+        %td
+          =# %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample
+          new(新入部員)
+        - @events.each do |event|
+          %td.center
+            - atnd = user.atnd(event)
+            - if atnd
+              = { 'at' => '+', 'ab' => '-', 'ma' => '?' }[atnd.state[0..1]]
     
 .admin
   = link_to 'Edit', edit_group_path(@group)

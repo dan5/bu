@@ -2,8 +2,7 @@
   - @events.each do |event|
     %tr
       %td *
-      - t = event.started_at
-      %td== #{t.month}/#{t.day}
+      %td= month_day(event)
       - unless controller_name == 'groups'
         %td= link_to event.group.name, event.group
       %td= link_to event.title, event

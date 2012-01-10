@@ -20,14 +20,12 @@
     %td Address:
     %td= @event.address
 
-%hr
-
 %p @todo: イベントの説明を表示
 
 %hr
 
 .state
-  %h2 Your state
+  %h2 Your state（あなたの出欠）
   - if @user.nil?
     = link_to 'Please login...', '/users/new'
   - elsif atnd = @user.atnd(@event)
@@ -43,6 +41,8 @@
     %h2
       You are not a member of
       = link_to @event.group.name, @event.group
+
+%hr
 
 .users
   %h2 Attendees(参加者)
@@ -88,8 +88,6 @@
     .actions
       = f.submit 'post'
 !== -->
-
-%hr
 
 .menu
   = link_to @event.group.name, @event.group
