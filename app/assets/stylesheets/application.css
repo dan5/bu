@@ -16,12 +16,13 @@
 
 .atnd {
   font-weight: bold;
-  color: #4a4;
+  color: #777;
 }
 
 .atnd_other {
   color: #4a4;
 }
+
 .update a:link {
   color: #c42;
   text-decoration: none;

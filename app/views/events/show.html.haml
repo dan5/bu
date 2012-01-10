@@ -44,29 +44,50 @@
       You are not a member of
       = link_to @event.group.name, @event.group
 
-
-%hr
-
 .users
-  %h3 Attendees(参加者)
+  %h2 Attendees(参加者)
   %table
     - @event.attendees.each do |user|
       %tr
         %td +
         %td= user.name
         %td= user.status
-        %td コメント。。。
-  %h3 Maybees(微妙な人たち)
-  %ul
+  %h2 Maybees(微妙な人たち)
+  %table
     - @event.maybees.each do |user|
-      %li== #{user.name} : コメント。。。
-  %h3 Absentees(欠席者)
-  %ul
+      %tr
+        %td +
+        %td= user.name
+        %td= user.status
+  %h2 Absentees(欠席者)
+  %table
     - @event.absentees.each do |user|
-      %li= user.name
-%hr
+      %tr
+        %td +
+        %td= user.name
+        %td= user.status
 
+!== <!--
 %h2 Comments
+%ul
+  - @comments = %w(てすと てすてす)
+  - @comments.each do |comment|
+    %li= comment
+
+- if @user
+  = form_for @current_user do |f|
+    -if @current_user.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@current_user.errors.count, "error")} prohibited this user from being saved:"
+        %ul
+          - @current_user.errors.full_messages.each do |msg|
+            %li= msg
+    .field
+      = f.label :name
+      = f.text_field :name
+    .actions
+      = f.submit 'post'
+!== -->
 
 %hr
 
