@@ -50,4 +50,6 @@
   - if @user and @group.owner?(@user)
     = link_to 'Edit', edit_group_path(@group)
     /
+    = link_to 'Admin'
+    /
     = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
