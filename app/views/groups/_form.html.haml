@@ -10,7 +10,10 @@
     %p= f.label :name
     = f.text_field :name
   .field
+    %p= f.label 'permission: 未実装'
+    = f.select(:permission, [['Public(公開)', 0], ['Must be allowed(許可が必要)', 1], ['Secret(非公開)', 2]])
+  .field
     %p= f.label :description
-    = f.text_area :description
+    = f.text_area :description, :size => '80x20'
   .actions
     = f.submit 'Save'

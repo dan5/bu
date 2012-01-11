@@ -5,8 +5,11 @@
   != simple_html_compiler(@group.description)
 
 %p
-  %b owner(部長):
-  = @group.owner.name
+  permission:
+  %b= ['Public(公開)', 'Must be allowed(許可が必要)', 'Secret(非公開)', 2][@group.permission]
+  \/
+  owner(部長):
+  %b= @group.owner.name
 
 - is_member = @group.member?(@user)
 - unless is_member
