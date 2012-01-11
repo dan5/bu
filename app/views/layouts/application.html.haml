@@ -14,7 +14,8 @@
       = link_to 'home', '/'
       - if @user
         = link_to 'my', '/my'
-        = link_to 'about', '/about'
+      = link_to 'about', '/about'
+      - if @user
         = link_to "logout(#{@user.name})", '/users/logout'
       - else
         = link_to 'login', '/users/new'
