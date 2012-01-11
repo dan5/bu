@@ -7,9 +7,9 @@
   %tr
     %td datatime:
     %td
-      = @event.started_at
+      = date_time(@event.started_at)
       == ...
-      = @event.ended_at
+      = date_time(@event.ended_at)
   %tr
     %td Limit:
     %td= @event.limit
