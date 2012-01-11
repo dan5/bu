@@ -24,7 +24,7 @@
   != simple_html_compiler(@event.description)
 
 .state
-  %h2 Your state（あなたの出欠）
+  %h2 Your state(あなたの出欠)
   - if @user.nil?
     = link_to 'Please login...', '/users/new'
   - elsif atnd = @user.atnd(@event)
@@ -51,7 +51,7 @@
         %td +
         %td= user.name
         %td= user.status
-  %h2 Maybees(微妙な人たち)
+  %h2 Maybees(微妙な人)
   %table
     - @event.maybees.each do |user|
       %tr
