@@ -6,7 +6,11 @@ class User < ActiveRecord::Base
   has_many :user_events
   has_many :events, :through => :user_events
   def status
-    'guest'
+    'new'
+  end
+
+  def joinded_at(group)
+    user_groups.find_by_group_id(group.id).created_at
   end
 
   def atnd(event)
