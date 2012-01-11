@@ -21,4 +21,12 @@ class Group < ActiveRecord::Base
   def member?(user)
     !!(user and users.find_by_id(user.id))
   end
+
+  def public?
+    permission == 0
+  end
+
+  def secret?
+    permission == 2
+  end
 end

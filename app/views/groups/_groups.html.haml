@@ -3,4 +3,8 @@
     %tr
       %td +
       %td= link_to group.name, group
-      %td= group.description
+      %td
+        - size = 70
+        = group.description.first(size)
+        - if group.description.size > size
+          \...

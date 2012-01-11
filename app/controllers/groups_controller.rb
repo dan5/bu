@@ -10,8 +10,12 @@ class GroupsController < ApplicationController
   def join
     @group = Group.find(params[:id])
     if @user
-      @group.users << @user unless @group.member?(@user)
-      redirect_to @group, notice: 'Joined.'
+      if @group.public?
+        @group.users << @user unless @group.member?(@user)
+        redirect_to @group, notice: 'Joined.'
+      else
+        redirect_to @group, notice: 'Not joind.'
+      end
     else
       redirect_to '/users/new'
       session[:redirect_path] = request.path

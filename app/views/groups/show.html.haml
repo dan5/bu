@@ -12,7 +12,7 @@
   %b= @group.owner.name
 
 - is_member = @group.member?(@user)
-- unless is_member
+- if !is_member and @group.public?
   %p.update= link_to 'join this group(この部活に参加する)', "#{@group.id}/join"
 
 .events
@@ -46,6 +46,7 @@
               = { 'at' => '+', 'ab' => '-', 'ma' => '?' }[atnd.state[0..1]]
     
 .bottom_menu
-  = link_to 'Edit', edit_group_path(@group)
-  /
-  = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
+  - if @user and @group.owner?(@user)
+    = link_to 'Edit', edit_group_path(@group)
+    /
+    = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
