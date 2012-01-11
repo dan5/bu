@@ -1,6 +1,7 @@
 Bu::Application.routes.draw do
 
   root :to => 'welcome#index'
+  get "about" => "welcome#about"
 
   get "cron/update"
   get "my" => "my#index"
