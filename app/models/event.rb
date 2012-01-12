@@ -2,6 +2,10 @@ class Event < ActiveRecord::Base
   belongs_to :group
   has_many :user_events
   has_many :users, :through => :user_events
+
+  validates :title, :presence => true,
+                   :length => { :maximum => 32 }
+
   def atnds(*args) user_events(*args) end
 
   def attendees

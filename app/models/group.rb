@@ -2,6 +2,9 @@ class Group < ActiveRecord::Base
   class NotGroupMember < Exception ; end
   class NotGroupOwner < Exception ; end
 
+  validates :name, :presence => true,
+                   :length => { :maximum => 16 }
+
   has_many :events
   has_many :user_groups
   has_many :users, :through => :user_groups

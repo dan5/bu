@@ -22,12 +22,23 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @current_user = User.find_by_name(params[:user][:name])
-    if @current_user or @current_user = User.create(params[:user])
-      path = session.delete(:redirect_path) || '/my'
-      redirect_to path, notice: 'Login successful.'
-      session[:name] = @current_user.name
+    if @current_user
+      redirect_after_create
     else
-      render action: "new"
+      @current_user = User.new(params[:user])
+      if @current_user.save
+        redirect_after_create
+      else
+        render action: "new"
+      end
     end
+  end
+
+  private
+
+  def redirect_after_create
+    path = session.delete(:redirect_path) || '/my'
+    redirect_to path, notice: 'Login successful.'
+    session[:name] = @current_user.name
   end
 end

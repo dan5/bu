@@ -1,10 +1,14 @@
 class User < ActiveRecord::Base
   class UnAuthorized < Exception ; end
 
+  validates :name, :presence => true,
+                   :length => { :maximum => 16 }
+
   has_many :user_groups
   has_many :groups, :through => :user_groups
   has_many :user_events
   has_many :events, :through => :user_events
+
   def status
     'new'
   end
