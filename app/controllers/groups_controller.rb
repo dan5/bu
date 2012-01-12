@@ -1,5 +1,11 @@
 class GroupsController < ApplicationController
   before_filter {
+    if action_name == 'index'
+      user.administrator? or raise(User::NotAdministrator)
+    end
+  }
+
+  before_filter {
     includes = %w(edit update destroy)
     if includes.include?(action_name)
       group = Group.find(params[:id])
@@ -78,6 +84,6 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @group.destroy
 
-    redirect_to groups_url
+    redirect_to '/my'
   end
 end

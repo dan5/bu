@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :user
 
+  rescue_from User::NotAdministrator, :with => -> { redirect_to '/' }
   rescue_from User::UnAuthorized, :with => -> { redirect_to '/users/new' }
   rescue_from Group::NotGroupMember, :with => -> { render :text => 'not group member' }
   rescue_from Group::NotGroupOwner, :with => -> { render :text => 'not group owner' }

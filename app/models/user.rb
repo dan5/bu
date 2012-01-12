@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   class UnAuthorized < Exception ; end
+  class NotAdministrator < Exception ; end
 
   validates :name, :presence => true,
                    :length => { :maximum => 16 }
@@ -8,6 +9,10 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_groups
   has_many :user_events
   has_many :events, :through => :user_events
+
+  def administrator?
+    id == 1
+  end
 
   def status
     'new'

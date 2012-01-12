@@ -6,6 +6,7 @@
       - unless controller_name == 'groups'
         %td= link_to to_short(event.group.name, 16), event.group
       %td= link_to to_short(event.title, 16), event
+
       - if @user.nil?
       - else
         - atnd = @user.atnd(event)
