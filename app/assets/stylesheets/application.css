@@ -19,6 +19,7 @@
 .left { text-align: left; }
 .right { text-align: right; }
 .center { text-align: center; }
+.gray { color: #888888; }
 
 .atnd {
   font-weight: bold;
@@ -37,6 +38,15 @@
 .update a:hover {
   color: #fff;
   background-color: #a40;
+}
+
+h1 {
+  margin: 24px 0;
+}
+
+h2 {
+  margin-top: 40px;
+  margin-bottom: 14px;
 }
 
 div.description {

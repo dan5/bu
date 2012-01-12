@@ -1,3 +1,5 @@
+- last = Group.find(session[:group_id]).events.find(:first, :order => 'id desc')
+- last ||= Event.new
 = form_for @event do |f|
   -if @event.errors.any?
     #error_explanation
@@ -9,24 +11,33 @@
   %table
     %tr.field
       %td= f.label :title
-      %td= f.text_field :title
+      %td
+        = f.text_field :title, :value => @event.title
+        %span.gray== 過去の入力:#{last.title}
+        %span.gray @todo:クリックで過去の入力を選択
     %tr.field
       %td= f.label :limit
-      %td= f.number_field :limit
+      %td
+        = f.number_field :limit, :value => @event.limit
+        %span.gray== 過去の入力:#{last.limit}
     %tr.field
       %td= f.label :place
-      %td= f.text_field :place
+      %td
+        = f.text_field :place, :value => @event.place || last.place
+        %span.gray== 過去の入力:#{last.place}
     %tr.field
       %td= f.label :address
-      %td= f.text_field :address
+      %td
+        = f.text_field :address, :value => @event.address || last.address
+        %span.gray== 過去の入力:#{last.address}
     %tr.field
       %td= f.label :started_at
-      %td= f.datetime_select :started_at
+      %td= f.datetime_select :started_at, :use_month_numbers => true, :minute_step => 10
     %tr.field
       %td= f.label :ended_at
-      %td= f.datetime_select :ended_at
+      %td= f.datetime_select :ended_at, :use_month_numbers => true, :minute_step => 10
     %tr.field
       %td.top= f.label :description
-      %td= f.text_area :description, :size => '60x20'
+      %td= f.text_area :description, :size => '60x15'
   .actions
     = f.submit 'Save'

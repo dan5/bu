@@ -1,7 +1,9 @@
+- if group_id = session[:group_id]
+  - group = Group.find(group_id)
+  %h3= link_to group.name, group
 %h1 New event
 
 = render 'form'
 
 .bottom_menu
-  - group_id = session[:group_id]
-  = link_to 'Back', group_id ? Group.find(group_id) : events_path
+  = link_to 'Back', group ? group : events_path
