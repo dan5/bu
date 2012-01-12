@@ -1,13 +1,13 @@
-%h1 My page
+%h1=_'My page'
 
 %p#notice= notice
 
-%p= link_to 'new group(新しい部活を作る)', "/groups/new"
+%p= link_to _('new group'), "/groups/new"
 
-%h2 Events(活動スケジュール)
+%h2=_'Events'
 - @events = @user.groups.map(&:events).flatten.sort_by(&:started_at).reverse
 = render '/groups/events'
 
-%h2 Your Groups(参加している部活)
+%h2=_'Your Groups'
 - @groups = @user.groups
 = render '/groups/groups'

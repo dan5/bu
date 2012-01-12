@@ -10,16 +10,16 @@
       - else
         - atnd = @user.atnd(event)
         - if atnd
-          %td.atnd= atnd.state.capitalize
+          %td.atnd=_ atnd.state.capitalize
         - else
-          %td Unknown
+          %td=_'Unknown'
 
         - if event.ended?
           %td ended(終了)
         - elsif atnd
-          %td.update= link_to 'cancel(取り消し)', event_path(event, 'delete')
+          %td.update= link_to _('cancel'), event_path(event, 'delete')
         - elsif event.group.member?(@user)
           %td.update.atnd
-            = link_to 'attend(出席)', event_path(event, 'attend')
-            = link_to 'absent(欠席)', event_path(event, 'absent')
-            = link_to 'maybe(微妙)', event_path(event, 'maybe')
+            = link_to _('attend'), event_path(event, 'attend')
+            = link_to _('absent'), event_path(event, 'absent')
+            = link_to _('maybe'),  event_path(event, 'maybe')

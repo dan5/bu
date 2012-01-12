@@ -11,14 +11,22 @@
 
   %body
     .topmenu
-      = link_to 'home', '/'
-      - if @user
-        = link_to 'my', '/my'
-      = link_to 'about', '/about'
-      - if @user
-        = link_to "logout(#{@user.name})", '/users/logout'
-      - else
-        = link_to 'login', '/users/new'
+      %table{:width => '100%'}
+        %tr
+          %td
+            = link_to 'home', '/'
+            - if @user
+              = link_to 'my', '/my'
+            = link_to 'about', '/about'
+            - if @user
+              = link_to "logout(#{@user.name})", '/users/logout'
+            - else
+              = link_to 'login', '/users/new'
+          %td.right
+            - if session[:language].nil? or session[:language] == 'japanese'
+              = link_to 'English', 'settings/language/english'
+            - else
+              = link_to 'Japanese', 'settings/language/japanese'
     %div{:class => controller_name}
       = yield
     .footer

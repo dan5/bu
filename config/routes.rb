@@ -22,6 +22,8 @@ Bu::Application.routes.draw do
   get "groups/:id/join" => "groups#join"
   resources :groups
 
+  get "settings/language/:language" => "settings#language"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
