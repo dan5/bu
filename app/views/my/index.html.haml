@@ -2,7 +2,8 @@
 
 %p#notice= notice
 
-%p= link_to _('new group'), "/groups/new"
+%h2=_'Update'
+%p @todo
 
 %h2=_'Events'
 - @events = @user.groups.map(&:events).flatten.sort_by(&:started_at).reverse

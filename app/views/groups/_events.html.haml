@@ -16,7 +16,7 @@
           %td=_'Unknown'
 
         - if event.ended?
-          %td=_'ended'
+          %td.gray=_'ended'
         - elsif atnd
           %td.update= link_to _('cancel'), event_path(event, 'delete')
         - elsif event.group.member?(@user)

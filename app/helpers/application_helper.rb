@@ -50,7 +50,11 @@ module ApplicationHelper
       'new group'   => '新しい部活を作る',
       'events'      => '活動スケジュール',
       'your groups' => '参加している部活',
-      'ended'       => '終了',
+      'ended'       => '終了しました',
+
+      # my
+      'update'      => '更新情報',
+      'bbs'         => '掲示板',
 
       # groups
       'groups'      => '部活リスト',
