@@ -1,6 +1,14 @@
 # -*- encoding: utf-8 -*-
 
 module ApplicationHelper
+  def to_short(str, max)
+    if str.size > max
+      str.first(max) + '...'
+    else
+      str
+    end
+  end
+
   def month_day(event)
     t = event.started_at
     "#{t.month}/#{t.day}"
@@ -13,6 +21,8 @@ module ApplicationHelper
   def simple_html_compiler(str)
     h(str).gsub("\n", '<br />')
   end
+
+  # language support --
 
   def _(str)
     key = str.to_s.downcase

@@ -2,9 +2,5 @@
   - @groups.each do |group|
     %tr
       %td +
-      %td= link_to group.name, group
-      %td
-        - size = 70
-        = group.description.first(size)
-        - if group.description.size > size
-          \...
+      %td= link_to to_short(group.name, 16), group
+      %td= to_short group.description, 50
