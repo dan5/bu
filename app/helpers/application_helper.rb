@@ -16,7 +16,7 @@ module ApplicationHelper
 
   def _(str)
     key = str.to_s.downcase
-    lang = session[:language] || 'japanese'
+    lang = session[:language] || 'japanese' # default lang is japanese
     %w(english japanese).include?(lang) or raise
     return str if lang == 'english'
     begin
@@ -34,12 +34,36 @@ module ApplicationHelper
       'absence'     => '欠席',
       'maybe'       => '微妙',
       'cancel'      => '取り消し',
+      'unknown'     => '未入力',
 
       'my page'     => 'マイページ',
       'new group'   => '新しい部活を作る',
       'events'      => '活動スケジュール',
       'your groups' => '参加している部活',
-      'hello'       => 'こんにちは',
+      'ended'       => '終了',
+
+      # groups
+      'groups'      => '部活リスト',
+      'users'       => '部員',
+      'owner'       => '部長',
+      'join this group' => 'この部活に参加する',
+      'new events'  => '新しいスケジュールを追加',
+      'new user'    => '新入部員',
+      # %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample
+      'name'        => '名前',
+      'permission'  => '入部制限',
+      'description' => '詳細',
+
+      # events
+      'public'      => '誰でも参加できる',
+      'must be allowed' => '許可が必要',
+      'secret'      => '非公開',
+      'new event'   => '新しいスケジュール',
+
+      'your state'  => 'あなたの出欠',
+      'attendees'   => '参加者',
+      'maybees'     => '微妙な人',
+      'absentees'   => '欠席者',
     }
   end
 end

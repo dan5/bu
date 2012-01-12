@@ -7,13 +7,13 @@
           %li= msg
 
   .field
-    %p= f.label :name
+    %p= f.label :name, _(:Name)
     = f.text_field :name
   .field
-    %p= f.label 'permission: 未実装'
-    = f.select(:permission, [['Public(公開)', 0], ['Must be allowed(許可が必要)', 1], ['Secret(非公開)', 2]])
+    %p= f.label :permission, _(:Permission)
+    = f.select(:permission, [[_('Public'), 0], [_('Must be allowed'), 1], [_('Secret'), 2]])
   .field
-    %p= f.label :description
+    %p= f.label :description, _(:Description)
     = f.text_area :description, :size => '80x20'
   .actions
     = f.submit 'Save'

@@ -1,7 +1,7 @@
 - if group_id = session[:group_id]
   - group = Group.find(group_id)
   %h3= link_to group.name, group
-%h1 New event
+%h1=_'New event'
 
 = render 'form'
 

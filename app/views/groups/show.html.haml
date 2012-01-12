@@ -6,26 +6,26 @@
 
 .status
   %p
-    permission:
-    %b= ['Public(公開)', 'Must be allowed(許可が必要)', 'Secret(非公開)', 2][@group.permission]
+    == #{_ :permission}:
+    %b= [_(:Public), _('Must be allowed'), _(:Secret), 2][@group.permission]
     \/
-    owner(部長):
+    == #{_ :owner}:
     %b= @group.owner.name
 
 - is_member = @group.member?(@user)
 - if !is_member and @group.public?
-  %p.update= link_to 'join this group(この部活に参加する)', "#{@group.id}/join"
+  %p.update= link_to _('join this group'), "#{@group.id}/join"
 
 .events
-  %h2 Events(活動スケジュール)
+  %h2=_ :Events
   = render 'events'
 
 .events_new
   - if is_member
-    %p= link_to 'new events(新しいスケジュールを追加)', "/events/new"
+    %p= link_to _('new events'), "/events/new"
 
 .users
-  %h2 Users(部員)
+  %h2=_ :Users
   %table
     %tr
       %th
@@ -38,8 +38,7 @@
         %td +
         %td= user.name
         %td
-          =# %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample
-          new(新入部員)
+          =_('new user')
         - @events.each do |event|
           %td.center
             - atnd = user.atnd(event)

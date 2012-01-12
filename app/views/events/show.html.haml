@@ -24,18 +24,18 @@
   != simple_html_compiler(@event.description)
 
 .state
-  %h2 Your state(あなたの出欠)
+  %h2=_('Your state')
   - if @user.nil?
     = link_to 'Please login...', '/users/new'
   - elsif atnd = @user.atnd(@event)
-    %span.atnd== #{atnd.state.capitalize}:
-    %span.update= link_to 'cancel(出欠入力を取り消す)', event_path(@event, 'delete')
+    %span.atnd== #{_ atnd.state.capitalize}:
+    %span.update= link_to _(:cancel), event_path(@event, 'delete')
   - elsif @event.group.member?(@user)
     Set your state:
     %span.update.atnd
-      = link_to 'attend(出席)', event_path(@event, 'attend')
-      = link_to 'absent(欠席)', event_path(@event, 'absent')
-      = link_to 'maybe(微妙)', event_path(@event, 'maybe')
+      = link_to _(:attend), event_path(@event, 'attend')
+      = link_to _(:absent), event_path(@event, 'absent')
+      = link_to _(:maybe), event_path(@event, 'maybe')
   - else
     %h2
       You are not a member of
@@ -44,21 +44,21 @@
 %hr
 
 .users
-  %h2 Attendees(参加者)
+  %h2=_ :Attendees
   %table
     - @event.attendees.each do |user|
       %tr
         %td +
         %td= user.name
         %td= user.status
-  %h2 Maybees(微妙な人)
+  %h2=_ :Maybees
   %table
     - @event.maybees.each do |user|
       %tr
         %td +
         %td= user.name
         %td= user.status
-  %h2 Absentees(欠席者)
+  %h2=_ :Absentees
   %table
     - @event.absentees.each do |user|
       %tr
