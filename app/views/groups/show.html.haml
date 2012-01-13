@@ -36,10 +36,10 @@
       %th
       %th
       - @events.each do |event|
-        %td= link_to month_day(event), event
+        %td= link_to month_day(event.started_at), event
     - @group.users.each do |user|
       %tr
-        %td +
+        %td *
         %td= user.name
         %td
           =_('new user')

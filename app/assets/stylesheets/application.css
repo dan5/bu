@@ -20,6 +20,10 @@
 .right { text-align: right; }
 .center { text-align: center; }
 .gray { color: #888888; }
+.small {
+  font-size: 70%;
+  line-height: 1.62;
+}
 
 .atnd {
   font-weight: bold;

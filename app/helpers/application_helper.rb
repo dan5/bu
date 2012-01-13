@@ -1,21 +1,24 @@
 # -*- encoding: utf-8 -*-
 
 module ApplicationHelper
-  def to_short(str, max)
+  def to_short(str, max, period_size = 3)
     if str.size > max
-      str.first(max) + '...'
+      str.first(max - 1) + '.' * period_size
     else
       str
     end
   end
 
-  def month_day(event)
-    t = event.started_at
-    "#{t.month}/#{t.day}"
+  def hour_min(time)
+    "%02d" % time.hour + ':%02d' % time.min
+  end
+
+  def month_day(time)
+    "#{time.month}/#{time.day}"
   end
 
   def date_time(time)
-    time.to_s.sub(/:\d\d \w+/, '')
+    time.to_s.sub(/:\d\d \+?\w+/, '')
   end
 
   def simple_html_compiler(str)

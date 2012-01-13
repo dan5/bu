@@ -2,10 +2,11 @@
   - @events.each do |event|
     %tr
       %td *
-      %td= month_day(event)
+      %td= month_day(event.started_at)
+      %td.bottom.small== (#{hour_min(event.started_at)})
       - unless controller_name == 'groups'
-        %td= link_to to_short(event.group.name, 16), event.group
-      %td= link_to to_short(event.title, 16), event
+        %td= link_to to_short(event.group.name, 8, 2), event.group
+      %td= link_to to_short(event.title, 16, 2), event
 
       - if @user.nil?
       - else
