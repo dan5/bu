@@ -24,6 +24,11 @@
   font-size: 70%;
   line-height: 1.62;
 }
+.bold { font-weight: bold; }
+
+.atnd_other {
+  color: #4a4;
+}
 
 .atnd {
   font-weight: bold;
