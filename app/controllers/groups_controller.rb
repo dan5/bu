@@ -37,7 +37,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     session[:group_id] = @group.id
-    @events = @group.events.sort_by(&:started_at).reverse
+    @events = @group.events.order('started_at desc')
   end
 
   # GET /groups/new
