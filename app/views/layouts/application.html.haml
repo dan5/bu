@@ -20,9 +20,9 @@
             = link_to 'about', '/about'
           %td.right
             - if @user
-              = link_to "logout(#{@user.name})", logout_path
+              = link_to "Sign out(#{@user.name})", logout_path
             - else
-              = link_to 'login', '/auth/twitter'
+              = link_to 'Sign in with twitter', '/auth/twitter'
             - if session[:language].nil? or session[:language] == 'japanese'
               = link_to 'English', '/settings/language/english'
             - else
