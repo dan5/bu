@@ -6,14 +6,14 @@ Bu::Application.routes.draw do
   root :to => 'welcome#index'
   get "about" => "welcome#about"
 
+  get "settings/language/:language" => "settings#language"
+  get "settings/account" => "settings#account"
+
   get "cron/update"
   get "my" => "my#index"
 
   get "users" => "users#index"
-  get "users/login" => "users#login"
-  get "users/login/:name" => "users#login"
-  get "users/logout" => "users#logout"
-
+  get "users/edit" => "users#edit"
   resources :users
 
   get "events/:id.delete" => "events#delete"
@@ -24,8 +24,6 @@ Bu::Application.routes.draw do
 
   get "groups/:id/join" => "groups#join"
   resources :groups
-
-  get "settings/language/:language" => "settings#language"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

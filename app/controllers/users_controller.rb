@@ -4,43 +4,22 @@ class UsersController < ApplicationController
     @current_user = User.new
   end
 
-=begin
-  def logout
-    session[:name] = nil
-    redirect_to '/users/new', notice: 'Logout successful.'
+  # GET /users/edit
+  def edit
+    login_required
   end
 
-  # GET /users
-  def index
-    @users = User.all
-  end
-
-  # GET /users/1
-  def show
-    @current_user = User.find(params[:id])
-  end
-
-  # POST /users
-  def create
-    @current_user = User.find_by_name(params[:user][:name])
-    if @current_user
-      redirect_after_create
+  # PUT /users/1
+  def update
+    login_required
+    hash = {
+      :name => params[:user][:name],
+      :mail => params[:user][:mail],
+    }
+    if @user.update_attributes(hash)
+      redirect_to '/users/edit', notice: 'User was successfully updated.'
     else
-      @current_user = User.new(params[:user])
-      if @current_user.save
-        redirect_after_create
-      else
-        render action: "new"
-      end
+      render action: "edit"
     end
   end
-
-  private
-
-  def redirect_after_create
-    path = session.delete(:redirect_path) || '/my'
-    redirect_to path, notice: 'Login successful.'
-    session[:name] = @current_user.name
-  end
-=end
 end

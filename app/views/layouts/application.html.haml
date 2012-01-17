@@ -20,6 +20,7 @@
             = link_to 'about', '/about'
           %td.right
             - if @user
+              = link_to 'Settings', '/users/edit'
               = link_to "Sign out(#{@user.name})", logout_path
             - else
               = link_to 'Sign in with twitter', '/auth/twitter'
@@ -27,9 +28,9 @@
               = link_to 'English', '/settings/language/english'
             - else
               = link_to 'Japanese', '/settings/language/japanese'
-    - if false and @user
+    - if @user and !@user.mail?
       .input_mail
-        %p Please input your mail address
+        %p.bold= link_to 'Please input your mail address', '/users/edit'
     %div{:class => controller_name}
       = yield
     .footer
