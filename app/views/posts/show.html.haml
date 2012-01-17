@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @post.user_id
+%p
+  %b Group:
+  = @post.group_id
+%p
+  %b Text:
+  = @post.text
+
+= link_to 'Edit', edit_post_path(@post)
+\|
+= link_to 'Back', posts_path
