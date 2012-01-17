@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   validates :name, :presence => true,
                    :length => { :maximum => 16 }
+  validates_uniqueness_of :uid, :scope => [:provider]
 
   has_many :user_groups
   has_many :groups, :through => :user_groups

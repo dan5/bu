@@ -10,12 +10,6 @@
     <meta name="viewport" content="width=480" />
 
   %body
-    .auth
-      twitter:
-      - if current_user
-        = link_to "logout(#{current_user.name})", logout_path
-      - else
-        = link_to 'login', '/auth/twitter'
     .topmenu
       %table{:width => '100%'}
         %tr
@@ -26,9 +20,10 @@
             = link_to 'about', '/about'
           %td.right
             - if @user
-              = link_to "logout(#{@user.name})", '/users/logout'
+              = link_to "logout(#{@user.name})", logout_path
             - else
-              = link_to 'login', '/users/new'
+              =# link_to 'login', '/users/new'
+              = link_to 'login', '/auth/twitter'
             - if session[:language].nil? or session[:language] == 'japanese'
               = link_to 'English', '/settings/language/english'
             - else
