@@ -6,6 +6,7 @@ class Group < ActiveRecord::Base
                    :length => { :maximum => 16 }
 
   has_many :events, dependent: :destroy
+  has_many :posts, dependent: :destroy
   has_many :user_groups, dependent: :destroy
   has_many :users, :through => :user_groups
 
