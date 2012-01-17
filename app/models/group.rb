@@ -5,8 +5,8 @@ class Group < ActiveRecord::Base
   validates :name, :presence => true,
                    :length => { :maximum => 16 }
 
-  has_many :events
-  has_many :user_groups
+  has_many :events, dependent: :destroy
+  has_many :user_groups, dependent: :destroy
   has_many :users, :through => :user_groups
 
   def owner?(user)

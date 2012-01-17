@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
                    :length => { :maximum => 16 }
   validates_uniqueness_of :uid, :scope => [:provider]
 
-  has_many :user_groups
+  has_many :user_groups, dependent: :destroy
   has_many :groups, :through => :user_groups
-  has_many :user_events
+  has_many :user_events, dependent: :destroy
   has_many :events, :through => :user_events
 
   def administrator?
