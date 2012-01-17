@@ -1,5 +1,8 @@
 Bu::Application.routes.draw do
 
+  match '/auth/:provider/callback', :to => 'sessions#callback'
+  match '/logout' => 'sessions#destroy', :as => :logout
+
   root :to => 'welcome#index'
   get "about" => "welcome#about"
 

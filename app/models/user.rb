@@ -40,4 +40,14 @@ class User < ActiveRecord::Base
     events << event
     atnd(event).update_attributes :state => 'maybe'
   end
+
+  # thx: http://d.hatena.ne.jp/kaorumori/20111113/1321155791
+  def self.create_with_omniauth(auth)
+    create! do |user|
+      user.provider = auth['provider']
+      user.uid = auth['uid']
+      user.screen_name = auth['info']['nickname']
+      user.name = auth['info']['name']
+    end
+  end
 end

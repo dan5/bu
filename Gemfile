@@ -44,3 +44,5 @@ end
 
 gem 'execjs'
 gem 'therubyracer'
+gem 'omniauth'
+gem 'omniauth-twitter'

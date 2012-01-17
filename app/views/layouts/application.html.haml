@@ -10,6 +10,12 @@
     <meta name="viewport" content="width=480" />
 
   %body
+    .auth
+      twitter:
+      - if current_user
+        = link_to "logout(#{current_user.name})", logout_path
+      - else
+        = link_to 'login', '/auth/twitter'
     .topmenu
       %table{:width => '100%'}
         %tr
