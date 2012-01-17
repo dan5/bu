@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  # GET /users/new
+  def new
+    @current_user = User.new
+  end
+
+=begin
   def logout
     session[:name] = nil
     redirect_to '/users/new', notice: 'Logout successful.'
@@ -12,11 +18,6 @@ class UsersController < ApplicationController
   # GET /users/1
   def show
     @current_user = User.find(params[:id])
-  end
-
-  # GET /users/new
-  def new
-    @current_user = User.new
   end
 
   # POST /users
@@ -41,4 +42,5 @@ class UsersController < ApplicationController
     redirect_to path, notice: 'Login successful.'
     session[:name] = @current_user.name
   end
+=end
 end

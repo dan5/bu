@@ -1,11 +1,5 @@
 class GroupsController < ApplicationController
   before_filter {
-    if action_name == 'index'
-      user.administrator? or raise(User::NotAdministrator)
-    end
-  }
-
-  before_filter {
     includes = %w(edit update destroy)
     if includes.include?(action_name)
       group = Group.find(params[:id])
@@ -14,22 +8,23 @@ class GroupsController < ApplicationController
   }
 
   def join
+    login_required
     @group = Group.find(params[:id])
-    if @user
-      if @group.public?
-        @group.users << @user unless @group.member?(@user)
-        redirect_to @group, notice: 'Joined.'
+    if @group.public?
+      if @group.member?(@user)
+        redirect_to @group, notice: 'You already are a member of this group.'
       else
-        redirect_to @group, notice: 'Not joind.'
+        @group.users << @user
+        redirect_to @group, notice: 'Joined.'
       end
     else
-      redirect_to '/users/new'
-      session[:redirect_path] = request.path
+      redirect_to @group, notice: 'Not joind.'
     end
   end
 
   # GET /groups
   def index
+    user.administrator? or raise(User::NotAdministrator)
     @groups = Group.all
   end
 
@@ -42,7 +37,7 @@ class GroupsController < ApplicationController
 
   # GET /groups/new
   def new
-    only_logged_user
+    login_required
     @group = Group.new
   end
 
@@ -53,7 +48,7 @@ class GroupsController < ApplicationController
 
   # POST /groups
   def create
-    only_logged_user
+    login_required
     params[:group][:owner_user_id] = @user.id
     @group = Group.new(params[:group])
 

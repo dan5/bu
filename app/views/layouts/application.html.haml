@@ -22,7 +22,6 @@
             - if @user
               = link_to "logout(#{@user.name})", logout_path
             - else
-              =# link_to 'login', '/users/new'
               = link_to 'login', '/auth/twitter'
             - if session[:language].nil? or session[:language] == 'japanese'
               = link_to 'English', '/settings/language/english'
