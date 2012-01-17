@@ -48,7 +48,8 @@ class User < ActiveRecord::Base
       user.provider = auth['provider']
       user.uid = auth['uid']
       user.screen_name = auth['info']['nickname']
-      user.name = auth['info']['name']
+      #user.name = auth['info']['name']
+      user.name = user.screen_name
     end
   end
 end

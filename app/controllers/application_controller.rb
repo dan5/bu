@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
 
   def user
     @user ||= User.find(session[:user_id]) if session[:user_id]
+  rescue ActiveRecord::RecordNotFound
+    session[:user_id] = nil
   end
 
   def login_required

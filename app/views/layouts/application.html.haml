@@ -27,6 +27,9 @@
               = link_to 'English', '/settings/language/english'
             - else
               = link_to 'Japanese', '/settings/language/japanese'
+    - if false and @user
+      .input_mail
+        %p Please input your mail address
     %div{:class => controller_name}
       = yield
     .footer
