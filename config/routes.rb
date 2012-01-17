@@ -22,6 +22,7 @@ Bu::Application.routes.draw do
   get "events/:id.maybe"  => "events#maybe"
   resources :events
 
+  get "groups/:id/leave" => "groups#leave"
   get "groups/:id/join" => "groups#join"
   resources :groups
 

@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def only_group_member(group = nil)
+    login_required
     group ||= Group.find(params[:id])
     group.member?(@user) or raise(Group::NotGroupMember)
   end

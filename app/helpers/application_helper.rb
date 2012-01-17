@@ -64,6 +64,7 @@ module ApplicationHelper
       'users'       => '部員',
       'owner'       => '部長',
       'join this group' => 'この部活に参加する',
+      'leave this group' => 'この部活を退部する',
       'new events'  => '新しいスケジュールを追加',
       'new user'    => '新入部員',
       # %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample

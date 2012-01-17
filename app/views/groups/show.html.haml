@@ -13,7 +13,8 @@
     %b= @group.owner.name
 
 - is_member = @group.member?(@user)
-- if !is_member and @group.public?
+- if is_member
+- elsif @group.public?
   %p.update= link_to _('join this group'), "#{@group.id}/join"
 
 .events
@@ -50,6 +51,8 @@
               = { 'at' => '+', 'ab' => '-', 'ma' => '?' }[atnd.state[0..1]]
     
 .bottom_menu
+  - if is_member and !@group.owner?(@user)
+    %p.update= link_to _('leave this group'), "#{@group.id}/leave"
   - if @user and @group.owner?(@user)
     = link_to 'Edit', edit_group_path(@group)
     /

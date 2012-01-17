@@ -7,6 +7,13 @@ class GroupsController < ApplicationController
     end
   }
 
+  def leave
+    @group = Group.find(params[:id])
+    only_group_member(@group)
+    @group.users.delete(@user)
+    redirect_to @group, notice: 'Left.'
+  end
+
   def join
     login_required
     @group = Group.find(params[:id])
