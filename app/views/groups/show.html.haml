@@ -1,11 +1,15 @@
 %h1= @group.name
 %p#notice= notice
 
+= @group.description
+&#187;
+= link_to 'もっと詳しく'
+
 .description
   != simple_html_compiler(@group.description)
 
 .status
-  %p
+  %p.gray
     == #{_ :permission}:
     %b= [_(:Public), _('Must be allowed'), _(:Secret), 2][@group.permission]
     \/

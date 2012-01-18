@@ -1,11 +1,12 @@
-%h1= @event.title
-%h3= link_to @event.group.name, @event.group
+%h1
+  = link_to @event.group.name, @event.group
+  = @event.title
 
 %p#notice= notice
 
 %table
   %tr
-    %td datatime:
+    %td==#{_ :date} :
     %td
       = date_time(@event.started_at)
       == ...

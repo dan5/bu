@@ -83,6 +83,7 @@ module ApplicationHelper
       'posts'       => '掲示板',
 
       # events
+      'date'        => '日時',
       'public'      => '誰でも参加できる',
       'must be allowed' => '許可が必要',
       'secret'      => '非公開',
