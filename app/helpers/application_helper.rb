@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def date_time(time)
-    time.to_s.sub(/:\d\d \+?\w+/, '')
+    time.to_s.sub(/:\d\d \+?\w+/, '').gsub('-', '/')
   end
 
   def simple_html_compiler(str)

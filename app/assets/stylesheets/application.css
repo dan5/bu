@@ -70,6 +70,10 @@ div.description {
 }
 
 /* -- */
+body {
+  margin: 8px 16px;
+}
+
 div.topmenu {
 }
 

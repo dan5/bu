@@ -10,18 +10,22 @@
       = date_time(@event.started_at)
       == ...
       = date_time(@event.ended_at)
-  %tr
-    %td Limit:
-    %td= @event.limit
-  %tr
-    %td Place:
-    %td= @event.place
-  %tr
-    %td Address:
-    %td= @event.address
+  - if @event.limit?
+    %tr
+      %td Limit:
+      %td= @event.limit
+  - if @event.place?
+    %tr
+      %td Place:
+      %td= @event.place
+  - if @event.address?
+    %tr
+      %td Address:
+      %td= @event.address
 
-.description
-  != simple_html_compiler(@event.description)
+- if @event.description?
+  .description
+    != simple_html_compiler(@event.description)
 
 .state
   %h2=_('Your state')
