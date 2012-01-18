@@ -66,8 +66,9 @@ module ApplicationHelper
       'join this group' => 'この部活に参加する',
       'leave this group' => 'この部活を退部する',
       'new events'  => '新しいスケジュールを追加',
-      'new posts'   => '掲示板に書き込む',
       'new user'    => '新入部員',
+      'new posts'   => '掲示板に書き込む',
+      'read more'   => 'もっと読む',
       # %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample
       'name'        => '名前',
       'permission'  => '入部制限',

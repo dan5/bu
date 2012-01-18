@@ -6,14 +6,9 @@
         - @post.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :user_id
-    = f.number_field :user_id
-  .field
-    = f.label :group_id
-    = f.number_field :group_id
-  .field
-    = f.label :text
-    = f.text_area :text
   .actions
-    = f.submit 'Save'
+    = f.submit 'Post'
+    posted by :
+    = @user.name
+  .field
+    = f.text_area :text, :size => '58x4'

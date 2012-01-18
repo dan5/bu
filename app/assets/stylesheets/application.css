@@ -49,6 +49,10 @@
   background-color: #a40;
 }
 
+html {
+  /* font-size: 16px; */
+}
+
 h1 {
   margin: 24px 0;
 }
@@ -76,4 +80,21 @@ div.bottom_menu {
 div.footer a:link {
   color: #777;
   text-decoration: none;
+}
+
+div.post {
+  margin: 32px 0;
+}
+
+div.post .head {
+  margin: 6px 0;
+}
+
+div.post .body {
+  margin-left: 24px;
+}
+
+div.post_menu {
+  margin-top: 16px;
+  margin-bottom: 6px;
 }

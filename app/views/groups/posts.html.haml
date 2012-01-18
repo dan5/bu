@@ -1,0 +1,22 @@
+
+= render 'posts/menu'
+
+%hr
+
+%h1
+  =@group.name
+  Posts
+
+- @posts.each do |post|
+  .post
+    .head{:id => post.idx}
+      == #{post.idx} : #{post.user.name} :
+      = link_to date_time(post.created_at), "/groups/#{@group.id}.posts/#{post.idx}"
+    .body!= simple_html_compiler(post.text)
+
+%hr
+
+= render 'posts/menu'
+
+- if @group.member?(@user)
+  = render 'posts/form'

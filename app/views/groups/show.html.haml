@@ -31,13 +31,12 @@
     - @group.posts.order('created_at desc').limit(3).each do |post|
       %tr
         %td *
-        %td= month_day post.created_at
+        %td= link_to month_day(post.created_at), "/groups/#{@group.id}.posts/#{post.idx}"
         %td
           = to_short post.text, 40
           %span.small
             == posted by #{post.user.name}
-  - if is_member
-    %p= link_to _('new posts'), "/posts/new"
+  %p= link_to _('read more'), "/groups/#{@group.id}.posts"
 
 .users
   %h2=_ :Users

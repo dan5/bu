@@ -15,7 +15,9 @@ class Group < ActiveRecord::Base
   end
   
   def owner
-    User.find_by_id(owner_user_id) # 例外を発生させない
+    User.find(owner_user_id)
+  rescue ActiveRecord::RecordNotFound
+    User.new(:name => 'testman')
   end
 
   def owner=(user)

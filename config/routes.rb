@@ -1,7 +1,5 @@
 Bu::Application.routes.draw do
 
-  resources :posts
-
   match '/auth/:provider/callback', :to => 'sessions#callback'
   match '/logout' => 'sessions#destroy', :as => :logout
 
@@ -24,8 +22,12 @@ Bu::Application.routes.draw do
   get "events/:id.maybe"  => "events#maybe"
   resources :events
 
+  post "posts" => "posts#create"
+
   get "groups/:id/leave" => "groups#leave"
   get "groups/:id/join" => "groups#join"
+  get "groups/:id.posts/:renge" => "groups#posts"
+  get "groups/:id.posts" => "groups#posts"
   resources :groups
 
   # The priority is based upon order of creation:
