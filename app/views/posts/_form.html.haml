@@ -8,6 +8,7 @@
 
   .actions
     = f.submit _('Post')
+    = f.hidden_field :group_id
     = f.label :subject, "#{_('subject')}:"
     = f.text_field :subject, :size => '24'
     %span.small

@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
   # POST /posts
   def create
-    @group = Group.find(session[:group_id])
+    @post = Post.new(params[:post])
+    @group = @post.group
     only_group_member(@group)
-    @post = @group.posts.new(params[:post])
     @post.user = @user
     @post.idx = @group.posts.maximum('idx').to_i + 1
-    @post.notification
+    #@post.notification
 
     if @post.save
       path = "/groups/#{@group.id}.posts##{@post.idx}"

@@ -1,15 +1,8 @@
-%p#notice= notice
+.comment
+  %h2.name= @comment.user.name
+  .text
+    = @comment.text
+  .date_time
+    %span.small= link_to date_time(@comment.created_at), @comment
 
-%p
-  %b User:
-  = @comment.user_id
-%p
-  %b Event:
-  = @comment.event_id
-%p
-  %b Text:
-  = @comment.text
-
-= link_to 'Edit', edit_comment_path(@comment)
-\|
-= link_to 'Back', comments_path
+= link_to 'Back', @comment.event

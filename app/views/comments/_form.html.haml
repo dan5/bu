@@ -7,13 +7,7 @@
           %li= msg
 
   .field
-    = f.label :user_id
-    = f.number_field :user_id
-  .field
-    = f.label :event_id
-    = f.number_field :event_id
-  .field
-    = f.label :text
-    = f.text_field :text
+    = f.hidden_field :event_id
+    = f.text_area :text, :size => '60x2'
   .actions
     = f.submit 'Save'

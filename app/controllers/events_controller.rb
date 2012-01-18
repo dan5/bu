@@ -44,7 +44,7 @@ class EventsController < ApplicationController
   # GET /events/1
   def show
     @event = Event.find(params[:id])
-    @current_user = User.new
+    @comment = Comment.new(:event_id => @event.id)
   end
 
   # GET /events/new
