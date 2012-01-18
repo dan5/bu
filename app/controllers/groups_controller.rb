@@ -7,6 +7,11 @@ class GroupsController < ApplicationController
     end
   }
 
+  def description
+    session[:description] = true
+    redirect_to group_path
+  end
+
   def leave
     @group = Group.find(params[:id])
     only_group_member(@group)
@@ -66,6 +71,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     session[:group_id] = @group.id
     @events = @group.events.order('started_at desc')
+    @show_description = session.delete(:description)
   end
 
   # GET /groups/new

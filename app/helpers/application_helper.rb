@@ -72,7 +72,8 @@ module ApplicationHelper
       # %w(新人 新入部員 レギュラー 準レギュラー レアキャラ 幽霊部員 休部).sample
       'name'        => '名前',
       'permission'  => '入部制限',
-      'description' => '説明',
+      'summary'     => '概要',
+      'description' => '詳しい説明',
 
       # posts
       'notification' => 'メンバーへのメール通知',

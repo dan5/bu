@@ -4,6 +4,9 @@ class Group < ActiveRecord::Base
 
   validates :name, :presence => true,
                    :length => { :maximum => 16 }
+  validates :summary, :presence => true,
+                      :length => { :maximum => 100 }
+  validates :description, :length => { :maximum => 4096 }
 
   has_many :events, dependent: :destroy
   has_many :posts, dependent: :destroy

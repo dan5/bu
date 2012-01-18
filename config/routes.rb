@@ -28,6 +28,7 @@ Bu::Application.routes.draw do
   get "groups/:id/join" => "groups#join"
   get "groups/:id.posts/:renge" => "groups#posts"
   get "groups/:id.posts" => "groups#posts"
+  get "groups/:id.description" => "groups#description"
   resources :groups
 
   # The priority is based upon order of creation:

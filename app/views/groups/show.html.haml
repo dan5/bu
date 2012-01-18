@@ -1,12 +1,17 @@
 %h1= @group.name
 %p#notice= notice
 
-= @group.description
-&#187;
-= link_to 'もっと詳しく'
-
+%p.summary
+  = @group.summary
+  - if @group.description? and !@show_description
+    &#187;
+    = link_to 'もっと詳しく', group_path + '.description'
 .description
-  != simple_html_compiler(@group.description)
+  - if @show_description
+    %p
+      &#171;
+      = link_to '説明を閉じる', group_path
+    != simple_html_compiler(@group.description)
 
 .status
   %p.gray
