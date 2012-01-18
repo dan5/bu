@@ -83,6 +83,36 @@ div.description {
   background-color: #eee;*/
 }
 
+div.events {
+  div.state {
+    margin-top: 12px;
+    padding: 8px 0;
+    font-size: 18px;
+    b {
+      font-size: 18px;
+    }
+    .atnd {
+      span.attend {
+        font-size: 32px;
+      }
+      span {
+        margin: 0px 2px;
+      }
+    }
+  }
+
+  div.users {
+    margin: 16px 0;
+    line-height: 1.8;
+    b {
+      font-size: 18px;
+    }
+    .name {
+      margin: 0 2px;
+    }
+  }
+}
+
 /* -- */
 body {
   margin: 8px 16px;

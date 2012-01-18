@@ -4,96 +4,74 @@
 
 %p#notice= notice
 
-%table
-  %tr
-    %td==#{_ :date} :
-    %td
-      = date_time(@event.started_at)
-      == ...
-      = date_time(@event.ended_at)
-  - if @event.limit?
-    %tr
-      %td Limit:
-      %td= @event.limit
-  - if @event.place?
-    %tr
-      %td Place:
-      %td= @event.place
-  - if @event.address?
-    %tr
-      %td Address:
-      %td= @event.address
+.table
+  .tr
+    .td.top{:width => 600}
+      %table
+        %tr
+          %td==#{_ :date} :
+          %td
+            = date_time(@event.started_at)
+            == ...
+            = date_time(@event.ended_at)
+        - if @event.limit?
+          %tr
+            %td Limit:
+            %td= @event.limit
+        - if @event.place?
+          %tr
+            %td Place:
+            %td= @event.place
+        - if @event.address?
+          %tr
+            %td Address:
+            %td= @event.address
+      
+      - if @event.description?
+        .description
+          != simple_html_compiler(@event.description)
 
-- if @event.description?
-  .description
-    != simple_html_compiler(@event.description)
-
-.state
-  %h2=_('Your state')
-  - if @user.nil?
-    = link_to 'Please login...', '/users/new'
-  - elsif atnd = @user.atnd(@event)
-    %span.atnd== #{_ atnd.state.capitalize}:
-    %span.update= link_to _(:cancel), event_path(@event, 'delete')
-  - elsif @event.group.member?(@user)
-    Set your state:
-    %span.update.atnd
-      = link_to _(:attend), event_path(@event, 'attend')
-      = link_to _(:absent), event_path(@event, 'absent')
-      = link_to _(:maybe), event_path(@event, 'maybe')
-  - else
-    %h2
-      You are not a member of
-      = link_to @event.group.name, @event.group
-
-%hr
-
-.users
-  %h2=_ :Attendees
-  %table
-    - @event.attendees.each do |user|
-      %tr
-        %td +
-        %td= user.name
-        %td= user.status
-  %h2=_ :Maybees
-  %table
-    - @event.maybees.each do |user|
-      %tr
-        %td +
-        %td= user.name
-        %td= user.status
-  %h2=_ :Absentees
-  %table
-    - @event.absentees.each do |user|
-      %tr
-        %td +
-        %td= user.name
-        %td= user.status
-
-!== <!--
-%h2 Comments
-%ul
-  - @comments = %w(てすと てすてす)
-  - @comments.each do |comment|
-    %li= comment
-
-- if @user
-  = form_for @current_user do |f|
-    -if @current_user.errors.any?
-      #error_explanation
-        %h2= "#{pluralize(@current_user.errors.count, "error")} prohibited this user from being saved:"
-        %ul
-          - @current_user.errors.full_messages.each do |msg|
-            %li= msg
-    .field
-      = f.label :name
-      = f.text_field :name
-    .actions
-      = f.submit 'post'
-!== -->
+      %hr
+      .state
+        %b=_('Your state')
+        \:
+        - if @user.nil?
+          = link_to 'Please login...', '/users/new'
+        - elsif atnd = @user.atnd(@event)
+          %span.atnd== #{_ atnd.state.capitalize}
+          %span.update= link_to _(:cancel), event_path(@event, 'delete')
+        - elsif @event.group.member?(@user)
+          %span.update.atnd
+            %span.attend= link_to _(:attend), event_path(@event, 'attend')
+            %span.absent= link_to _(:absent), event_path(@event, 'absent')
+            %span.maybe=  link_to _(:maybe), event_path(@event, 'maybe')
+        - else
+          You are not a member of
+          = link_to @event.group.name, @event.group
+      
+      %hr
+      
+      .users
+        %b=_ :Attendees
+        \:
+        - @event.attendees.each do |user|
+          == #{user.name}(1)
+      .users
+        %b=_ :Maybees
+        \:
+        - @event.maybees.each do |user|
+          == #{user.name}(1)
+      .users
+        %b=_ :Absentees
+        \:
+        - @event.absentees.each do |user|
+          == #{user.name}(1)
+      
+      %h2 Logs
+      = render 'logs'
+      
 
 .bottom_menu
   = link_to @event.group.name, @event.group
   |
-  = link_to 'Edit', edit_event_path(@event)
+  = link_to _('Edit'), edit_event_path(@event)

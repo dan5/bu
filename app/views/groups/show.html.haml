@@ -48,7 +48,7 @@
           = to_short post.text, 40
           %span.small
             == posted by #{post.user.name}
-  %p= link_to _('read more'), "/groups/#{@group.id}.posts"
+  %p= link_to _(@group.posts.count == 0 ? 'new posts' : 'read more'), "/groups/#{@group.id}.posts"
 
 .users
   %h2=_ :Users
