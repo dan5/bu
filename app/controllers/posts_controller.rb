@@ -6,6 +6,7 @@ class PostsController < ApplicationController
     @post = @group.posts.new(params[:post])
     @post.user = @user
     @post.idx = @group.posts.maximum('idx').to_i + 1
+    @post.notification
 
     if @post.save
       path = "/groups/#{@group.id}.posts##{@post.idx}"

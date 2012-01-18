@@ -25,14 +25,17 @@
   - if is_member
     %p= link_to _('new events'), "/events/new"
 
-.bbs
-  %h2=_ :BBS
+.posts
+  %h2=_ :Posts
   %table
     - @group.posts.order('created_at desc').limit(3).each do |post|
       %tr
         %td *
-        %td= link_to month_day(post.created_at), "/groups/#{@group.id}.posts/#{post.idx}"
+        %td= link_to month_day(post.created_at), "/groups/#{@group.id}.posts##{post.idx}"
         %td
+          - if post.subject
+            %b= to_short post.subject, 20
+            \:
           = to_short post.text, 40
           %span.small
             == posted by #{post.user.name}

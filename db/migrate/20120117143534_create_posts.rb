@@ -4,6 +4,8 @@ class CreatePosts < ActiveRecord::Migration
       t.integer :user_id
       t.integer :group_id
       t.integer :idx
+      t.integer :notification
+      t.text :subject
       t.text :text
 
       t.timestamps

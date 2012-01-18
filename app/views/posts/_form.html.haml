@@ -7,8 +7,12 @@
           %li= msg
 
   .actions
-    = f.submit 'Post'
-    posted by :
-    = @user.name
+    = f.submit _('Post')
+    = f.label :subject, "#{_('subject')}:"
+    = f.text_field :subject, :size => '24'
+    %span.small
+      件名が空欄の場合はメール通知しません
+    =# f.label :notification, _('Notification')
+    =# f.select(:notification, [[_("Don't notify to members"), 0], [_('Notify to members'), 1]])
   .field
     = f.text_area :text, :size => '58x4'
