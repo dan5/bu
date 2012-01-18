@@ -1,5 +1,7 @@
 Bu::Application.routes.draw do
 
+  resources :comments
+
   match '/auth/:provider/callback', :to => 'sessions#callback'
   match '/logout' => 'sessions#destroy', :as => :logout
 

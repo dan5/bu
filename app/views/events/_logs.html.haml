@@ -1,0 +1,17 @@
+- if @user
+  = form_for @current_user do |f|
+    -if @current_user.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@current_user.errors.count, "error")} prohibited this user from being saved:"
+        %ul
+          - @current_user.errors.full_messages.each do |msg|
+            %li= msg
+    %span.field
+      = f.text_field :name
+    %span.actions
+      = f.submit 'post'
+
+  %ul
+    - @comments = %w(testmanが微妙を入力 てすと てすてす dan5ya:出席=>欠席)
+    - @comments.each do |comment|
+      %li= comment
