@@ -29,6 +29,6 @@
               = f.text_field :role, :size => '16'
             %span.actions
               = f.submit _'Set role'
-        %td= link_to _(:remove)
+        %td= link_to _(:remove), user.user_group(@group), :method => :delete
 .bottom_menu
   = link_to _(:Back), @group

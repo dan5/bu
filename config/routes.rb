@@ -1,7 +1,7 @@
 Bu::Application.routes.draw do
 
-  resources :comments
   resources :user_groups
+  resources :comments
 
   match '/auth/:provider/callback', :to => 'sessions#callback'
   match '/logout' => 'sessions#destroy', :as => :logout
@@ -30,6 +30,7 @@ Bu::Application.routes.draw do
   get "groups/:id/leave" => "groups#leave"
   get "groups/:id/join" => "groups#join"
   get "groups/:id.users" => "groups#users"
+  get "groups/:id.users/:user_id" => "groups#users_show"
   get "groups/:id.posts/:renge" => "groups#posts"
   get "groups/:id.posts" => "groups#posts"
   get "groups/:id.description" => "groups#description"
