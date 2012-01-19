@@ -65,7 +65,7 @@
     == #{user.name}(1)
 
 %h2=_ 'Comments and Logs'
-- if @user
+- if @user and @event.group.member?(@user)
   = render 'comments/form'
 
 - @event.comments.order('created_at desc').each do |comment|

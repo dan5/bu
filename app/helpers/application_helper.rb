@@ -2,8 +2,8 @@
 
 module ApplicationHelper
   def to_short(str, max, period_size = 3)
-    if str.size > max
-      str.first(max - 1) + '.' * period_size
+    if str.to_s.size > max
+      str.to_s.first(max - 1) + '.' * period_size
     else
       str
     end
