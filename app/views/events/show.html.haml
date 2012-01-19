@@ -57,27 +57,29 @@
 %hr
 
 .users
-  %b=_ :Attendees
+  %b.group_name=_ :Attendees
   \:
   - @event.attendees.each do |user|
     == #{user.name}(1)
   - if @event.waiting_attendees.count > 0
     \/
-    %b=_ :WaitingAttendees
+    %b.red=_ :WaitingAttendees
     \:
     %span.gray
       - @event.waiting_attendees.each do |user|
         == #{user.name}(1)
 .users
-  %b=_ :Maybees
-  \:
-  - @event.maybees.each do |user|
-    == #{user.name}(1)
-.users
-  %b=_ :Absentees
+  %b.group_name=_ :Absentees
   \:
   - @event.absentees.each do |user|
     == #{user.name}(1)
+  - if @event.maybees.count > 0
+    \/
+    %b=_ :Maybe
+    \:
+    %span
+      - @event.maybees.each do |user|
+        == #{user.name}(1)
 
 %h2=_ 'Comments and Logs'
 - if @user and @event.group.member?(@user)

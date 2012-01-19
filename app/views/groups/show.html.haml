@@ -70,6 +70,7 @@
             - atnd = user.atnd(event)
             - if atnd
               = { 'at' => '+', 'ab' => '-', 'ma' => '?' }[atnd.state[0..1]]
+  %p= link_to _('listing users'), group_path + '.users'
     
 .bottom_menu
   - if is_member and !@group.owner?(@user)

@@ -34,10 +34,16 @@ class GroupsController < ApplicationController
     end
   end
 
+  def users
+    @group = Group.find(params[:id])
+    @events = @group.events.order('started_at desc')
+  end
+
   def posts
-    # @todo: login_required
+    # @todo: シークレットならlogin_required
     # @todo: 1001件目からを1として表示し古いpostsは過去ログとする
     @group = Group.find(params[:id])
+
     limit = 1000
     conditions = ''
     case renge = params[:renge]

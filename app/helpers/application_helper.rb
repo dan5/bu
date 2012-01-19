@@ -14,7 +14,11 @@ module ApplicationHelper
   end
 
   def month_day(time)
-    "#{time.month}/#{time.day}"
+    "#{time.mon}/#{time.day}"
+  end
+
+  def year_month_day(time)
+    "#{time.year}/#{time.mon}/#{time.day}"
   end
 
   def date_time(time)
@@ -55,6 +59,12 @@ module ApplicationHelper
       'your groups' => '参加している部活',
       'ended'       => '終了しました',
 
+      # users
+      'state'       => '状態',
+      'role'        => '役員',
+      'set role'    => '役員設定',
+      'admin menu'  => '管理メニュー',
+
       # my
       'update'      => '更新情報',
       'bbs'         => '掲示板',
@@ -74,6 +84,7 @@ module ApplicationHelper
       'permission'  => '入部制限',
       'summary'     => '概要',
       'description' => '詳しい説明',
+      'listing users' => '部員リスト',
 
       # posts
       'notification' => 'メンバーへのメール通知',
@@ -95,8 +106,8 @@ module ApplicationHelper
 
       'your state'  => 'あなたの出欠',
       'attendees'   => '参加者',
-      'maybees'     => '微妙な者',
       'absentees'   => '欠席者',
+      'maybees'     => '微妙',
       'waitingattendees' => 'キャンセル待ち',
 
       'comments and logs' => 'コメントとログ',

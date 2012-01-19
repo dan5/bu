@@ -1,0 +1,34 @@
+%h1
+  = link_to @group.name, @group
+  =_ 'Listing users'
+
+%p#notice= notice
+
+.users
+  %table
+    %tr
+      %th=_ :name
+      %th=_ :state
+      %th 入部日
+      %th 出席
+      %th 欠席
+      %th 出席率
+      %th=_ 'set role'
+      %th=_ 'admin menu'
+    - @group.users.each do |user|
+      %tr
+        %td= link_to user.name, group_path + ".users/#{user.id}"
+        %td=_ user.status
+        %td= year_month_day user.user_group(@group).created_at
+        %td
+        %td
+        %td
+        %td
+          = form_for user.user_group(@group) do |f|
+            %span.field
+              = f.text_field :role, :size => '16'
+            %span.actions
+              = f.submit _'Set role'
+        %td= link_to _(:remove)
+.bottom_menu
+  = link_to _(:Back), @group

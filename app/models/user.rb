@@ -17,11 +17,19 @@ class User < ActiveRecord::Base
   end
 
   def status
-    'new'
+    'new user'
+  end
+
+  def role(group)
+    user_group(group).role
   end
 
   def joinded_at(group)
-    user_groups.find_by_group_id(group.id).created_at
+    user_group(group).created_at
+  end
+
+  def user_group(group)
+    user_groups.find_by_group_id(group.id)
   end
 
   def atnd(event)

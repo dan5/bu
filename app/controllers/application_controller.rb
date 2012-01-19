@@ -3,8 +3,9 @@ class ApplicationController < ActionController::Base
 
   rescue_from User::NotAdministrator, :with => -> { redirect_to '/' }
   rescue_from User::UnAuthorized, :with => -> { redirect_to '/users/new' }
-  rescue_from Group::NotGroupMember, :with => -> { render :text => 'not group member' }
   rescue_from Group::NotGroupOwner, :with => -> { render :text => 'not group owner' }
+  rescue_from Group::NotGroupManager, :with => -> { render :text => 'not group manager' }
+  rescue_from Group::NotGroupMember, :with => -> { render :text => 'not group member' }
 
   private
 
@@ -24,6 +25,18 @@ class ApplicationController < ActionController::Base
       session[:redirect_path] = request.path
       raise(User::UnAuthorized)
     end
+  end
+
+  def only_group_owner(group = nil)
+    login_required
+    group ||= Group.find(params[:id])
+    group.owner?(@user) or raise(Group::NotGroupOwner)
+  end
+
+  def only_group_manager(group = nil)
+    login_required
+    group ||= Group.find(params[:id])
+    group.manager?(@user) or raise(Group::NotGroupManager)
   end
 
   def only_group_member(group = nil)

@@ -1,6 +1,7 @@
 class Group < ActiveRecord::Base
-  class NotGroupMember < Exception ; end
   class NotGroupOwner < Exception ; end
+  class NotGroupManager < Exception ; end
+  class NotGroupMember < Exception ; end
 
   validates :name, :presence => true,
                    :length => { :maximum => 16 }
@@ -25,6 +26,11 @@ class Group < ActiveRecord::Base
 
   def owner=(user)
     self.owner_user_id = user.id
+  end
+
+  def manager?(user)
+    return true if owner?(user)
+    !!(user and user_groups.find_by_user_id(user.id).role?)
   end
 
   def member?(user)

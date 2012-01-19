@@ -1,5 +1,12 @@
 class CronController < ApplicationController
+
+  private
+
   def update
+    update_events
+  end
+
+  def update_events
     Event.transaction do
       events = Event.where("ended_at < ? and ended = ?", Time.now, false)
       events.each do |event|
