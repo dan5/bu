@@ -30,7 +30,9 @@
 
 %hr
 .state
-  %b=_('Your state')
+  - if @event.ended?
+    %p=_ 'This event has ended.'
+  %b=_ 'Your state'
   \:
   - if @user.nil?
     = link_to 'Please login...', '/users/new'
@@ -53,6 +55,13 @@
   \:
   - @event.attendees.each do |user|
     == #{user.name}(1)
+  - if @event.waiting_attendees.count > 0
+    \/
+    %b=_ :WaitingAttendees
+    \:
+    %span.gray
+      - @event.waiting_attendees.each do |user|
+        == #{user.name}(1)
 .users
   %b=_ :Maybees
   \:

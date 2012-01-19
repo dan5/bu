@@ -94,6 +94,7 @@ module ApplicationHelper
       'attendees'   => '参加者',
       'maybees'     => '微妙な者',
       'absentees'   => '欠席者',
+      'waitingattendees' => 'キャンセル待ち',
 
       'comments and logs' => 'コメントとログ',
     }

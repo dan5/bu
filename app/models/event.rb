@@ -1,16 +1,26 @@
 class Event < ActiveRecord::Base
   belongs_to :group
   has_many :comments, dependent: :destroy
-  has_many :user_events, dependent: :destroy
+  has_many :user_events, dependent: :destroy, order: :updated_at
   has_many :users, :through => :user_events
 
   validates :title, :presence => true,
                    :length => { :maximum => 32 }
 
-  def atnds(*args) user_events(*args) end
+  def attendances
+    user_events.where(:state => 'attendance')
+  end
+
+  def waitings
+    attendances - attendances.limit(limit)
+  end
 
   def attendees
-    user_events.where(:state => 'attendance').map(&:user)
+    attendances.limit(limit).map(&:user)
+  end
+
+  def waiting_attendees
+    waitings.map(&:user)
   end
 
   def maybees

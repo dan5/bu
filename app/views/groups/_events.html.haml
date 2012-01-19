@@ -7,6 +7,11 @@
       - unless controller_name == 'groups'
         %td= link_to to_short(event.group.name, 9, 2), event.group
       %td.bold= link_to to_short(event.title, 16, 2), event
+      %td
+        - if event.limit?
+          == #{event.attendances.count}/#{event.limit}
+        - else
+          = event.attendances.count
 
       - if @user.nil?
       - else
