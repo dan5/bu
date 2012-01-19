@@ -18,8 +18,6 @@
         - atnd = @user.atnd(event)
         - if atnd
           %td.atnd=_ atnd.state.capitalize
-        - else
-          %td=_'Unknown'
 
         - if event.ended?
           %td.gray=_'ended'

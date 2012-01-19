@@ -45,11 +45,15 @@ module ApplicationHelper
 
   def _japanese_default
     {
+      'atnd'        => '出欠',
+      'event'       => '活動',
+
       'attend'      => '出席する',
       'absent'      => '欠席する',
       'attendance'  => '出席',
       'absence'     => '欠席',
       'maybe'       => '微妙',
+      'no answer'   => '無回答',
       'cancel'      => '取り消し',
       'unknown'     => '未入力',
 
@@ -64,6 +68,7 @@ module ApplicationHelper
       'role'        => '役員',
       'set role'    => '役員設定',
       'admin menu'  => '管理メニュー',
+      "'s atnds"    => 'の出欠一覧',
 
       # my
       'update'      => '更新情報',

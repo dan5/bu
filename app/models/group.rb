@@ -9,8 +9,8 @@ class Group < ActiveRecord::Base
                       :length => { :maximum => 100 }
   validates :description, :length => { :maximum => 4096 }
 
-  has_many :events, dependent: :destroy
-  has_many :posts, dependent: :destroy
+  has_many :events, dependent: :destroy, :order => 'started_at desc'
+  has_many :posts, dependent: :destroy, :order => :created_at
   has_many :user_groups, dependent: :destroy
   has_many :users, :through => :user_groups
 

@@ -1,0 +1,27 @@
+%h1
+  = link_to @group.name, @group
+  = @current_user.name
+  =_ "'s ATNDS"
+
+%table
+  %tr
+    %th=_ :date
+    %th=_ :event
+    %th=_ :atnd
+  - @events.each do |event|
+    %tr
+      - atnd = @current_user.atnd(event)
+      %td
+        = year_month_day event.started_at
+      %td
+        %b= link_to to_short(event.title, 12), event
+      %td.atnd
+        - if atnd
+          =_ atnd.state.capitalize
+      %td.gray
+        - if event.ended?
+          =_'ended'
+
+.bottom_menu
+  = link_to @group.name, @group
+  = link_to _('listing users'), group_path + '.users'

@@ -36,7 +36,19 @@ class GroupsController < ApplicationController
 
   def users
     @group = Group.find(params[:id])
-    @events = @group.events.order('started_at desc')
+    @events = @group.events
+  end
+
+  def users_show
+    @group = Group.find(params[:id])
+    @current_user = @group.users.find(params[:user_id])
+    @user_group = @current_user.user_group(@group)
+
+    time = @user_group.created_at
+    if oldst = @current_user.user_events.minimum(:created_at)
+      time = oldst if oldst < time
+    end
+    @events = @group.events.where('created_at >= ?', time)
   end
 
   def posts
@@ -76,7 +88,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     session[:group_id] = @group.id
-    @events = @group.events.order('started_at desc')
+    @events = @group.events.limit(7)
     @show_description = session.delete(:description)
   end
 

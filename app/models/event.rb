@@ -30,4 +30,26 @@ class Event < ActiveRecord::Base
   def absentees
     user_events.where(:state => 'absence').map(&:user)
   end
+
+  def be_ended
+    raise if ended?
+    transaction do
+      update_attributes(:ended => true)
+
+      waitings.each do |user_event|
+        user_event.state = 'absence'
+        user_event.save
+      end
+
+      group.users.each do |user|
+        next if user.user_events.find_by_event_id(self.id)
+        user.user_events.create(:event_id => self.id, :state => 'no answer')
+      end
+    end
+  end
+
+  def self.be_ended_all
+    events = where("ended_at < ? and ended = ?", Time.now, false)
+    events.each &:be_ended
+  end
 end

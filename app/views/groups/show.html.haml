@@ -58,11 +58,16 @@
       %th
       %th
       - @events.each do |event|
-        %td= link_to month_day(event.started_at), event
+        %td
+          - link = link_to month_day(event.started_at), event
+          - if event.ended?
+            = link
+          - else
+            %b= link
     - @group.users.each do |user|
       %tr
         %td *
-        %td= user.name
+        %td= link_to user.name, user
         %td
           =_('new user')
         - @events.each do |event|
@@ -73,11 +78,9 @@
   %p= link_to _('listing users'), group_path + '.users'
     
 .bottom_menu
+  %h2=_ 'Admin menu'
   - if is_member and !@group.owner?(@user)
     %p.update= link_to _('leave this group'), "#{@group.id}/leave"
   - if @user and @group.owner?(@user)
     = link_to 'Edit', edit_group_path(@group)
-    /
-    = link_to 'Admin'
-    /
     = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
