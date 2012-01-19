@@ -1,5 +1,11 @@
 %p#notice= notice
 
-%h1= @user.name
+%h1= @current_user.name
 
+Twitter:
+- if screen_name = @current_user.screen_name
+  = link_to screen_name, "https://twitter.com/#!/#{screen_name}"
 
+%h2=_'Groups'
+- @groups = @current_user.groups
+= render '/groups/groups'

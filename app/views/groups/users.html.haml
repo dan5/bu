@@ -5,6 +5,7 @@
 %p#notice= notice
 
 .users
+  - is_manager = @user && @group.manager?(@user)
   %table
     %tr
       %th=_ :name
@@ -13,8 +14,9 @@
       %th 出席
       %th 欠席
       %th 出席率
-      %th=_ 'set role'
-      %th=_ 'admin menu'
+      - if is_manager
+        %th=_ 'set role'
+        %th=_ 'admin menu'
     - @group.users.each do |user|
       %tr
         %td= link_to user.name, group_path + ".users/#{user.id}"
@@ -23,12 +25,13 @@
         %td
         %td
         %td
-        %td
-          = form_for user.user_group(@group) do |f|
-            %span.field
-              = f.text_field :role, :size => '16'
-            %span.actions
-              = f.submit _'Set role'
-        %td= link_to _(:remove), user.user_group(@group), :method => :delete
+        - if is_manager
+          %td
+            = form_for user.user_group(@group) do |f|
+              %span.field
+                = f.text_field :role, :size => '16'
+                %span.actions
+                = f.submit _'Set role'
+          %td= link_to _(:remove), user.user_group(@group), :method => :delete
 .bottom_menu
   = link_to @group.name, @group

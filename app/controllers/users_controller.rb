@@ -1,4 +1,9 @@
 class UsersController < ApplicationController
+  # GET /users/1
+  def show
+    @current_user = User.find(params[:id])
+  end
+
   # GET /users/new
   def new
     @current_user = User.new
