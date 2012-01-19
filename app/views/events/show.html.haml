@@ -8,20 +8,26 @@
   %tr
     %td==#{_ :date} :
     %td
-      = date_time(@event.started_at)
-      == ...
-      = date_time(@event.ended_at)
+      - s = @event.started_at
+      - e = @event.ended_at
+      = date_time(s)
+      - if e > s
+        == ...
+        - if s.year == e.year and s.mon == e.mon and s.day == e.day
+          = hour_min(e)
+        - else
+          = date_time(e)
   - if @event.limit?
     %tr
-      %td Limit:
+      %td==#{_ :Limit}:
       %td= @event.limit
   - if @event.place?
     %tr
-      %td Place:
+      %td== #{_ :Place}:
       %td= @event.place
   - if @event.address?
     %tr
-      %td Address:
+      %td== #{_ :Address}:
       %td= @event.address
 
 - if @event.description?
