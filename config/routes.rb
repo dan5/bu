@@ -1,4 +1,5 @@
 Bu::Application.routes.draw do
+  get "users/test_login"
 
   resources :user_groups
   resources :comments

@@ -1,4 +1,11 @@
 class UsersController < ApplicationController
+  def test_login
+    # check pass word
+    user = User.find_or_create_by_name('testman')
+    session[:user_id] = user.id
+    render :text => 'ok'
+  end
+
   # GET /users/1
   def show
     @current_user = User.find(params[:id])

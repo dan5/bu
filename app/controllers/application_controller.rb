@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   private
 
   before_filter :user
-  #helper_method :user
 
   def user
     @user ||= User.find(session[:user_id]) if session[:user_id]
