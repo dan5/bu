@@ -54,7 +54,7 @@ context 'event' do
   end
 end
 
-__END__
+#__END__
   
 context 'attend' do 
   get '/my'

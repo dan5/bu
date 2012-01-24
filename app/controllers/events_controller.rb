@@ -7,21 +7,21 @@ class EventsController < ApplicationController
 
   def attend
     event = Event.find(params[:id])
-    only_group_member(group)
+    only_group_member(event.group)
     atnd = @user.attend(event)
     redirect_to :back
   end
 
   def absent
     event = Event.find(params[:id])
-    only_group_member(group)
+    only_group_member(event.group)
     atnd = @user.be_absent(event)
     redirect_to :back
   end
 
   def maybe
     event = Event.find(params[:id])
-    only_group_member(group)
+    only_group_member(event.group)
     atnd = @user.be_maybe(event)
     redirect_to :back
   end
