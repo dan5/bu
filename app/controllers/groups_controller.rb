@@ -34,23 +34,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def users
-    @group = Group.find(params[:id])
-    @events = @group.events
-  end
-
-  def users_show
-    @group = Group.find(params[:id])
-    @current_user = @group.users.find(params[:user_id])
-    @user_group = @current_user.user_group(@group)
-
-    time = @user_group.created_at
-    if oldst = @current_user.user_events.minimum(:created_at)
-      time = oldst if oldst < time
-    end
-    @events = @group.events.where('created_at >= ?', time)
-  end
-
   # GET /groups
   def index
     user.administrator? or raise(User::NotAdministrator)

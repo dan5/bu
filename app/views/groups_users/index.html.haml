@@ -19,7 +19,7 @@
         %th=_ 'admin menu'
     - @group.users.each do |user|
       %tr
-        %td= link_to user.name, group_path + ".users/#{user.id}"
+        %td= link_to user.name, group_users_path + "/#{user.id}"
         %td=_ user.status
         %td= year_month_day user.user_group(@group).created_at
         %td

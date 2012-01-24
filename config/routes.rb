@@ -29,13 +29,14 @@ Bu::Application.routes.draw do
 
   get "groups/:id/leave" => "groups#leave"
   get "groups/:id/join" => "groups#join"
-  get "groups/:id.users" => "groups#users"
-  get "groups/:id.users/:user_id" => "groups#users_show"
+  #get "groups/:id.users" => "groups#users"
+  #get "groups/:id.users/:user_id" => "groups#users_show"
   get "groups/:id.description" => "groups#description"
 
   resources :groups do
     get "posts/:renge" => "groups_posts#index"
     resources :posts, :controller => 'groups_posts'
+    resources :users, :controller => 'groups_users'
   end
 
   # The priority is based upon order of creation:

@@ -29,6 +29,7 @@ class Group < ActiveRecord::Base
   end
 
   def manager?(user)
+    return false unless member?(user)
     return true if owner?(user)
     !!(user and user_groups.find_by_user_id(user.id).role?)
   end
