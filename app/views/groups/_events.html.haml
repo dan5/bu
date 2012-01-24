@@ -22,9 +22,9 @@
         - if event.ended?
           %td.gray=_'ended'
         - elsif atnd
-          %td.update= link_to _('cancel'), event_path(event, 'delete')
+          %td.update= link_to _('cancel'), event_path(event) + '/delete'
         - elsif event.group.member?(@user)
           %td.update.atnd
-            = link_to _('attend'), event_path(event, 'attend')
-            = link_to _('absent'), event_path(event, 'absent')
-            = link_to _('maybe'),  event_path(event, 'maybe')
+            = link_to _('attend'), event_path(event) + '/attend'
+            = link_to _('absent'), event_path(event) + '/absent'
+            = link_to _('maybe'),  event_path(event) + '/maybe'

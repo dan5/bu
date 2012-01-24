@@ -21,17 +21,15 @@ Bu::Application.routes.draw do
   get "users/edit" => "users#edit"
   resources :users
 
-  get "events/:id.delete" => "events#delete"
-  get "events/:id.attend" => "events#attend"
-  get "events/:id.absent" => "events#absent"
-  get "events/:id.maybe"  => "events#maybe"
+  get "events/:id/delete" => "events#delete"
+  get "events/:id/attend" => "events#attend"
+  get "events/:id/absent" => "events#absent"
+  get "events/:id/maybe"  => "events#maybe"
   resources :events
 
   get "groups/:id/leave" => "groups#leave"
   get "groups/:id/join" => "groups#join"
-  #get "groups/:id.users" => "groups#users"
-  #get "groups/:id.users/:user_id" => "groups#users_show"
-  get "groups/:id.description" => "groups#description"
+  get "groups/:id/description" => "groups#description"
 
   resources :groups do
     get "posts/:renge" => "groups_posts#index"
