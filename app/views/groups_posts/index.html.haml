@@ -1,5 +1,5 @@
 
-= render 'posts/menu'
+= render 'menu'
 
 %hr
 
@@ -11,14 +11,14 @@
   .post
     .head{:id => post.idx}
       == #{post.idx} : #{post.user.name} :
-      = link_to date_time(post.created_at), "/groups/#{@group.id}.posts/#{post.idx}"
+      = link_to date_time(post.created_at), "/groups/#{@group.id}/posts/#{post.idx}"
     .body
       %h3= post.subject
       != simple_html_compiler(post.text)
 
 %hr
 
-= render 'posts/menu'
+= render 'menu'
 
 - if @group.member?(@user)
-  = render 'posts/form'
+  = render 'form'

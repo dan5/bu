@@ -1,4 +1,5 @@
 Bu::Application.routes.draw do
+
   get "users/test_login"
 
   resources :user_groups
@@ -26,16 +27,16 @@ Bu::Application.routes.draw do
   get "events/:id.maybe"  => "events#maybe"
   resources :events
 
-  post "posts" => "posts#create"
-
   get "groups/:id/leave" => "groups#leave"
   get "groups/:id/join" => "groups#join"
   get "groups/:id.users" => "groups#users"
   get "groups/:id.users/:user_id" => "groups#users_show"
-  get "groups/:id.posts/:renge" => "groups#posts"
-  get "groups/:id.posts" => "groups#posts"
   get "groups/:id.description" => "groups#description"
-  resources :groups
+
+  resources :groups do
+    get "posts/:renge" => "groups_posts#index"
+    resources :posts, :controller => 'groups_posts'
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
