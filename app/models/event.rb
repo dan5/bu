@@ -1,4 +1,7 @@
 class Event < ActiveRecord::Base
+  class NotEventOwner < Exception ; end
+  class NotEventManager < Exception ; end
+
   belongs_to :group
   has_many :comments, dependent: :destroy
   has_many :user_events, dependent: :destroy, order: :updated_at
@@ -6,6 +9,25 @@ class Event < ActiveRecord::Base
 
   validates :title, :presence => true,
                    :length => { :maximum => 32 }
+
+  def owner?(user)
+    owner.id == user.id
+  end
+
+  def owner
+    User.find(owner_user_id)
+  rescue ActiveRecord::RecordNotFound
+    User.new(:name => 'testman')
+  end
+
+  def owner=(user)
+    self.owner_user_id = user.id
+  end
+
+  def manager?(user)
+    return true if owner?(user)
+    return true if group.manager?(user)
+  end
 
   def attendances
     user_events.where(:state => 'attendance')

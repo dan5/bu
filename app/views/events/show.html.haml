@@ -6,7 +6,11 @@
 
 %table
   %tr
-    %td==#{_ :date} :
+    %td== #{_ 'event owner'} :
+    %td= @event.owner.name
+
+  %tr
+    %td== #{_ :date} :
     %td
       - s = @event.started_at
       - e = @event.ended_at
@@ -19,7 +23,7 @@
           = date_time(e)
   - if @event.limit?
     %tr
-      %td==#{_ :Limit}:
+      %td== #{_ :Limit}:
       %td= @event.limit
   - if @event.place?
     %tr
@@ -93,5 +97,6 @@
 
 .bottom_menu
   = link_to @event.group.name, @event.group
-  |
-  = link_to _('Edit'), edit_event_path(@event)
+  - if @user and @event.manager?(@user)
+    = link_to _('Edit'), edit_event_path(@event)
+    = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete

@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   rescue_from Group::NotGroupOwner, :with => -> { render :text => 'not group owner' }
   rescue_from Group::NotGroupManager, :with => -> { render :text => 'not group manager' }
   rescue_from Group::NotGroupMember, :with => -> { render :text => 'not group member' }
+  rescue_from Event::NotEventManager, :with => -> { render :text => 'not event manager' }
 
   private
 
@@ -42,5 +43,10 @@ class ApplicationController < ActionController::Base
     login_required
     group ||= Group.find(params[:id])
     group.member?(@user) or raise(Group::NotGroupMember)
+  end
+
+  def only_event_manager(event)
+    login_required
+    event.manager?(@user) or raise(Event::NotEventManager)
   end
 end

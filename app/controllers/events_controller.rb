@@ -1,17 +1,4 @@
 class EventsController < ApplicationController
-  before_filter {
-    if action_name == 'create'
-      group = Group.find(session[:group_id])
-      only_group_member(group)
-    else
-      excludes = %w(show new index)
-      unless excludes.include?(action_name)
-        event = Event.find(params[:id])
-        only_group_member(event.group)
-      end
-    end
-  }
-
   def delete
     event = Event.find(params[:id])
     @user.atnd(event).destroy
@@ -20,25 +7,23 @@ class EventsController < ApplicationController
 
   def attend
     event = Event.find(params[:id])
+    only_group_member(group)
     atnd = @user.attend(event)
     redirect_to :back
   end
 
   def absent
     event = Event.find(params[:id])
+    only_group_member(group)
     atnd = @user.be_absent(event)
     redirect_to :back
   end
 
   def maybe
     event = Event.find(params[:id])
+    only_group_member(group)
     atnd = @user.be_maybe(event)
     redirect_to :back
-  end
-
-  # GET /events
-  def index
-    @events = Event.all
   end
 
   # GET /events/1
@@ -59,9 +44,12 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
+    # todo: use hidden
     params[:event].delete(:group_id)
     group = Group.find(session[:group_id])
+    only_group_member(group)
     @event = group.events.new(params[:event])
+    @event.owner = @user
 
     if @event.save
       redirect_to @event, notice: 'Event was successfully created.'
@@ -73,6 +61,7 @@ class EventsController < ApplicationController
   # PUT /events/1
   def update
     @event = Event.find(params[:id])
+    only_event_manager(@event)
 
     if @event.update_attributes(params[:event])
       redirect_to @event, notice: 'Event was successfully updated.'
@@ -84,6 +73,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   def destroy
     @event = Event.find(params[:id])
+    only_event_manager(@event)
     @event.destroy
 
     redirect_to events_url

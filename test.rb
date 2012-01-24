@@ -16,8 +16,8 @@ setup('http://localhost:3000') do
   shuld_have_content 'English'
   page.link_with(:text => 'English').click
   shuld_have_content 'Japanese'
-  @group_name = "TAKO#{Time.now.to_i.to_s(36)}"
-  @event_name = "YAKI#{Time.now.to_i.to_s(36)}"
+  @group_name = "TAKO-#{Time.now.to_i.to_s(36)}"
+  @event_name = "YAKI-#{Time.now.to_i.to_s(36)}"
 end
 
 # new group
@@ -37,24 +37,6 @@ context 'group' do
   shuld_have_content @group_name
 end
 
-context 'post' do
-    get '/my'
-    page.link_with(:text => @group_name).click
-    page.link_with(:text => 'new post').click
-    page.form_with(:id => 'new_post') {|form|
-      form.field_with(:name => 'post[text]').value = 'first post'
-      form.click_button
-    }
-    shuld_have_content 'first post', 'div.body'
-
-    page.form_with(:id => 'new_post') {|form|
-      form.field_with(:name => 'post[text]').value = 'second post'
-      form.click_button
-    }
-    shuld_have_content 'second post', 'div.body'
-end
-
-# new event
 context 'event' do 
   context 'create' do 
     get '/my'
@@ -71,6 +53,8 @@ context 'event' do
     shuld_have_content @event_name
   end
 end
+
+__END__
   
 context 'attend' do 
   get '/my'
@@ -110,6 +94,24 @@ context 'attend' do
   end
 end
 
+context 'post' do
+    get '/my'
+    page.link_with(:text => @group_name).click
+    page.link_with(:text => 'new post').click
+    page.form_with(:id => 'new_post') {|form|
+      form.field_with(:name => 'post[text]').value = 'first post'
+      form.click_button
+    }
+    shuld_have_content 'first post', 'div.body'
+
+    page.form_with(:id => 'new_post') {|form|
+      form.field_with(:name => 'post[text]').value = 'second post'
+      form.click_button
+    }
+    shuld_have_content 'second post', 'div.body'
+end
+
+# new event
 
 # todo: page.link_with(:text => 'Destroy').click
 

@@ -100,6 +100,7 @@ module ApplicationHelper
       'posts'       => '掲示板',
 
       # events
+      'event owner' => '作成者',
       'date'        => '日時',
       'limit'       => '定員',
       'place'       => '場所',
