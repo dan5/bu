@@ -56,7 +56,7 @@
 
 %hr
 
-.users
+.users.attendees
   %b.group_name=_ :Attendees
   \:
   - @event.attendees.each do |user|
@@ -65,10 +65,10 @@
     \/
     %b.red=_ :WaitingAttendees
     \:
-    %span.gray
+    %span.gray.waiting_attendees
       - @event.waiting_attendees.each do |user|
         == #{user.name}(1)
-.users
+.users.absentees
   %b.group_name=_ :Absentees
   \:
   - @event.absentees.each do |user|
@@ -77,7 +77,7 @@
     \/
     %b=_ :Maybe
     \:
-    %span
+    %span.maybees
       - @event.maybees.each do |user|
         == #{user.name}(1)
 

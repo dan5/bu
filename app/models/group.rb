@@ -4,7 +4,7 @@ class Group < ActiveRecord::Base
   class NotGroupMember < Exception ; end
 
   validates :name, :presence => true,
-                   :length => { :maximum => 16 }
+                   :length => { :maximum => 32 }
   validates :summary, :presence => true,
                       :length => { :maximum => 100 }
   validates :description, :length => { :maximum => 4096 }
