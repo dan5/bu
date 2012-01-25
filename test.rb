@@ -16,26 +16,44 @@ setup('http://localhost:3000') do
   shuld_have_content 'English'
   click :text => 'English'
   shuld_have_content 'Japanese'
-  @group_name = "TAKO-#{Time.now.to_i.to_s(36)}"
-  @event_name = "YAKI-#{Time.now.to_i.to_s(36)}"
+
+  @group_name = "TAKO-#{uniq_string(8)}"
+  @event_name = "YAKI-#{uniq_string(8)}"
 end
 
 # new group
 context 'group:create' do 
-  get '/' 
-  click :text => 'new group'
-  page.form_with(:id => 'new_group') {|form|
-    form.field_with(:name => 'group[name]').value = @group_name
-    # todo: empty
-    form.field_with(:name => 'group[summary]').value = 'summary'
-    form.click_button
-  }
-  assert page.uri.path[%r(/groups/\d+)]
-  shuld_have_content @group_name
-  shuld_have_content 'Group was successfully created.'
-  click :text => 'Edit'
+  context "Name can't be blank" do
+    get '/' 
+    click :text => 'new group'
+    page_form_with(:new_group, :group, :summary => 'summary').click_button
+    assert page.uri.path == '/groups'
+    shuld_have_content "Name can't be blank"
+  end
+
+  context "Summary can't be blank => success" do
+    get '/' 
+    click :text => 'new group'
+    # failure
+    page_form_with(:new_group, :group, :name => @group_name).click_button
+    assert page.uri.path == '/groups'
+    shuld_have_content "Summary can't be blank"
+    # success
+    page_form_with(:new_group, :group, :name => @group_name, :summary => 'hello').click_button
+    @group_id = page.uri.path.match(%r!^/groups/(\d+)!)[1]
+    assert "/groups/#{@group_id}" == page.uri.path
+    shuld_have_content @group_name
+    shuld_have_content 'Group was successfully created.'
+  end
+end
+
+context 'group:edit' do 
   get '/my'
-  shuld_have_content @group_name
+  click :text => @group_name
+  click :text => 'Edit'
+  shuld_have_content 'Editing group'
+  page_form_with("edit_group_#{@group_id}", :group, :description => 'hello world!!').click_button
+  assert "/groups/#{@group_id}" == page.uri.path
 end
 
 context 'event' do 
@@ -43,11 +61,8 @@ context 'event' do
     get '/my'
     click :text => @group_name
     click :text => 'new event'
-    page.form_with(:id => 'new_event') {|form|
-      form.field_with(:name => 'event[title]').value = @event_name
-      form.click_button
-    }
-    assert page.uri.path[%r(/events/\d+)]
+    page_form_with(:new_event, :event, :title => @event_name).click_button
+    assert %r(/events/\d+) === page.uri.path
     shuld_have_content 'Event was successfully created.'
     shuld_have_content @event_name
     get '/my'
@@ -55,8 +70,6 @@ context 'event' do
   end
 end
 
-#__END__
-  
 context 'attend' do 
   get '/my'
   click :text => @event_name
@@ -95,48 +108,14 @@ context 'attend' do
   end
 end
 
-context 'post' do
-    get '/my'
-    click :text => @group_name
-    click :text => 'new post'
-    page.form_with(:id => 'new_post') {|form|
-      form.field_with(:name => 'post[text]').value = 'first post'
-      form.click_button
-    }
-    shuld_have_content 'first post', 'div.body'
-
-    page.form_with(:id => 'new_post') {|form|
-      form.field_with(:name => 'post[text]').value = 'second post'
-      form.click_button
-    }
-    shuld_have_content 'second post', 'div.body'
+context 'posts:create' do
+  get '/my'
+  click :text => @group_name
+  click :text => 'new post'
+  # post
+  page_form_with(:new_post, :post, :text => 'first post').click_button
+  shuld_have_content 'first post', 'div.body'
+  # post again
+  page_form_with(:new_post, :post, :text => 'second post').click_button
+  shuld_have_content 'second post', 'div.body'
 end
-
-# new event
-
-# todo:  click:text => 'Destroy'
-
-
-
-
-__END__
-#agent. click:text => "English"
-
-5.times {
-  agent. click:text => "新しい部活を作る"
-  puts agent.page.uri
-  agent. click:text => "home"
-  puts agent.page.uri
-}
-
-__END__
-agent.page.form_with(:name => 'f') {|form|
-  form.field_with(:name => 'q').value = 'Ruby'
-  form.click_button
-}
-
-agent.page.link_with(:text => "オブジェクト指向スクリプト言語 Ruby".toutf8).click
-puts agent.page.uri
-puts agent.page.at('div#logo/img')['alt']
-puts agent.page.at('div#logo/img')['width']
-
