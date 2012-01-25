@@ -28,16 +28,15 @@ def body
   page.body
 end
 
-def have_content?(str, tag = nil)
-  text = tag ? page.at(tag).inner_text : page.body
-  text.toutf8.include?(str.toutf8)
+def have_content?(str, tag)
+  page.at(tag).inner_text.toutf8.include?(str.toutf8)
 end
 
-def shuld_have_content(str, tag = nil)
+def shuld_have_content(str, tag = :html)
   have_content?(str, tag) ? success : failure
 end
 
-def shuld_not_have_content(str, tag = nil)
+def shuld_not_have_content(str, tag = :html)
   have_content?(str, tag) ? failure : success
 end
 
