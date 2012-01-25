@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_groups
   has_many :user_events, dependent: :destroy
   has_many :events, :through => :user_events
+  has_many :member_requests, dependent: :destroy
+  has_many :requested_groups, :source => :group, :through => :member_requests
 
   def administrator?
     id == 1

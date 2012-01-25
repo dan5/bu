@@ -13,6 +13,8 @@ class Group < ActiveRecord::Base
   has_many :posts, dependent: :destroy, :order => :created_at
   has_many :user_groups, dependent: :destroy
   has_many :users, :through => :user_groups
+  has_many :member_requests, dependent: :destroy
+  has_many :requesting_users, :source => :user, :through => :member_requests
 
   def owner?(user)
     owner.id == user.id
@@ -36,6 +38,10 @@ class Group < ActiveRecord::Base
 
   def member?(user)
     !!(user and users.find_by_id(user.id))
+  end
+
+  def requesting_user?(user)
+    !!(user and requesting_users.find_by_id(user.id))
   end
 
   def public?

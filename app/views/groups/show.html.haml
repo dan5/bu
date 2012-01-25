@@ -5,11 +5,11 @@
 
 %p.summary
   = @group.summary
-  - if @group.description? and !@show_description
+  - if !is_secret and @group.description? and !@show_description
     &#187;
     = link_to 'もっと詳しく', group_path + '/description'
 .description
-  - if @show_description
+  - if !is_secret and @show_description
     %p
       &#171;
       = link_to '説明を閉じる', group_path
@@ -24,65 +24,70 @@
     %b= @group.owner.name
 
 - is_member = @group.member?(@user)
-- if is_member
-- elsif @group.public?
-  %p.update= link_to _('join this group'), "#{@group.id}/join"
+- unless is_member
+  - if @group.public?
+    %p.update= link_to _('join this group'), "#{@group.id}/join"
+  - elsif @group.requesting_user?(@user)
+    %p.update= link_to _('delete request to join'), "#{@group.id}/delete_request"
+  - else
+    %p.update= link_to _('request to join this group'), "#{@group.id}/request_to_join"
 
-.events
-  %h2=_ :Events
-  = render 'events'
-
-.events_new
-  - if is_member
-    %p= link_to _('new event'), "/events/new"
-
-.posts
-  %h2=_ :Posts
-  %table
-    - @group.posts.order('created_at desc').limit(3).each do |post|
+- unless is_secret
+  .events
+    %h2=_ :Events
+    = render 'events'
+  
+  .events_new
+    - if is_member
+      %p= link_to _('new event'), "/events/new"
+  
+  .posts
+    %h2=_ :Posts
+    %table
+      - @group.posts.order('created_at desc').limit(3).each do |post|
+        %tr
+          %td *
+          %td= link_to month_day(post.created_at), "/groups/#{@group.id}/posts##{post.idx}"
+          %td
+            - if post.subject
+              %b= to_short post.subject, 20
+              \:
+            = to_short post.text, 40
+            %span.small
+              == posted by #{post.user.name}
+    %p= link_to _(@group.posts.count == 0 ? 'new post' : 'read more'), "/groups/#{@group.id}/posts"
+  
+  .users
+    %h2=_ :Users
+    %table
       %tr
-        %td *
-        %td= link_to month_day(post.created_at), "/groups/#{@group.id}/posts##{post.idx}"
-        %td
-          - if post.subject
-            %b= to_short post.subject, 20
-            \:
-          = to_short post.text, 40
-          %span.small
-            == posted by #{post.user.name}
-  %p= link_to _(@group.posts.count == 0 ? 'new post' : 'read more'), "/groups/#{@group.id}/posts"
-
-.users
-  %h2=_ :Users
-  %table
-    %tr
-      %th
-      %th
-      %th
-      - @events.each do |event|
-        %td
-          - link = link_to month_day(event.started_at), event
-          - if event.ended?
-            = link
-          - else
-            %b= link
-    - @group.users.each do |user|
-      %tr
-        %td *
-        %td= link_to user.name, user
-        %td
-          =_('new user')
+        %th
+        %th
+        %th
         - @events.each do |event|
-          %td.center
-            - atnd = user.atnd(event)
-            - if atnd
-              = { 'at' => '+', 'ab' => '-', 'ma' => '?' }[atnd.state[0..1]]
-  %p= link_to _('listing users'), group_path + '/users'
-    
-.bottom_menu
-  %h2=_ 'Admin menu'
-  - if is_member and !@group.owner?(@user)
-    %p.update= link_to _('leave this group'), "#{@group.id}/leave"
-  - if @user and @group.owner?(@user)
-    = link_to 'Edit', edit_group_path(@group)
-    = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
+          %td
+            - link = link_to month_day(event.started_at), event
+            - if event.ended?
+              = link
+            - else
+              %b= link
+      - @group.users.each do |user|
+        %tr
+          %td *
+          %td= link_to user.name, user
+          %td
+            =_('new user')
+          - @events.each do |event|
+            %td.center
+              - atnd = user.atnd(event)
+              - if atnd
+                = { 'at' => '+', 'ab' => '-', 'ma' => '?' }[atnd.state[0..1]]
+    %p= link_to _('listing users'), group_path + '/users'
+      
+  .bottom_menu
+    %h2=_ 'Admin menu'
+    - if is_member and !@group.owner?(@user)
+      %p.update= link_to _('leave this group'), "#{@group.id}/leave"
+    - if @user and @group.owner?(@user)
+      = link_to 'Edit', edit_group_path(@group)
+      = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete

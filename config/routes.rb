@@ -29,6 +29,8 @@ Bu::Application.routes.draw do
 
   get "groups/:id/leave" => "groups#leave"
   get "groups/:id/join" => "groups#join"
+  get "groups/:id/request_to_join" => "groups#request_to_join"
+  get "groups/:id/delete_request" => "groups#delete_request"
   get "groups/:id/description" => "groups#description"
 
   resources :groups do
