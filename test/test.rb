@@ -68,43 +68,43 @@ context 'event' do
     get '/my'
     shuld_have_content @event_name
   end
-end
 
-context 'attend' do 
-  get '/my'
-  click :text => @event_name
-  [
-    %w(attend Attendance div.attendees),
-    %w(absent Absence div.absentees),
-    %w(maybe Maybe div.absentees), # trap: div.absentees
-  ].each do |action, state, state_class|
-    # action
-    puts action
-    click :text => action
-    shuld_have_content state, 'div.state'
-    shuld_have_content 'testman', state_class
-    # cansel
-    click :text => 'cancel'
-    shuld_not_have_content 'testman', state_class
+  context 'attend' do 
+    get '/my'
+    click :text => @event_name
+    [
+      %w(attend Attendance div.attendees),
+      %w(absent Absence div.absentees),
+      %w(maybe Maybe div.absentees), # trap: div.absentees
+    ].each do |action, state, state_class|
+      i_puts action
+      click :text => action
+      shuld_have_content state, 'div.state'
+      shuld_have_content 'testman', state_class
+      click :text => 'cancel'
+      shuld_not_have_content 'testman', state_class
+    end
   end
-  
-  # attend from group#show
-  get '/my'
-  click :text => @group_name
-  %w(attend absent maybe).each do |action|
-    puts action
-    click :text => action
-    click :text => 'cancel'
-    shuld_not_have_content 'cancel'
+    
+  context 'attend from group#show' do
+    get '/my'
+    click :text => @group_name
+    %w(attend absent maybe).each do |action|
+      i_puts action
+      click :text => action
+      click :text => 'cancel'
+      shuld_not_have_content 'cancel'
+    end
   end
-  
-  # attend from my
-  get '/my'
-  %w(attend absent maybe).each do |action|
-    puts action
-    click :text => action
-    click :text => 'cancel'
-    #shuld_not_have_content 'cancel'
+    
+  context 'attend from my' do
+    get '/my'
+    %w(attend absent maybe).each do |action|
+      i_puts action
+      click :text => action
+      click :text => 'cancel'
+      #shuld_not_have_content 'cancel'
+    end
   end
 end
 

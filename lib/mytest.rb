@@ -1,17 +1,30 @@
 require 'mechanize'
 
-def setup(urlbase)
+def setup(uribase)
   @agent = Mechanize.new
-  @urlbase = urlbase
+  @uribase = uribase
+  @context_depth = 0
+  i_puts "setup: #{uribase}"
+  indent { yield if block_given? }
+end
+
+def i_puts(*args)
+  args.each {|e| puts '  ' * @context_depth + e.to_s }
+end
+
+def indent
+  @context_depth += 1
   yield if block_given?
+  @context_depth -= 1
 end
 
 def context(name)
-  yield if block_given?
+  i_puts "context: #{name}"
+  indent { yield if block_given? }
 end
 
 def get(path)
-  @agent.get(@urlbase + path)
+  @agent.get(@uribase + path)
   shuld_not_have_content('Error')
 end
 
@@ -53,11 +66,11 @@ def assert(cond, msg = nil)
 end
 
 def success
-  puts 'pass'
+  i_puts 'pass'
 end
 
 def failure(depth = 1)
-  puts "failure: #{caller[depth]}"
+  i_puts "failure: #{caller[depth]}"
 end
 
 def uniq_string(len)
