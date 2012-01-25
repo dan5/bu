@@ -1,0 +1,24 @@
+%h1
+  = link_to @group.name, @group
+  =_ 'Listing member requests'
+
+%p#notice= notice
+
+.users
+  - is_manager = @user && @group.manager?(@user)
+  %table
+    %tr
+      %th=_ :name
+      %th=_ :created_at
+      %th=_ 'admin menu'
+    - @group.member_requests.each do |req|
+      - user = req.user
+      %tr
+        %td= link_to user.name, user
+        %td=_ date_time(user.created_at)
+        %td.bold.update
+          = link_to _(:confirm)
+          = link_to _(:reject)
+
+.bottom_menu
+  = link_to @group.name, @group

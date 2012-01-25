@@ -37,6 +37,7 @@ Bu::Application.routes.draw do
     get "posts/:renge" => "groups_posts#index"
     resources :posts, :controller => 'groups_posts'
     resources :users, :controller => 'groups_users'
+    get "member_requests" => "groups_member_requests#index"
   end
 
   # The priority is based upon order of creation:
