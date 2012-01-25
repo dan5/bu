@@ -1,6 +1,8 @@
 %h1= @group.name
 %p#notice= notice
 
+- is_secret = @group.secret? && !@group.member?(@user)
+
 %p.summary
   = @group.summary
   - if @group.description? and !@show_description
@@ -81,6 +83,6 @@
   %h2=_ 'Admin menu'
   - if is_member and !@group.owner?(@user)
     %p.update= link_to _('leave this group'), "#{@group.id}/leave"
-  - if true#@user and @group.owner?(@user)
+  - if @user and @group.owner?(@user)
     = link_to 'Edit', edit_group_path(@group)
     = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete

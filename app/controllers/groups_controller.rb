@@ -1,12 +1,4 @@
 class GroupsController < ApplicationController
-  before_filter {
-    includes = %w(edit update destroy)
-    if includes.include?(action_name)
-      group = Group.find(params[:id])
-      group.owner?(user) or raise(Group::NotGroupOwner)
-    end
-  }
-
   def description
     session[:description] = true
     redirect_to group_path
@@ -57,13 +49,14 @@ class GroupsController < ApplicationController
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
+    only_group_owner(@group)
   end
 
   # POST /groups
   def create
     login_required
-    params[:group][:owner_user_id] = @user.id
     @group = Group.new(params[:group])
+    @group.owner = @user
 
     Group.transaction do
       if @group.save
@@ -78,6 +71,7 @@ class GroupsController < ApplicationController
   # PUT /groups/1
   def update
     @group = Group.find(params[:id])
+    only_group_owner(@group)
     params[:group].delete(:owner_user_id)
 
     if @group.update_attributes(params[:group])
@@ -90,6 +84,7 @@ class GroupsController < ApplicationController
   # DELETE /groups/1
   def destroy
     @group = Group.find(params[:id])
+    only_group_owner(@group)
     @group.destroy
 
     redirect_to '/my'

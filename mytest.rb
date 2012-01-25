@@ -12,6 +12,12 @@ end
 
 def get(path)
   @agent.get(@urlbase + path)
+  shuld_not_have_content('Error')
+end
+
+def click(*args)
+  page.link_with(*args).click
+  shuld_not_have_content('Error')
 end
 
 def page
