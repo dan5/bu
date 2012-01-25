@@ -8,8 +8,9 @@ def setup(uribase)
   indent { yield if block_given? }
 end
 
-def i_puts(*args)
-  args.each {|e| puts '  ' * @context_depth + e.to_s }
+def context(name)
+  i_puts "context: #{name}"
+  indent { yield if block_given? }
 end
 
 def indent
@@ -18,9 +19,8 @@ def indent
   @context_depth -= 1
 end
 
-def context(name)
-  i_puts "context: #{name}"
-  indent { yield if block_given? }
+def i_puts(*args)
+  args.each {|e| puts '  ' * @context_depth + e.to_s }
 end
 
 def get(path)
