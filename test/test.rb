@@ -27,7 +27,7 @@ context 'group:create' do
     get '/' 
     click :text => 'new group'
     page_form_with(:new_group, :group, :summary => 'summary').click_button
-    assert page.uri.path == '/groups'
+    shuld_be_path '/groups'
     shuld_have_content "Name can't be blank"
   end
 
@@ -36,12 +36,12 @@ context 'group:create' do
     click :text => 'new group'
     # failure
     page_form_with(:new_group, :group, :name => @group_name).click_button
-    assert page.uri.path == '/groups'
+    shuld_be_path '/groups'
     shuld_have_content "Summary can't be blank"
     # success
     page_form_with(:new_group, :group, :name => @group_name, :summary => 'hello').click_button
     @group_id = page.uri.path.match(%r!^/groups/(\d+)!)[1]
-    assert "/groups/#{@group_id}" == page.uri.path
+    shuld_be_path "/groups/#{@group_id}"
     shuld_have_content @group_name
     shuld_have_content 'Group was successfully created.'
   end
@@ -53,7 +53,7 @@ context 'group:edit' do
   click :text => 'Edit'
   shuld_have_content 'Editing group'
   page_form_with("edit_group_#{@group_id}", :group, :description => 'hello world!!').click_button
-  assert "/groups/#{@group_id}" == page.uri.path
+  shuld_be_path "/groups/#{@group_id}"
 end
 
 context 'event' do 
@@ -62,7 +62,7 @@ context 'event' do
     click :text => @group_name
     click :text => 'new event'
     page_form_with(:new_event, :event, :title => @event_name).click_button
-    assert %r(/events/\d+) === page.uri.path
+    shuld_be_path %r(/events/\d+)
     shuld_have_content 'Event was successfully created.'
     shuld_have_content @event_name
     get '/my'

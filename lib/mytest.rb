@@ -3,6 +3,8 @@ require 'mechanize'
 def setup(uribase)
   @agent = Mechanize.new
   @uribase = uribase
+  @successes = 0
+  @failures = 0
   @context_depth = 0
   i_puts "setup: #{uribase}"
   indent { yield if block_given? }
@@ -61,18 +63,29 @@ def shuld_not_have_content(str, tag = :html)
   have_content?(str, tag) ? failure : success
 end
 
+def shuld_be_path(ptn)
+  ptn === page.uri.path ? success : failure
+end
+
 def assert(cond, msg = nil)
   cond ? success : failure
 end
 
 def success
   i_puts 'pass'
+  @successes += 1
 end
 
-def failure(depth = 1)
+def failure(depth = 1) # todo: delete depth. search another script name.
   i_puts "failure: #{caller[depth]}"
+  @failures += 1
 end
 
 def uniq_string(len)
   rand(36 ** len).to_s(36)
 end
+
+END {
+  puts "successes: #{@successes}"
+  puts "failures: #{@failures}"
+}
