@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-require './mytest'
+require './lib/mytest'
 
 setup('http://localhost:3000') do
   # login
