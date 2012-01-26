@@ -84,7 +84,7 @@
                 = { 'at' => '+', 'ab' => '-', 'ma' => '?' }[atnd.state[0..1]]
     %p
       = link_to _('listing users'), group_path + '/users'
-      - if @group.manager?(@user)
+      - if @group.manager?(@user) and !@group.public?
         - text = "#{_('listing requests')}(#{@group.requesting_users.count})"
         = link_to text, group_path + '/member_requests'
       
