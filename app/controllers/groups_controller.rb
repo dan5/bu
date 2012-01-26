@@ -100,10 +100,13 @@ class GroupsController < ApplicationController
     only_group_owner(@group)
     params[:group].delete(:owner_user_id)
 
-    if @group.update_attributes(params[:group])
-      redirect_to @group, notice: 'Group was successfully updated.'
-    else
-      render action: "edit"
+    Group.transaction do
+      if @group.update_attributes(params[:group])
+        @group.member_requests.delete_all if @group.public?
+        redirect_to @group, notice: 'Group was successfully updated.'
+      else
+        render action: "edit"
+      end
     end
   end
 

@@ -1,8 +1,14 @@
 class EventsController < ApplicationController
+  rescue_from ActiveRecord::RecordInvalid, :with => -> { redirect_to :back, :notice => 'error' }
+
   def delete
     event = Event.find(params[:id])
-    @user.atnd(event).destroy
-    redirect_to :back
+    if atnd = @user.atnd(event)
+      atnd.destroy
+      redirect_to :back
+    else
+      redirect_to :back, :notice => 'error: Not deleted.'
+    end
   end
 
   def attend

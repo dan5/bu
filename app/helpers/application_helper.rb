@@ -90,6 +90,9 @@ module ApplicationHelper
       'summary'     => '概要',
       'description' => '詳しい説明',
       'listing users' => '部員リスト',
+      'listing requests' => '参加リクエスト',
+      'request to join this group' => 'この部活への参加リクエストを送る',
+      'delete request to join' => '参加リクエストを削除',
 
       # posts
       'notification' => 'メンバーへのメール通知',
