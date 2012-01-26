@@ -21,6 +21,17 @@ setup('http://localhost:3000') do
   @event_name = "YAKI-#{uniq_string(8)}"
 end
 
+context 'group:destroy all of mine' do 
+  get '/my' 
+  group_names = page.search('table.groups a').map(&:inner_text)
+  group_names.each do |name|
+    get '/my' 
+    click :text => name
+    i_puts "destroy group: #{name} #{page.uri.path}"
+    click :text => '__Destroy__'
+  end
+end
+
 # new group
 context 'group:create' do 
   context "Name can't be blank" do

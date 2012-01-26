@@ -32,6 +32,7 @@ Bu::Application.routes.draw do
   get "groups/:id/request_to_join" => "groups#request_to_join"
   get "groups/:id/delete_request" => "groups#delete_request"
   get "groups/:id/description" => "groups#description"
+  get "groups/:id/__destroy__" => "groups#destroy"
 
   resources :groups do
     get "posts/:renge" => "groups_posts#index"
