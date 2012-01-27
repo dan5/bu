@@ -10,30 +10,31 @@
     <meta name="viewport" content="width=480" />
 
   %body
-    .topmenu
-      %table{:width => '100%'}
-        %tr
-          %td
-            = link_to 'home', '/'
-            - if @user
-              = link_to 'my', '/my'
-            = link_to 'about', '/about'
-          %td.right
-            - if @user
-              = link_to 'Settings', '/users/edit'
-              = link_to "Sign out(#{@user.name})", logout_path
-            - else
-              = link_to 'Sign in with twitter', '/auth/twitter'
-            - if session[:language].nil? or session[:language] == 'japanese'
-              = link_to 'English', '/settings/language/english'
-            - else
-              = link_to 'Japanese', '/settings/language/japanese'
-    - if @user and !@user.mail?
-      .input_mail
-        %p.bold= link_to 'Please input your mail address', '/users/edit'
-    %div{:class => controller_name}
-      = yield
-    .footer
-      %p
-        bu:
-        = link_to '@dan5ya', 'http://twitter.com/dan5ya'
+    .content
+      .topmenu
+        %table{:width => '100%'}
+          %tr
+            %td
+              = link_to 'home', '/'
+              - if @user
+                = link_to 'my', '/my'
+              = link_to 'about', '/about'
+            %td.right
+              - if @user
+                = link_to 'Settings', '/users/edit'
+                = link_to "Sign out(#{@user.name})", logout_path
+              - else
+                = link_to 'Sign in with twitter', '/auth/twitter'
+              - if session[:language].nil? or session[:language] == 'japanese'
+                = link_to 'English', '/settings/language/english'
+              - else
+                = link_to 'Japanese', '/settings/language/japanese'
+      - if @user and !@user.mail?
+        .input_mail
+          %p.bold= link_to 'Please input your mail address', '/users/edit'
+      %div{:class => controller_name}
+        = yield
+      .footer
+        %p
+          bu:
+          = link_to '@dan5ya', 'http://twitter.com/dan5ya'

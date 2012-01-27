@@ -4,6 +4,10 @@
 
 %p#notice= notice
 
+- if @event.group.image_src
+  .logo
+    %img.logo{ :src => @event.group.image_src }
+
 %table
   %tr
     %td== #{_ 'event owner'} :

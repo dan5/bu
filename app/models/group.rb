@@ -16,6 +16,13 @@ class Group < ActiveRecord::Base
   has_many :member_requests, dependent: :destroy
   has_many :requesting_users, :source => :user, :through => :member_requests
 
+  def image_src
+    src = "http://dgames.jp/images/bluelogo.jpg"
+    src = "http://dgames.jp/images/yokohamarb/yokohamarb_logo_short256.png"
+    src = "http://dgames.jp/images/yokohamarb/yokohamarb_logo640.png"
+    src.gsub(/['"<>]/, '')
+  end
+
   def owner?(user)
     owner.id == user.id
   end
