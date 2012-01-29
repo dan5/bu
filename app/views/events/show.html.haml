@@ -4,7 +4,7 @@
 
 %p#notice= notice
 
-- if @event.group.image_url?
+- if @event.group.image_url? and !@event.image_url.empty?
   .logo
     %img.logo{ :src => @event.image_src }
 
