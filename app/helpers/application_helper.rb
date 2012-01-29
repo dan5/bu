@@ -107,7 +107,7 @@ module ApplicationHelper
       'date'        => '日時',
       'limit'       => '定員',
       'place'       => '場所',
-      'adrees'      => '住所',
+      'address'     => '住所',
       'public'      => '誰でも参加できる',
       'must be allowed' => '許可が必要',
       'secret'      => '非公開',
