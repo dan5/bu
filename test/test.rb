@@ -27,8 +27,12 @@ context 'group:destroy all of mine' do
   group_names.each do |name|
     get '/my' 
     click :text => name
-    i_puts "destroy group: #{name} #{page.uri.path}"
-    click :text => '__Destroy__'
+    if page.at('html').inner_html =~ /owner: testman/
+      i_puts "destroy group: #{name} #{page.uri.path}"
+      click :text => '__Destroy__'
+    else
+      i_puts "#{name}: testman isn't owner."
+    end
   end
 end
 

@@ -79,11 +79,14 @@ h2 {
 
 div.events {
   div.logo {
-    padding: 4px;
+    padding: 3px;
     text-align: center;
     border: 1px solid #666;
     img {
-      width: 600px;
+      margin: 0px 0px -4px 0px;
+      border: 1px solid #666;
+      max-width: 630px;
+      max-height: 630px;
     }
   }
 }
@@ -99,6 +102,7 @@ div.groups {
       height: 104px;
       border: 1px solid #666;
       img {
+        margin: 0px 0px -4px 0px;
         max-width: 100px;
         max-height: 100px;
       }

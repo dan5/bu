@@ -39,5 +39,10 @@
     %tr.field
       %td.top= f.label :description
       %td= f.text_area :description, :size => '60x8'
+    %tr.field
+      %td= f.label :image_url
+      %td
+        = f.text_field :image_url, :value => @event.image_url || last.image_url
+        %span.gray== 過去の入力:#{last.image_url}
   .actions
     = f.submit 'Save'

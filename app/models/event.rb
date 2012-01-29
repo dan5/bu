@@ -10,6 +10,10 @@ class Event < ActiveRecord::Base
   validates :title, :presence => true,
                    :length => { :maximum => 32 }
 
+  def image_src
+    image_url.to_s.gsub(/['"<>]/, '')
+  end
+
   def owner?(user)
     owner.id == user.id
   end

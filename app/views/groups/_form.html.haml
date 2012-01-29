@@ -18,5 +18,8 @@
   .field
     %p= f.label :description, _(:Description)
     = f.text_area :description, :size => '60x8'
+  .field
+    %p= f.label :image_url, _(:Image)
+    = f.text_field :image_url, :size => 60
   .actions
     = f.submit 'Save'

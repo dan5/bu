@@ -4,9 +4,9 @@
 
 %p#notice= notice
 
-- if @event.group.image_src
+- if @event.group.image_url?
   .logo
-    %img.logo{ :src => @event.group.image_src }
+    %img.logo{ :src => @event.image_src }
 
 %table
   %tr
