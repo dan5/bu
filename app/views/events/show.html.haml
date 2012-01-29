@@ -39,6 +39,7 @@
       %td= @event.address
 
 - if @event.description?
+  %hr
   .description
     != simple_html_compiler(@event.description)
 
