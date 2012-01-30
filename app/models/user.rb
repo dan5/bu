@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   has_many :member_requests, dependent: :destroy
   has_many :requested_groups, :source => :group, :through => :member_requests
 
+  def attendance_count(group)
+    user_events.joins(:event).where(:state => "attendance", "events.group_id" => group.id, "events.ended" => true).count
+  end
+
   def administrator?
     id == 1
   end

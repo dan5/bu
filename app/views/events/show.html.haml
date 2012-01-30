@@ -1,5 +1,6 @@
 %h1
-  = link_to @event.group.name, @event.group
+  - group = @event.group
+  = link_to group.name, group
   = @event.title
 
 %p#notice= notice
@@ -54,14 +55,14 @@
   - elsif atnd = @user.atnd(@event)
     %span.atnd== #{_ atnd.state.capitalize}
     %span.update= link_to _(:cancel), event_path(@event) + '/delete'
-  - elsif @event.group.member?(@user)
+  - elsif group.member?(@user)
     %span.update.atnd
       %span.attend= link_to _(:attend), event_path(@event) + '/attend'
       %span.absent= link_to _(:absent), event_path(@event) + '/absent'
       %span.maybe=  link_to _(:maybe), event_path(@event) + '/maybe'
   - else
     You are not a member of
-    = link_to @event.group.name, @event.group
+    = link_to group.name, group
 
 %hr
 
@@ -69,29 +70,29 @@
   %b.group_name=_ :Attendees
   \:
   - @event.attendees.each do |user|
-    = link_to "#{user.name}(1)", user
+    = link_to user.name, user
   - if @event.waiting_attendees.count > 0
     \/
     %b.red=_ :WaitingAttendees
     \:
     %span.gray.waiting_attendees
       - @event.waiting_attendees.each do |user|
-        = link_to "#{user.name}(1)", user
+        = link_to user.name, user
 .users.absentees
   %b.group_name=_ :Absentees
   \:
   - @event.absentees.each do |user|
-    = link_to "#{user.name}(1)", user
+    = link_to user.name, user
   - if @event.maybees.count > 0
     \/
     %b=_ :Maybe
     \:
     %span.maybees
       - @event.maybees.each do |user|
-        = link_to "#{user.name}(1)", user
+        = link_to user.name, user
 
 %h2=_ 'Comments and Logs'
-- if @user and @event.group.member?(@user)
+- if @user and group.member?(@user)
   = render 'comments/form'
 
 - @event.comments.order('created_at desc').each do |comment|
@@ -101,7 +102,7 @@
     %span.small= link_to date_time(comment.created_at), comment
 
 .bottom_menu
-  = link_to @event.group.name, @event.group
+  = link_to group.name, group
   - if @user and @event.manager?(@user)
     = link_to _('Edit'), edit_event_path(@event)
     = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete

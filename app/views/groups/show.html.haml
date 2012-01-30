@@ -81,7 +81,7 @@
       - @group.users.each do |user|
         %tr
           %td *
-          %td= link_to user.name, user
+          %td= link_to "#{user.name}(#{user.attendance_count(@group)})", user
           %td
             =_('new user')
           - @events.each do |event|
