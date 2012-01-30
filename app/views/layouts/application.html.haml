@@ -2,7 +2,7 @@
 !!! 1.1
 %html{"xml:lang" => "ja", :xmlns => "http://www.w3.org/1999/xhtml"}
   %head
-    %title Bu
+    %title Bu: beta
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -15,10 +15,10 @@
         %table{:width => '100%'}
           %tr
             %td
-              = link_to 'home', '/'
+              = link_to 'Home', '/'
               - if @user
-                = link_to 'my', '/my'
-              = link_to 'about', '/about'
+                = link_to 'My page', '/my'
+              = link_to 'About', '/about'
             %td.right
               - if @user
                 = link_to 'Settings', '/users/edit'

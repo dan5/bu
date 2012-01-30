@@ -4,7 +4,7 @@
 
 %table
   %tr
-    - if @group.image_src
+    - if @group.image_url?
       %td.logo
         .logo
           %img.logo{ :src => @group.image_src }
