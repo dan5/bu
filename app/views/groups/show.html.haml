@@ -35,9 +35,9 @@
   - if @group.public?
     %p.update= link_to _('join this group'), "#{@group.id}/join"
   - elsif @group.requesting_user?(@user)
-    %p.update= link_to _('delete request to join'), "#{@group.id}/delete_request"
+    %p.update= link_to _('cancel request'), "#{@group.id}/delete_request"
   - else
-    %p.update= link_to _('request to join this group'), "#{@group.id}/request_to_join"
+    %p.update= link_to _('ask to join this group'), "#{@group.id}/request_to_join"
 
 - unless is_secret
   .events
