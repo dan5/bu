@@ -28,7 +28,7 @@
           %b= [_(:Public), _('Must be allowed'), _(:Secret), 2][@group.permission]
           \/
           == #{_ :owner}:
-          %b= @group.owner.name
+          %b= link_to @group.owner.name, @group.owner
       
 - is_member = @group.member?(@user)
 - unless is_member

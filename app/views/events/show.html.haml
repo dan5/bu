@@ -12,7 +12,7 @@
 %table
   %tr
     %td== #{_ 'event owner'} :
-    %td= @event.owner.name
+    %td= link_to @event.owner.name, @event.owner
 
   %tr
     %td== #{_ :date} :

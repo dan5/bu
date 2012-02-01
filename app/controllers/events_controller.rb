@@ -82,6 +82,6 @@ class EventsController < ApplicationController
     only_event_manager(@event)
     @event.destroy
 
-    redirect_to events_url
+    redirect_to @event.group
   end
 end
