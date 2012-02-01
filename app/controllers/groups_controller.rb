@@ -30,7 +30,9 @@ class GroupsController < ApplicationController
     login_required
     @group = Group.find(params[:id])
     unless @group.public?
-      if @group.requesting_user?(@user)
+      if @group.member?(@user)
+        redirect_to @group, notice: 'You already are a member of this group.'
+      elsif @group.requesting_user?(@user)
         redirect_to @group, notice: 'You already requested to join this group.'
       else
         @group.requesting_users << @user
