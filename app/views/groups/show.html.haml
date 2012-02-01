@@ -105,7 +105,7 @@
       %span#JSOK{ :style => "display:none;" }
         = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
       %span#JSNG{ :style => "" }
-        = link_to '__Destroy__', group_path + '/__destroy__'
+        = link_to '__Destroy__', group_path + '/destroy_confirm'
       %script
         document.getElementById("JSOK").style.display = "inline";
         document.getElementById("JSNG").style.display = "none";
