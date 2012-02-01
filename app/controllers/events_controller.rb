@@ -1,6 +1,12 @@
 class EventsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, :with => -> { redirect_to :back, :notice => 'error' }
 
+  before_filter { # for secret group
+    params[:id] or return
+    group = Event.find(params[:id]).group
+    only_group_member(group) if group.secret?
+  }
+
   def delete
     event = Event.find(params[:id])
     if atnd = @user.atnd(event)

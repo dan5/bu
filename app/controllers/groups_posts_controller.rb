@@ -1,8 +1,8 @@
 class GroupsPostsController < ApplicationController
   def index
-    # @todo: シークレットならlogin_required
     # @todo: 1001件目からを1として表示し古いpostsは過去ログとする
     @group = Group.find(params[:group_id])
+    only_group_member(@group) if @group.secret?
 
     limit = 1000
     conditions = ''

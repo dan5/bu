@@ -1,12 +1,13 @@
 class GroupsMemberRequestsController < ApplicationController
-  def index
+  before_filter { # for secret group
     @group = Group.find(params[:group_id])
-    @events = @group.events
+    only_group_manager(@group)
+  }
+
+  def index
   end
 
   def confirm
-    @group = Group.find(params[:group_id])
-    only_group_manager(@group)
     req = @group.member_requests.find(params[:id])
     Group.transaction do
       req.destroy
@@ -18,8 +19,6 @@ class GroupsMemberRequestsController < ApplicationController
   end
 
   def reject
-    @group = Group.find(params[:group_id])
-    only_group_manager(@group)
     req = @group.member_requests.find(params[:id])
     req.destroy
     redirect_to :back
