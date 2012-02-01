@@ -13,7 +13,7 @@
       %th 入部日
       %th 出席
       %th 欠席
-      %th 出席率
+      %th=_ :role
       - if is_manager
         %th=_ 'set role'
         %th=_ 'admin menu'
@@ -22,9 +22,9 @@
         %td= link_to user.name, group_users_path + "/#{user.id}"
         %td=_ user.status
         %td= year_month_day user.user_group(@group).created_at
-        %td
-        %td
-        %td
+        %td.right= user.attendance_count(@group)
+        %td.right= user.absence_count(@group)
+        %th= user.user_group(@group).role
         - if is_manager
           %td
             = form_for user.user_group(@group) do |f|

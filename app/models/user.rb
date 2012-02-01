@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
     user_events.joins(:event).where(:state => "attendance", "events.group_id" => group.id, "events.ended" => true).count
   end
 
+  def absence_count(group)
+    user_events.joins(:event).where("state != 'attendance' and events.group_id = ? and  events.ended = ?", group.id, true).count
+  end
+
   def administrator?
     id == 1
   end
