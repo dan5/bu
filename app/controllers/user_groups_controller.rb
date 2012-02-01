@@ -7,7 +7,7 @@ class UserGroupsController < ApplicationController
 
     @user_group.role = params[:user_group][:role]
 
-    path = "/groups/#{group.id}.users"
+    path = "/groups/#{group.id}/users"
     if @user_group.save
       redirect_to path, notice: 'Role was successfully updateed.'
     else
@@ -21,7 +21,7 @@ class UserGroupsController < ApplicationController
     group = @user_group.group
     only_group_manager(group)
 
-    path = "/groups/#{group.id}.users"
+    path = "/groups/#{group.id}/users"
     if group.owner?(@user_group.user)
       redirect_to path, notice: 'Cannot remove owner.'
     else
