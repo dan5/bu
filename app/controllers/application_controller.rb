@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
 
   before_filter :user
 
+  before_filter {
+    if controller_name != 'users' and controller_name != 'events' and controller_name != 'sessions'
+      session.delete(:redirect_path_after_event_show)
+    end
+  }
+
   def user
     @user ||= User.find(session[:user_id]) if session[:user_id]
   rescue ActiveRecord::RecordNotFound

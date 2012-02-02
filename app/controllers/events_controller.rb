@@ -7,6 +7,12 @@ class EventsController < ApplicationController
     only_group_member(group) if group.secret?
   }
 
+  after_filter {
+    if action_name == 'show'
+      session[:redirect_path_after_event_show] = "/events/#{@event.id}"
+    end
+  }
+
   def delete
     event = Event.find(params[:id])
     if atnd = @user.atnd(event)
@@ -21,18 +27,19 @@ class EventsController < ApplicationController
     login_required
     event = Event.find(params[:id])
     group = event.group
-    goto = :back # todo var name
+    notice = nil
     Event.transaction do
       if group.public? and !group.member?(@user)
         group.users << @user
-        goto = event # todo: このやり方では下記問題がある
       end
       only_group_member(event.group)
-      atnd = @user.attend(event)
+      if @user.atnd(event)
+        notice = 'atnd already is exist.'
+      else
+        @user.attend(event)
+      end
     end
-    # todo: eventページから未ログインかつグループメンバー状態で来たときにeventページに戻らないので
-    #       :back 指定で戻る場所をログインアクションのときに改ざんしたい
-    redirect_to goto
+    redirect_to session[:redirect_path_after_event_show] || :back, notice: notice
   end
 
   def absent
@@ -58,6 +65,8 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     @event = Event.new
+    # todo: use hidden
+    @group = Group.find(session[:group_id])
   end
 
   # GET /events/1/edit
