@@ -1,6 +1,7 @@
 %h1
   - group = @event.group
-  = link_to group.name, group
+  - unless group.hidden?
+    = link_to group.name, group
   = @event.title
 
 %p#notice= notice
@@ -113,7 +114,8 @@
     %span.small= link_to date_time(comment.created_at), comment
 
 .bottom_menu
-  = link_to group.name, group
+  - unless group.hidden?
+    = link_to group.name, group
   - if @user and @event.manager?(@user)
     = link_to _('Edit'), edit_event_path(@event)
     = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete
