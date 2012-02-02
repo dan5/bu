@@ -72,6 +72,7 @@ class EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
+    @group = @event.group
   end
 
   # POST /events
