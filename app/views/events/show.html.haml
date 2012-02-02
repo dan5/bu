@@ -51,18 +51,29 @@
   %b=_ 'Your state'
   \:
   - if @user.nil?
-    = link_to 'Please login...', '/users/new'
+    =_ :unknown
+    - if group.public?
+      %span.update.atnd
+        %span.attend= link_to _(:attend), event_path(@event) + '/attend'
+    - else
+      = link_to 'Please login...', '/users/new'
   - elsif atnd = @user.atnd(@event)
     %span.atnd== #{_ atnd.state.capitalize}
     %span.update= link_to _(:cancel), event_path(@event) + '/delete'
   - elsif group.member?(@user)
+    =_ :unknown
     %span.update.atnd
       %span.attend= link_to _(:attend), event_path(@event) + '/attend'
       %span.absent= link_to _(:absent), event_path(@event) + '/absent'
       %span.maybe=  link_to _(:maybe), event_path(@event) + '/maybe'
   - else
-    You are not a member of
-    = link_to group.name, group
+    =_ :unknown
+    - if group.public?
+      %span.update.atnd
+        %span.attend= link_to _(:attend), event_path(@event) + '/attend'
+    - else
+      You are not a member of
+      = link_to group.name, group
 
 %hr
 

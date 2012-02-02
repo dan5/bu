@@ -18,10 +18,21 @@ class EventsController < ApplicationController
   end
 
   def attend
+    login_required
     event = Event.find(params[:id])
-    only_group_member(event.group)
-    atnd = @user.attend(event)
-    redirect_to :back
+    group = event.group
+    goto = :back # todo var name
+    Event.transaction do
+      if group.public? and !group.member?(@user)
+        group.users << @user
+        goto = event # todo: このやり方では下記問題がある
+      end
+      only_group_member(event.group)
+      atnd = @user.attend(event)
+    end
+    # todo: eventページから未ログインかつグループメンバー状態で来たときにeventページに戻らないので
+    #       :back 指定で戻る場所をログインアクションのときに改ざんしたい
+    redirect_to goto
   end
 
   def absent
