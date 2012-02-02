@@ -10,5 +10,21 @@
 = render '/groups/events'
 
 %h2=_'Your Groups'
-- @groups = @user.groups
-= render '/groups/groups'
+%table.groups
+  %tr
+    %th
+    %th=_ 'group name'
+    %th=_ 'state'
+    %th=_ 'role'
+    %th=_ 'summary'
+  - @user.groups.each do |group|
+    - next if group.hidden?
+    %tr
+      %td +
+      %td.nowrap= link_to to_short(group.name, 16), group
+      %td.nowrap=_ @user.status(group)
+      %td.nowrap
+        - if group.owner?(@user)
+          =_ :owner
+        = @user.role(group)
+      %td= to_short group.summary, 50

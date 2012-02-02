@@ -65,8 +65,8 @@ module ApplicationHelper
 
       # users
       'state'       => '状態',
-      'role'        => '役員',
-      'set role'    => '役員設定',
+      'role'        => '役職',
+      'set role'    => '役職設定',
       'admin menu'  => '管理メニュー',
       "'s atnds"    => 'の出欠一覧',
 
