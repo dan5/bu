@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   private
 
   before_filter :user
+  before_filter { @subtitle = ': beta' }
 
   before_filter {
     if controller_name != 'users' and controller_name != 'events' and controller_name != 'sessions'

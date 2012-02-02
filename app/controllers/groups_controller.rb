@@ -66,18 +66,21 @@ class GroupsController < ApplicationController
     session[:group_id] = @group.id
     @events = @group.events.limit(7)
     @show_description = session.delete(:description)
+    set_subtitle
   end
 
   # GET /groups/new
   def new
     login_required
     @group = Group.new
+    set_subtitle 'new group'
   end
 
   # GET /groups/1/edit
   def edit
     @group = Group.find(params[:id])
     only_group_owner(@group)
+    set_subtitle
   end
 
   # POST /groups
@@ -119,5 +122,11 @@ class GroupsController < ApplicationController
     @group.destroy
 
     redirect_to '/my'
+  end
+
+  private
+
+  def set_subtitle(title = nil)
+    @subtitle = ": #{title or @group.name}"
   end
 end

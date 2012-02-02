@@ -60,6 +60,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @comment = Comment.new(:event_id => @event.id)
+    set_subtitle
   end
 
   # GET /events/new
@@ -67,12 +68,15 @@ class EventsController < ApplicationController
     @event = Event.new
     # todo: use hidden
     @group = Group.find(session[:group_id])
+    @event.group = @group
+    set_subtitle 'new'
   end
 
   # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
     @group = @event.group
+    set_subtitle
   end
 
   # POST /events
@@ -110,5 +114,11 @@ class EventsController < ApplicationController
     @event.destroy
 
     redirect_to @event.group
+  end
+
+  private
+
+  def set_subtitle(title = nil)
+    @subtitle = ": #{@event.group.name} #{title or @event.title}"
   end
 end
