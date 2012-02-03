@@ -79,10 +79,28 @@ context 'event' do
     click :text => 'new event'
     page_form_with(:new_event, :event, :title => @event_name).click_button
     shuld_be_path %r(/events/\d+)
+    @event_id = page.uri.path.match(%r!^/events/(\d+)!)[1]
     shuld_have_content 'Event was successfully created.'
     shuld_have_content @event_name
     get '/my'
     shuld_have_content @event_name
+  end
+
+  context 'edit' do
+    get '/my'
+    click :text => @event_name
+    click :text => 'Edit'
+    page_form_with("edit_event_#{@event_id}", :event,
+                   :limit => 5,
+                   :place => 'tanemaki',
+                   :address => 'yokohama',
+                   :description => 'hellohello',
+                   :image_url => 'images/rails.png',
+                  ).click_button
+    shuld_have_content 'Event was successfully updated.'
+    shuld_have_content 'tanemaki'
+    shuld_have_content 'yokohama'
+    shuld_have_content 'hellohello'
   end
 
   context 'attend' do 
