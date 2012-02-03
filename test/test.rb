@@ -21,6 +21,16 @@ setup('http://localhost:3000') do
   @event_name = "YAKI-#{uniq_string(8)}"
 end
 
+context 'users setting' do
+  context 'input mail' do
+    get '/my' 
+    click :text => 'Please input your mail address'
+    @user_id = page.body.match(/edit_user_(\d+)/)[1]
+    page_form_with("edit_user_#{@user_id}", :user, :mail => 'testman@example.com').click_button
+    shuld_not_have_content 'Please input your mail address'
+  end
+end
+
 context 'group:destroy all of mine' do 
   get '/my' 
   group_names = page.search('table.groups a').map(&:inner_text)

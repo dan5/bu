@@ -4,6 +4,9 @@ class UsersController < ApplicationController
     user = User.find_or_create_by_name('testman')
     session[:user_id] = user.id
     render :text => 'ok'
+    # reset user
+    user.mail = nil
+    user.save
   end
 
   # GET /users/1
