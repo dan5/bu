@@ -13,6 +13,8 @@
       %th 入部日
       %th 出席
       %th 欠席
+      - if is_manager
+        %th=_ :mail
       %th=_ :role
       - if is_manager
         %th=_ 'set role'
@@ -24,6 +26,8 @@
         %td= year_month_day user.user_group(@group).created_at
         %td.right= user.attendance_count(@group)
         %td.right= user.absence_count(@group)
+        %td.center
+          = user.mail? ? 'ok' : ''
         %th= user.user_group(@group).role
         - if is_manager
           %td

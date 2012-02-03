@@ -65,6 +65,7 @@ module ApplicationHelper
 
       # users
       'state'       => '状態',
+      'mail'        => 'メール',
       'role'        => '役職',
       'set role'    => '役職設定',
       'admin menu'  => '管理メニュー',
