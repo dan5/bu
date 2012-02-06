@@ -37,6 +37,10 @@ class Event < ActiveRecord::Base
     user_events.where(:state => 'attendance')
   end
 
+  #def absences
+  #  user_events.where(:state => 'absence')
+  #end
+
   def waitings
     attendances - attendances.limit(limit)
   end

@@ -79,7 +79,12 @@
 %hr
 
 .users.attendees
-  %b.group_name=_ :Attendees
+  %b.group_name
+    =_ :Attendees
+    - if @event.limit?
+      == (#{@event.attendances.count}/#{@event.limit})
+    - else
+      == (#{@event.attendances.count})
   \:
   - @event.attendees.each do |user|
     = link_to user.name, user
@@ -91,16 +96,20 @@
       - @event.waiting_attendees.each do |user|
         = link_to user.name, user
 .users.absentees
-  %b.group_name=_ :Absentees
+  - absentees = @event.absentees
+  - maybees = @event.maybees
+  %b.group_name
+    =_ :Absentees
+    == (#{absentees.size + maybees.size})
   \:
-  - @event.absentees.each do |user|
+  - absentees.each do |user|
     = link_to user.name, user
   - if @event.maybees.count > 0
     \/
     %b=_ :Maybe
     \:
     %span.maybees
-      - @event.maybees.each do |user|
+      - maybees.each do |user|
         = link_to user.name, user
 
 %h2=_ 'Comments and Logs'
