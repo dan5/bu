@@ -26,8 +26,9 @@
         %td= year_month_day user.user_group(@group).created_at
         %td.right= user.attendance_count(@group)
         %td.right= user.absence_count(@group)
-        %td.center
-          = user.mail? ? 'ok' : ''
+        - if is_manager
+          %td.center
+            = user.mail? ? 'ok' : ''
         %th= user.user_group(@group).role
         - if is_manager
           %td
