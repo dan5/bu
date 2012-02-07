@@ -22,7 +22,7 @@
     - @group.users.each do |user|
       %tr
         %td= link_to user.name, group_users_path + "/#{user.id}"
-        %td=_ user.status
+        %td=_ user.status(@group)
         %td= year_month_day user.user_group(@group).created_at
         %td.right= user.attendance_count(@group)
         %td.right= user.absence_count(@group)

@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     id == 1
   end
 
-  def status(group = nil) # todo: delete '= nil'
+  def status(group)
     'new user'
   end
 

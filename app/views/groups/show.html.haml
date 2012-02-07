@@ -82,9 +82,13 @@
         - @group.users.each do |user|
           %tr
             %td *
-            %td= link_to "#{user.name}(#{user.attendance_count(@group)})", user
+            %td{:class => @group.manager?(user) ? 'bold' : '' }
+              = link_to "#{user.name}(#{user.attendance_count(@group)})", user
             %td
-              =_('new user')
+              - if @group.owner?(user)
+                =_ :owner
+              - else
+                = user.role(@group) or _(user.status(@group))
             - @events.each do |event|
               %td.center
                 - atnd = user.atnd(event)
