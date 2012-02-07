@@ -10,7 +10,7 @@
     %tr
       %th=_ :name
       %th=_ :state
-      %th 入部日
+      =# %th 入部日
       %th 出席
       %th 欠席
       - if is_manager
@@ -21,9 +21,10 @@
         %th=_ 'admin menu'
     - @group.users.each do |user|
       %tr
-        %td= link_to user.name, group_users_path + "/#{user.id}"
+        %td{:class => @group.manager?(user) ? 'bold' : '' }
+          = link_to user.name, group_users_path + "/#{user.id}"
         %td=_ user.status(@group)
-        %td= year_month_day user.user_group(@group).created_at
+        =# %td= year_month_day user.user_group(@group).created_at
         %td.right= user.attendance_count(@group)
         %td.right= user.absence_count(@group)
         - if is_manager
