@@ -66,7 +66,9 @@
       %p= link_to _(@group.posts.count == 0 ? 'new post' : 'read more'), "/groups/#{@group.id}/posts"
     
     .users
-      %h2=_ :Users
+      %h2
+        =_ :Users
+        == (#{@group.users.count})
       %table
         %tr
           %th
