@@ -2,9 +2,13 @@
 
 %h1= @current_user.name
 
-Twitter:
-- if screen_name = @current_user.screen_name
-  = link_to screen_name, "https://twitter.com/#!/#{screen_name}"
+.twitter
+  Twitter:
+  - if screen_name = @current_user.screen_name
+    = link_to screen_name, "https://twitter.com/#!/#{screen_name}"
+
+.profile
+  profile...
 
 %h2=_'Groups'
 - @groups = @current_user.groups
