@@ -15,11 +15,11 @@ class User < ActiveRecord::Base
   has_many :requested_groups, :source => :group, :through => :member_requests
 
   def attendance_count(group)
-    user_events.joins(:event).where(:state => "attendance", "events.group_id" => group.id, "events.ended" => true).count
+    user_events.joins(:event).where(:state => "attendance", "events.group_id" => group.id, "events.ended" => true, "events.canceled" => false).count
   end
 
   def absence_count(group)
-    user_events.joins(:event).where("state != 'attendance' and events.group_id = ? and  events.ended = ?", group.id, true).count
+    user_events.joins(:event).where("state != 'attendance' and events.group_id = ? and events.ended = ? and events.canceled? = ?", group.id, true, false).count
   end
 
   def administrator?
