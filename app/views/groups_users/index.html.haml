@@ -40,7 +40,7 @@
                 = f.submit _'Set role'
           %td
             - unless @group.owner?(user)
-              = link_to _(:remove), user.user_group(@group), :method => :delete
+              = link_to _(:remove), user.user_group(@group), :confirm => 'Are you sure?', :method => :delete
 .bottom_menu
   = link_to @group.name, @group
   - if @group.manager?(@user) and !@group.public?
