@@ -41,6 +41,7 @@ context 'group:destroy all of mine' do
       i_puts "destroy group: #{name} #{page.uri.path}"
       click :text => '__Destroy__' # go to "Are you sure?"
       click :text => '__Destroy__' # ok
+      shuld_have_content 'Group was successfully deleted.'
     else
       i_puts "#{name}: testman isn't owner."
     end

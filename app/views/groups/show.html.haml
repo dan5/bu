@@ -108,11 +108,11 @@
     - if @user and @group.owner?(@user)
       %h2=_ 'Admin menu'
       = link_to 'Edit', edit_group_path(@group)
-
-      %span#JSOK{ :style => "display:none;" }
-        = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
-      %span#JSNG{ :style => "" }
-        = link_to '__Destroy__', group_path + '/destroy_confirm'
-      %script
-        document.getElementById("JSOK").style.display = "inline";
-        document.getElementById("JSNG").style.display = "none";
+      - if @group.users.count <= 1
+        %span#JSOK{ :style => "display:none;" }
+          = link_to 'Destroy', @group, :confirm => 'Are you sure?', :method => :delete
+        %span#JSNG{ :style => "" }
+          = link_to '__Destroy__', group_path + '/destroy_confirm'
+        %script
+          document.getElementById("JSOK").style.display = "inline";
+          document.getElementById("JSNG").style.display = "none";

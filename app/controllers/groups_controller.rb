@@ -119,9 +119,12 @@ class GroupsController < ApplicationController
   def destroy
     @group = Group.find(params[:id])
     only_group_owner(@group)
-    @group.destroy
-
-    redirect_to '/my'
+    if @group.users.count <= 1
+      @group.destroy
+      redirect_to '/my', notice: 'Group was successfully deleted.'
+    else
+      redirect_to :back, notice: 'Remove all users.'
+    end
   end
 
   private
