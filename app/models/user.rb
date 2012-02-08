@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def absence_count(group)
-    user_events.joins(:event).where("state != 'attendance' and events.group_id = ? and events.ended = ? and events.canceled? = ?", group.id, true, false).count
+    user_events.joins(:event).where("state != 'attendance' and events.group_id = ? and events.ended = ? and events.canceled = ?", group.id, true, false).count
   end
 
   def administrator?
