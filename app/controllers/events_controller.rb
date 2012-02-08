@@ -116,6 +116,20 @@ class EventsController < ApplicationController
     redirect_to @event.group
   end
 
+  def cancel
+    @event = Event.find(params[:id])
+    only_event_manager(@event)
+    @event.cancel
+    redirect_to @event, notice: 'Event was successfully canceled.'
+  end
+
+  def be_active
+    @event = Event.find(params[:id])
+    only_event_manager(@event)
+    @event.be_active
+    redirect_to @event, notice: 'Event is active.'
+  end
+
   private
 
   def set_subtitle(title = nil)

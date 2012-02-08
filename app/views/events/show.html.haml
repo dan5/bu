@@ -5,6 +5,8 @@
   = @event.title
 
 %p#notice= notice
+- if @event.canceled?
+  %p#notice_cancel=_ 'This event is canceled!'
 
 - if @event.image_url?
   .logo
@@ -122,9 +124,17 @@
     = comment.text
     %span.small= link_to date_time(comment.created_at), comment
 
+
+- if @user and @event.manager?(@user)
+  .admin_menu
+    %h2=_ 'admin menu'
+    = link_to _(:Edit), edit_event_path(@event)
+    - if @event.canceled?
+      = link_to _('Be active'), event_path(@event) + '/be_active'
+    - else
+      = link_to _('Cancel Event'), event_path(@event) + '/cancel'
+    = link_to _(:Destroy), @event, :confirm => 'Destroy event: Are you sure?', :method => :delete
+
 .bottom_menu
   - unless group.hidden?
     = link_to group.name, group
-  - if @user and @event.manager?(@user)
-    = link_to _('Edit'), edit_event_path(@event)
-    = link_to 'Destroy', @event, :confirm => 'Are you sure?', :method => :delete

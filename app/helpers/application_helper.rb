@@ -45,6 +45,10 @@ module ApplicationHelper
 
   def _japanese_default
     {
+      'edit'        => '編集',
+      'destroy'     => '削除',
+      'cancel event' => 'イベントを中止',
+      'be active'   => 'イベントを開催',
       'atnd'        => '出欠',
       'event'       => '活動',
 

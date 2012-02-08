@@ -61,6 +61,14 @@ class Event < ActiveRecord::Base
     user_events.where(:state => 'absence').map(&:user)
   end
 
+  def cancel
+    update_attributes(:canceled => true)
+  end
+
+  def be_active
+    update_attributes(:canceled => false)
+  end
+
   def be_ended
     raise if ended?
     transaction do

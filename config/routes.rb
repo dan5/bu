@@ -25,6 +25,8 @@ Bu::Application.routes.draw do
   get "events/:id/attend" => "events#attend"
   get "events/:id/absent" => "events#absent"
   get "events/:id/maybe"  => "events#maybe"
+  get "events/:id/cancel" => "events#cancel"
+  get "events/:id/be_active" => "events#be_active"
   resources :events
 
   get "groups/:id/leave" => "groups#leave"
