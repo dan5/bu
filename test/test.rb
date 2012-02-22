@@ -2,6 +2,11 @@
 require './lib/mytest'
 
 setup('http://localhost:3000') do
+  get '/'
+
+  get '/my' 
+  shuld_be_path '/users/new'
+
   # login
   get '/'
   shuld_have_content 'Sign in'
