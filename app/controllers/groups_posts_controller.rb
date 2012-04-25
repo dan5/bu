@@ -22,7 +22,7 @@ class GroupsPostsController < ApplicationController
     else
       limit = 10
     end
-    @posts = @group.posts.where(conditions).order('idx desc').limit(limit).reverse
+    @posts = @group.posts.where(conditions).order('idx desc').limit(limit)
     @post = Post.new(:group_id => @group.id)
   end
 
