@@ -26,31 +26,6 @@ module ApplicationHelper
     time.to_s.sub(/:\d\d \+?\w+/, '').gsub('-', '/')
   end
 
-  def html_compiler(str)
-    if str =~ /\A__hikidoc__/
-      str.sub! /\A__hikidoc__\s*/, ''
-      HikiDoc.to_html(str, :level => 2)
-    else
-      simple_html_compiler(str)
-    end
-  end
-
-  def simple_html_compiler(str)
-    url2link_of_string h(str).gsub("\n", '<br />')
-  end
-
-  def comment_html_compiler(str)
-    url2link_of_string h(str)
-  end
-
-  def url2link_of_string(html_string,options={})
-    target = options[:target] || '_blank'
-    URI.extract(html_string).uniq.each{|url|
-      html_string.gsub!(url,"<a href='#{url}' target='#{target}'>#{url}</a>")
-    }
-    html_string
-  end
-
   def _(str)
     key = str.to_s.downcase
     lang = session[:language] || 'japanese' # default lang is japanese
