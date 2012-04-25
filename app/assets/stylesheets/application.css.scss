@@ -83,6 +83,19 @@ hr {
   background-color: #eee;
 }
 
+div.description {
+  h1, h2, h3, h4 {
+    clear:both;
+  }
+
+  .amazon_image {
+    margin: 0 8px 12px 8px;
+    padding: 4px;
+    border: 1px solid #ccc;
+    float: left;
+  }
+}
+
 div.events {
   div.logo {
     margin: 16px 0;
