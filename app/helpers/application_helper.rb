@@ -36,10 +36,20 @@ module ApplicationHelper
   end
 
   def simple_html_compiler(str)
-    h(str).gsub("\n", '<br />')
+    url2link_of_string h(str).gsub("\n", '<br />')
   end
 
-  # language support --
+  def comment_html_compiler(str)
+    url2link_of_string h(str)
+  end
+
+  def url2link_of_string(html_string,options={})
+    target = options[:target] || '_blank'
+    URI.extract(html_string).uniq.each{|url|
+      html_string.gsub!(url,"<a href='#{url}' target='#{target}'>#{url}</a>")
+    }
+    html_string
+  end
 
   def _(str)
     key = str.to_s.downcase

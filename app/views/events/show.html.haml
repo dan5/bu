@@ -121,7 +121,7 @@
 - @event.comments.order('created_at desc').each do |comment|
   .comment
     %b= comment.user.name
-    = comment.text
+    != comment_html_compiler(comment.text)
     %span.small= link_to date_time(comment.created_at), comment
 
 
