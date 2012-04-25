@@ -45,7 +45,7 @@
 - if @event.description?
   %hr
   .description
-    != simple_html_compiler(@event.description)
+    != html_compiler(@event.description)
 
 %hr
 .state

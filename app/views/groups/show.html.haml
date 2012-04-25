@@ -20,7 +20,7 @@
           %p
             &#171;
             = link_to '説明を閉じる', group_path
-          != simple_html_compiler(@group.description)
+          != html_compiler(@group.description)
       
       .status.right
         %span.gray

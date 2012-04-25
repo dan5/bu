@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require 'hikidoc'
 
 module ApplicationHelper
   def to_short(str, max, period_size = 3)
@@ -23,6 +24,15 @@ module ApplicationHelper
 
   def date_time(time)
     time.to_s.sub(/:\d\d \+?\w+/, '').gsub('-', '/')
+  end
+
+  def html_compiler(str)
+    if str =~ /\A__hikidoc__/
+      str.sub! /\A__hikidoc__\s*/, ''
+      HikiDoc.to_html(str, :level => 2)
+    else
+      simple_html_compiler(str)
+    end
   end
 
   def simple_html_compiler(str)
