@@ -2,13 +2,16 @@
 
 %h1= @current_user.name
 
-.twitter
-  Twitter:
-  - if screen_name = @current_user.screen_name
-    = link_to screen_name, "https://twitter.com/#!/#{screen_name}"
-
-.profile
-  profile...
+%table
+  %tr
+    %td
+      %img.user_icon{ :src => @current_user.image }
+    %td.top
+      .twitter
+        - if screen_name = @current_user.screen_name
+          = link_to "twitter", "https://twitter.com/#!/#{screen_name}"
+      .profile
+        profile...
 
 %h2=_'Groups'
 - @groups = @current_user.groups

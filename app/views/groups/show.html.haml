@@ -83,7 +83,8 @@
                 %b= link
         - @group.users.each do |user|
           %tr
-            %td *
+            %td
+              %img.user_icon{ :src => user.image, :width => '20' }
             %td{:class => @group.manager?(user) ? 'bold' : '' }
               = link_to "#{user.name}(#{user.attendance_count(@group)})", user
             %td

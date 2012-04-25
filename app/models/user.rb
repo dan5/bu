@@ -63,14 +63,19 @@ class User < ActiveRecord::Base
     atnd(event).update_attributes :state => 'maybe'
   end
 
+  def set_authinfo(auth)
+    self.screen_name = auth['info']['nickname']
+    #self.name = auth['info']['name']
+    self.name = screen_name
+    self.image = auth["info"]["image"]
+    save!
+  end
+
   # thx: http://d.hatena.ne.jp/kaorumori/20111113/1321155791
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth['provider']
       user.uid = auth['uid']
-      user.screen_name = auth['info']['nickname']
-      #user.name = auth['info']['name']
-      user.name = user.screen_name
     end
   end
 end

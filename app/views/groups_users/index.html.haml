@@ -8,6 +8,7 @@
   - is_manager = @user && @group.manager?(@user)
   %table
     %tr
+      %th
       %th=_ :name
       %th=_ :state
       =# %th 入部日
@@ -21,6 +22,8 @@
         %th=_ 'admin menu'
     - @group.users.each do |user|
       %tr
+        %td
+          %img.user_icon{ :src => user.image, :width => '20' }
         %td{:class => @group.manager?(user) ? 'bold' : '' }
           = link_to user.name, group_users_path + "/#{user.id}"
         %td=_ user.status(@group)
