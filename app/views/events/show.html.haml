@@ -118,11 +118,16 @@
 - if @user and group.member?(@user)
   = render 'comments/form'
 
-- @event.comments.order('created_at desc').each do |comment|
-  .comment
-    %b= comment.user.name
-    != comment_html_compiler(comment.text)
-    %span.small= link_to date_time(comment.created_at), comment
+%table
+  - @event.comments.order('created_at desc').each do |comment|
+    %tr.comment
+      %td.top
+        %img.user_icon{ :src => comment.user.image, :width => '32' }
+      %td.top.bold
+        = link_to comment.user.name, comment.user
+      %td.top
+        != comment_html_compiler(comment.text)
+        %span.small= link_to date_time(comment.created_at), comment
 
 
 - if @user and @event.manager?(@user)
