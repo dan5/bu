@@ -122,7 +122,7 @@
   - @event.comments.order('created_at desc').each do |comment|
     %tr.comment
       %td
-        = image_tag comment.user.img, :class => 'user_icon_middle'
+        = user_icon comment.user, :middle
       %td.bold
         = link_to comment.user.name, comment.user
       %td

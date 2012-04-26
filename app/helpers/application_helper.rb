@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def user_icon(user, size = :small)
-    image_tag(user.img, :class => 'user_icon_' + size.to_s)
+    link_to image_tag(user.img, :class => 'user_icon_' + size.to_s), user
   end
 
   def to_short(str, max, period_size = 3)

@@ -41,23 +41,22 @@
   color: #4a4;
 }
 
-a:link {
+a {
   color: #000;
+  &:visited {
+    color: #666; }
+  &:hover {
+    color: #099; }
 }
 
-a:hover {
-  color: #fff;
-  background-color: #000;
-}
-
-.update a:link {
-  color: #c42;
-  text-decoration: none;
-}
-
-.update a:hover {
-  color: #fff;
-  background-color: #a40;
+.update {
+  a {
+    color: #c42;
+    &:visited {
+      color: #c42; }
+    &:hover {
+      color: #f75; }
+  }
 }
 
 img.user_icon_small {
