@@ -171,6 +171,14 @@ div.groups {
     color: #000;
     background-color: #eee;*/
   }
+
+  .posts {
+    td {
+      padding-top: 4px;
+      padding-right: 2px;
+      vertical-align: top;
+    }
+  }
 }
 
 div.events {
@@ -217,12 +225,13 @@ div.events {
   div.comment {
     margin: 16px 0;
   }
-}
 
-table.comments {
-  td {
-    padding-top: 4px;
-    padding-right: 2px;
+  table.comments {
+    td {
+      padding-top: 4px;
+      padding-right: 2px;
+      vertical-align: top;
+    }
   }
 }
 

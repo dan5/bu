@@ -54,15 +54,13 @@
       %table
         - @group.posts.order('created_at desc').limit(3).each do |post|
           %tr
-            %td *
-            %td= link_to month_day(post.created_at), "/groups/#{@group.id}/posts##{post.idx}"
+            %td= user_icon post.user, :middle
+            %td= link_to year_month_day(post.created_at), "/groups/#{@group.id}/posts##{post.idx}"
             %td
-              - if post.subject
+              - if post.subject and !post.subject.empty?
                 %b= to_short post.subject, 20
                 \:
-              = to_short post.text, 40
-              %span.small
-                == posted by #{post.user.name}
+              = to_short post.text, 75
       %p= link_to _(@group.posts.count == 0 ? 'new post' : 'read more'), "/groups/#{@group.id}/posts"
     
     .users

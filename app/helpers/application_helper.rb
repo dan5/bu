@@ -2,6 +2,14 @@
 require 'hikidoc'
 
 module ApplicationHelper
+  def user_name(user, size = :small) 
+    user_icon(user, size) + link_to(user.name, user)
+  end
+
+  def user_icon(user, size = :small)
+    image_tag(user.img, :class => 'user_icon_' + size.to_s)
+  end
+
   def to_short(str, max, period_size = 3)
     if str.to_s.size > max
       str.to_s.first(max - 1) + '.' * period_size
