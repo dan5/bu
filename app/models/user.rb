@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     id == 1
   end
 
+  def img
+    image or 'twitter-icon.png'
+  end
+
   def status(group)
     'new user'
   end

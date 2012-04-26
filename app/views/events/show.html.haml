@@ -80,6 +80,7 @@
 
 %hr
 
+- def user_name(user) image_tag(user.img, :class => 'user_icon') + link_to(user.name, user) end
 .users.attendees
   %b.group_name
     =_ :Attendees
@@ -89,14 +90,14 @@
       == (#{@event.attendances.count})
   \:
   - @event.attendees.each do |user|
-    = link_to user.name, user
+    = user_name(user)
   - if @event.waiting_attendees.count > 0
     \/
     %b.red=_ :WaitingAttendees
     \:
     %span.gray.waiting_attendees
       - @event.waiting_attendees.each do |user|
-        = link_to user.name, user
+        = user_name(user)
 .users.absentees
   - absentees = @event.absentees
   - maybees = @event.maybees
@@ -105,14 +106,14 @@
     == (#{absentees.size + maybees.size})
   \:
   - absentees.each do |user|
-    = link_to user.name, user
+    = user_name(user)
   - if @event.maybees.count > 0
     \/
     %b=_ :Maybe
     \:
     %span.maybees
       - maybees.each do |user|
-        = link_to user.name, user
+        = user_name(user)
 
 %h2=_ 'Comments and Logs'
 - if @user and group.member?(@user)
@@ -122,7 +123,7 @@
   - @event.comments.order('created_at desc').each do |comment|
     %tr.comment
       %td.top
-        %img.user_icon{ :src => comment.user.image, :width => '32' }
+        = image_tag comment.user.img, :size => '32x32', :class => 'image_icon'
       %td.top.bold
         = link_to comment.user.name, comment.user
       %td.top

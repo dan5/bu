@@ -164,8 +164,8 @@ context 'posts:create' do
   click :text => 'new post'
   # post
   page_form_with(:new_post, :post, :text => 'first post').click_button
-  shuld_have_content 'first post', 'div.body'
+  shuld_have_content 'first post', 'div.groups_posts'
   # post again
   page_form_with(:new_post, :post, :text => 'second post').click_button
-  shuld_have_content 'second post', 'div.body'
+  shuld_have_content 'second post', 'div.groups_posts'
 end

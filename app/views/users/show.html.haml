@@ -5,7 +5,7 @@
 %table
   %tr
     %td
-      %img.user_icon{ :src => @current_user.image }
+      = image_tag @current_user.img, :size => '80x80', :class => 'user_icon'
     %td.top
       .twitter
         - if screen_name = @current_user.screen_name
