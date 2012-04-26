@@ -1,7 +1,8 @@
 %table
   - @events.each do |event|
     %tr
-      %td *
+      %td
+        =image_tag event.image_src, :class => :event_icon_small
       %td= month_day(event.started_at)
       %td== (#{hour_min(event.started_at)})
       - unless controller_name == 'groups'
@@ -33,3 +34,8 @@
             = link_to _('attend'), event_path(event) + '/attend'
             = link_to _('absent'), event_path(event) + '/absent'
             = link_to _('maybe'),  event_path(event) + '/maybe'
+
+<script type="text/javascript">
+$("img.event_icon_small").MyThumbnail({thumbWidth:48, thumbHeight:32, backgroundColor:"#fff", imageDivClass:"event_icon_small" 
+}); 
+</script>

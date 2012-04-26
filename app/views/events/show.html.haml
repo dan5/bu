@@ -10,7 +10,7 @@
 
 - if @event.image_url?
   .logo
-    %img.logo{ :src => @event.image_src }
+    =image_tag @event.image_src
 
 %table
   %tr

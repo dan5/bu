@@ -14,3 +14,12 @@
   max-height: 40px;
 }
 
+.event_icon_small
+{
+  margin: 1px 0;
+  border-radius: 4px;
+  border:1px solid #ccc;
+  max-width: 60px;
+  max-height: 40px;
+}
+
