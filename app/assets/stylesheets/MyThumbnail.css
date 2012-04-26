@@ -1,0 +1,16 @@
+.myPic
+{
+	margin:10px;
+	border-radius:10px;
+	border:1px solid #ccc;
+}
+
+.group_icon_small
+{
+  margin: 4px;
+  border-radius: 4px;
+  border:1px solid #ccc;
+  max-width: 40px;
+  max-height: 40px;
+}
+

@@ -80,7 +80,7 @@
 
 %hr
 
-- def user_name(user) image_tag(user.img, :class => 'user_icon') + link_to(user.name, user) end
+- def user_name(user, size = 'small') image_tag(user.img, :class => 'user_icon_' + size) + link_to(user.name, user) end
 .users.attendees
   %b.group_name
     =_ :Attendees
@@ -119,11 +119,11 @@
 - if @user and group.member?(@user)
   = render 'comments/form'
 
-%table
+%table.comments
   - @event.comments.order('created_at desc').each do |comment|
     %tr.comment
       %td.top
-        = image_tag comment.user.img, :size => '32x32', :class => 'image_icon'
+        = image_tag comment.user.img, :class => 'user_icon_middle'
       %td.top.bold
         = link_to comment.user.name, comment.user
       %td.top

@@ -60,6 +60,23 @@ a:hover {
   background-color: #a40;
 }
 
+img.user_icon_small {
+  width: 18px;
+  border-radius: 4px;
+}
+
+img.user_icon_middle {
+  width: 32px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+img.user_icon_big {
+  width: 80px;
+  border-radius: 8px;
+  vertical-align: middle;
+}
+
 html {
   font-size: 14px;
 }
@@ -90,9 +107,15 @@ div.description {
 
   .amazon_image {
     margin: 0 8px 12px 8px;
-    padding: 4px;
-    border: 1px solid #ccc;
+    padding: 6px 4px;
+    border: 1px solid #ddd;
     float: left;
+    border-radius: 4px;
+    img {
+      margin: 0;
+      padding: 0;
+      vertical-align: bottom;
+    }
   }
 }
 
@@ -102,10 +125,12 @@ div.events {
     padding: 3px;
     text-align: center;
     border: 1px solid #ccc;
+    border-radius: 4px;
     img {
       margin: 0px 0px -4px 0px;
       max-width: 670px;
       max-height: 670px;
+      border-radius: 4px;
     }
   }
   
@@ -124,10 +149,12 @@ div.groups {
       min-width: 104px;
       height: 104px;
       border: 1px solid #ccc;
+      border-radius: 10px;
       img {
         margin: 0px 0px -4px 0px;
         max-width: 100px;
         max-height: 100px;
+        border-radius: 8px;
       }
     }
   }
@@ -179,8 +206,7 @@ div.events {
     .name {
       margin: 0 2px;
     }
-    img.user_icon {
-      width: 18px;
+    img.user_icon_small {
       margin-left: 4px;
       margin-right: 2px;
       margin-bottom: 2px;
@@ -193,9 +219,10 @@ div.events {
   }
 }
 
-div.comments {
-  div.comment {
-    margin: 16px 0;
+table.comments {
+  td {
+    padding-top: 4px;
+    padding-right: 2px;
   }
 }
 

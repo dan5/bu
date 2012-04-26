@@ -5,7 +5,12 @@
       %td= month_day(event.started_at)
       %td== (#{hour_min(event.started_at)})
       - unless controller_name == 'groups'
-        %td= link_to to_short(event.group.name, 9, 2), event.group
+        %td 
+          - src = event.group.image_src
+          - src = 'rails.png' if src.nil? or src.empty?
+          =# image_tag src, :width => 16
+        %td
+          = link_to to_short(event.group.name, 9, 2), event.group
       %td.bold= link_to to_short(event.title, 16, 2), event
       %td
         - if event.limit?
