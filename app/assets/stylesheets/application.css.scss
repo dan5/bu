@@ -21,8 +21,13 @@
 .right { text-align: right; }
 .center { text-align: center; }
 .gray { color: #888888; }
+.red { color: red; }
 .small {
   font-size: 70%;
+  line-height: 1.62;
+}
+.big {
+  font-size: 150%;
   line-height: 1.62;
 }
 .bold { font-weight: bold; }
