@@ -38,7 +38,4 @@
             = link_to _('absent'), event_path(event) + '/absent'
             = link_to _('maybe'),  event_path(event) + '/maybe'
 
-<script type="text/javascript">
-$("img.event_icon_small").MyThumbnail({thumbWidth:40, thumbHeight:28, backgroundColor:"#fff", imageDivClass:"event_icon_small" 
-}); 
-</script>
+= javascript_tag '$("img.event_icon_small").MyThumbnail({ thumbWidth:40, thumbHeight:28, backgroundColor:"#fff", imageDivClass:"event_icon_small" });'

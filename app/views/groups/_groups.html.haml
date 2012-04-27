@@ -23,7 +23,4 @@
             = @current_user.role(group)
         %td= to_short group.summary, 50
 
-<script type="text/javascript">
-$("#resize_group_icons img").MyThumbnail({thumbWidth:40, thumbHeight:40, backgroundColor:"#fff", imageDivClass:"group_icon_small" 
-}); 
-</script>
+= javascript_tag '$("#resize_group_icons img").MyThumbnail({ thumbWidth:40, thumbHeight:40, backgroundColor:"#fff", imageDivClass:"group_icon_small" });'
