@@ -20,6 +20,9 @@
           = event.attendances.count
 
       - if @user.nil?
+      - elsif event.canceled?
+        %td{:colspan => 2}
+          .notice_cancel=_ 'This event is canceled!'
       - else
         - atnd = @user.atnd(event)
         - if atnd
