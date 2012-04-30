@@ -80,6 +80,7 @@ class User < ActiveRecord::Base
     create! do |user|
       user.provider = auth['provider']
       user.uid = auth['uid']
+      user.set_authinfo(auth)
     end
   end
 end
