@@ -31,13 +31,42 @@ gem "haml-rails"
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :test do
-  # Pretty printed test output
-  gem 'turn', '0.8.2', :require => false
-end
-
 
 gem 'execjs'
 gem 'therubyracer'
 gem 'omniauth'
 gem 'omniauth-twitter'
+
+
+group :test, :development do
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem "rspec-rails"
+  gem 'rails_best_practices', ">= 1.2.0", :require => false
+  gem "database_cleaner"
+  gem 'forgery'
+  gem 'pry'
+  gem 'pry-nav'
+  gem 'pry-coolline'
+  gem 'guard'
+  gem 'guard-rails'
+  gem 'guard-spork'
+  gem 'guard-rspec'
+  gem 'guard-livereload'
+  group :darwin do
+    gem 'growl'
+    gem 'rb-fsevent'
+  end
+  gem 'named_let'
+end
+
+group :test do
+  gem "capybara"
+  gem "launchy"
+  gem 'capybara-webkit'
+  gem 'headless'
+  gem 'spork', '~> 0.9.0.rc'
+  # TODO Bundling from repo to use set_the_flash matcher with key.
+  #      Use released ver. when next version is released.
+  gem "shoulda-matchers", :git => 'git://github.com/thoughtbot/shoulda-matchers.git', :ref => 'fd4aa5'
+end
