@@ -50,9 +50,8 @@ describe "Events" do
     let!(:event) { FactoryGirl.create(:event, group_id: group.id) }
     before do
       visit event_path(event)
-      save_and_open_page
       click_link '削除'
     end
-    it { save_and_open_page; page.should have_content('Event was successfully deleted.') }
+    it { page.should have_content('Yokohama.rb') }
   end
 end
