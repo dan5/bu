@@ -52,3 +52,10 @@ shared_context "twitter_login" do
     visit "/auth/twitter"
   end
 end
+
+shared_context "visit_current_event" do
+  let!(:event) { FactoryGirl.create(:event, group_id: group.id) }
+  before do
+    visit event_path(event)
+  end
+end
