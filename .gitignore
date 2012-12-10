@@ -1,0 +1,10 @@
+.rspec
+/vendor/bundle
+/log/*
+/tmp/*
+/db/*.sqlite3
+/public/system/*
+/coverage/
+/spec/tmp/*
+.rvmrc
+
