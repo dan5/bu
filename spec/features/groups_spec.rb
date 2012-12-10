@@ -2,19 +2,7 @@
 require 'spec_helper'
 
 describe "Groups" do
-  before do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:twitter] = {
-      provider: 'twitter',
-      uid: '12345678',
-      'info' => {
-        'email' => 'yokohamarb@example.org',
-        'nickname' => 'yokohamarb',
-        'image' => 'https://si0.twimg.com/profile_images/2268491806/anq8ftu9ceoxzik2h2wj.png'
-      }
-    }
-    visit "/auth/twitter"
-  end
+  include_context "twitter_login"
 
   describe "GET /groups/1" do
     let!(:group) { FactoryGirl.create(:group) }
@@ -37,27 +25,26 @@ describe "Groups" do
   end
 
   describe "GET /groups/new" do
-    let!(:name){'Yokohama.rb'}
+    let!(:group) { FactoryGirl.attributes_for(:group) }
     before do
       visit new_group_path
-      fill_in 'group[name]', with: name
-      fill_in 'group[summary]', with: '横浜を中心とする…'
+      fill_in 'group[name]', with: group[:name]
+      fill_in 'group[summary]', with: group[:summary]
       click_on 'Save'
     end
-    it { page.should have_content(name) }
+    it { page.should have_content(group[:name]) }
   end
 
   describe "GET /groups/1/edit" do
-    let!(:name){'Yokoshima.rb'}
     let!(:group) { FactoryGirl.create(:group) }
     before do
       Group.any_instance.stub(:owner?).and_return( true )
       visit edit_group_path(group)
-      fill_in 'group[name]', with: name
-      fill_in 'group[summary]', with: '横浜を中心とする…'
+      fill_in 'group[name]', with: group.name
+      fill_in 'group[summary]', with: group.summary
       click_on 'Save'
     end
-    it { page.should have_content(name) }
+    it { page.should have_content(group.name) }
   end
 
   describe "DELETE /groups/1" do

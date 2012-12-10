@@ -2,18 +2,10 @@
 require 'spec_helper'
 
 describe "Events" do
+  include_context "twitter_login"
   let!(:group) { FactoryGirl.create(:group) }
+
   before do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:twitter] = {
-      provider: 'twitter',
-      uid: '12345678',
-      'info' => {
-        'email' => 'yokohamarb@example.org',
-        'nickname' => 'yokohamarb',
-        'image' => 'https://si0.twimg.com/profile_images/2268491806/anq8ftu9ceoxzik2h2wj.png'
-      }
-    }
     visit "/auth/twitter"
 
     # group owner
@@ -52,6 +44,6 @@ describe "Events" do
       visit event_path(event)
       click_link '削除'
     end
-    it { page.should have_content('Yokohama.rb') }
+    it { page.should have_content(group.name) }
   end
 end
