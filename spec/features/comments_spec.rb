@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe "Events" do
   include_context "twitter_login"
-  include_context 'visit_event'
+  include_context 'visit_event_page'
 
   describe 'POST /comments' do
     let(:comment) { FactoryGirl.attributes_for(:comment) }

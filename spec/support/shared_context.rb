@@ -17,15 +17,15 @@ shared_context "twitter_login" do
   end
 end
 
-shared_context "visit_event" do
-  include_context 'visit_group'
+shared_context "visit_event_page" do
+  include_context 'visit_group_page'
   let(:event) { FactoryGirl.create(:event, group: group) }
   before do
     visit event_path(event)
   end
 end
 
-shared_context "visit_group" do
+shared_context "visit_group_page" do
   let(:group) { FactoryGirl.create(:group, owner_user_id: you, users: [you]) }
   before { visit group_path(group) } #session[:group_id] に @group_idを代入するため
 end
