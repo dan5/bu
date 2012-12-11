@@ -30,4 +30,5 @@ group :test, :development do
   gem 'headless'
   gem "shoulda-matchers", :git => 'git://github.com/thoughtbot/shoulda-matchers.git', :ref => 'fd4aa5'
   gem 'erd'
+  gem "rails-erd"
 end
