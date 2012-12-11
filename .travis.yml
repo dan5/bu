@@ -1,0 +1,7 @@
+language: ruby
+rvm: 1.9.3
+env: DB=sqlite
+bundler_args: --without development:production
+before_install: gem update bundler
+before_script:
+  - RAILS_ENV=test rake db:create db:test:load --quiet
