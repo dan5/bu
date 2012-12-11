@@ -5,9 +5,8 @@ describe "Groups" do
   include_context "twitter_login"
 
   describe "GET /groups/1" do
-    let!(:group) { FactoryGirl.create(:group) }
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you, users: [you]) }
     before do
-      Group.any_instance.stub(:owner?).and_return( true )
       visit group_path(group)
     end
 
@@ -36,9 +35,8 @@ describe "Groups" do
   end
 
   describe "GET /groups/1/edit" do
-    let!(:group) { FactoryGirl.create(:group) }
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you, users: [you]) }
     before do
-      Group.any_instance.stub(:owner?).and_return( true )
       visit edit_group_path(group)
       fill_in 'group[name]', with: group.name
       fill_in 'group[summary]', with: group.summary
@@ -48,10 +46,9 @@ describe "Groups" do
   end
 
   describe "DELETE /groups/1" do
-    let!(:group) { FactoryGirl.create(:group) }
+    let!(:group) { FactoryGirl.create(:group, owner_user_id: you, users: [you]) }
     before do
       visit groups_path
-      Group.any_instance.stub(:owner?).and_return( true )
       click_link 'Destroy'
     end
     it { page.should have_content('Group was successfully deleted.') }

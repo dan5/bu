@@ -34,28 +34,3 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 end
-
-shared_context "twitter_login" do
-  let!(:user) { FactoryGirl.create(:user) }
-  before do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[user.provider.to_sym] = {
-      "provider" => user.provider,
-      "uid" => user.uid,
-      'info' => {
-        'email' => user.mail,
-        'nickname' => user.name,
-        'image' => user.image
-      }
-    }
-
-    visit "/auth/twitter"
-  end
-end
-
-shared_context "visit_current_event" do
-  let!(:event) { FactoryGirl.create(:event, group_id: group.id) }
-  before do
-    visit event_path(event)
-  end
-end
