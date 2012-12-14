@@ -20,9 +20,7 @@ end
 shared_context "visit_event_page" do
   include_context 'visit_group_page'
   let(:event) { FactoryGirl.create(:event, group: group) }
-  before do
-    visit event_path(event)
-  end
+  before { visit event_path(event) }
 end
 
 shared_context "visit_group_page" do
