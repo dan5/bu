@@ -23,11 +23,12 @@ describe "Comments" do
 
   describe 'DELETE /comment/:id' do
     let(:comment) { FactoryGirl.create(:comment, user: you) }
-
-    it '削除された旨が表示されること' do
+    before do
       visit comment_path(comment.id)
-      pending 'コメントの表示ページに削除リンクが未実装'
       click_link '削除'
+    end
+
+    pending 'コメントの表示ページに削除リンクが未実装' do
       page.should have_content('Comment was successfully deleted.')
     end
 
