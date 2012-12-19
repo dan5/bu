@@ -24,7 +24,7 @@ shared_context "visit_event_page" do
 end
 
 shared_context "visit_group_page" do
-  let(:group) { FactoryGirl.create(:group, owner_user_id: you, users: [you]) }
+  let(:group) { FactoryGirl.create(:group, owner_user_id: you.id, users: [you]) }
   # session[:group_id] に @group.idを代入するため
   # GroupsController#showを参照のこと
   before { visit group_path(group) }
