@@ -23,7 +23,7 @@ class Group < ActiveRecord::Base
   def owner?(user)
     owner.id == user.id
   end
-  
+
   def owner
     User.find(owner_user_id)
   rescue ActiveRecord::RecordNotFound
