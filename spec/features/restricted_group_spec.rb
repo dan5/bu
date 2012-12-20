@@ -13,7 +13,7 @@ describe "RequestedGroups" do
         click_link 'この部活への参加リクエストを送る'
       end
 
-      pending { page.should have_content('Requested.') }
+      it { page.should have_content('Requested.') }
     end
 
     context "リクエストをキャンセルする" do
@@ -23,7 +23,7 @@ describe "RequestedGroups" do
         click_link 'cancel request'
       end
 
-      pending { page.should have_content('Deleted request.') }
+      it { page.should have_content('Deleted request.') }
     end
   end
 
