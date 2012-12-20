@@ -5,7 +5,7 @@ describe "RequestedGroups" do
   context "あなたがオーナーではないグループの場合" do
     include_context "twitter_login"
     let(:other) { FactoryGirl.create(:user) }
-    let!(:group) { FactoryGirl.create(:group, owner_user_id: other.id, users: [other], permission: 1) }
+    let!(:group) { FactoryGirl.create(:group, owner_user_id: other.id, permission: 1) }
 
     context "グループへ参加リクエストする" do
       before do
@@ -31,7 +31,7 @@ describe "RequestedGroups" do
     include_context "twitter_login"
     let(:other) { FactoryGirl.create(:user) }
     let!(:request) { FactoryGirl.create(:member_request, user: other, group: group) }
-    let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id, users: [you], permission: 1) }
+    let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id, permission: 1) }
 
     before do
       visit group_path(group)
