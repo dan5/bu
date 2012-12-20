@@ -13,16 +13,16 @@ class GroupsController < ApplicationController
   def show
     @events = @group.events.limit(7)
     session[:group_id] = @group.id #TODO: ネステッドリソースにする
-    set_subtitle #TODO: https://github.com/lwe/page_title_helper
+    set_subtitle
   end
 
   def new
     @group = Group.new
-    set_subtitle 'new group' #TODO: https://github.com/lwe/page_title_helper
+    set_subtitle 'new group'
   end
 
   def edit
-    set_subtitle #TODO: https://github.com/lwe/page_title_helper
+    set_subtitle
   end
 
   def create
@@ -33,20 +33,19 @@ class GroupsController < ApplicationController
       redirect_to group_url(@group), notice: 'Group was successfully created.'
     else
       render action: "new"
-      set_subtitle 'new group' #TODO: https://github.com/lwe/page_title_helper
+      set_subtitle 'new group'
     end
   end
 
   def update
     if @group.update_attributes(params[:group])
-      redirect_to @group, notice: 'Group was successfully updated.'
+      redirect_to group_url(@group), notice: 'Group was successfully updated.'
     else
       render action: "edit"
-      set_subtitle #TODO: https://github.com/lwe/page_title_helper
+      set_subtitle
     end
   end
 
-  # DELETE /groups/1
   def destroy
     if @group.destroy
       redirect_to my_url, notice: 'Group was successfully deleted.'

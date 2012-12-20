@@ -1,5 +1,6 @@
+# coding: utf-8
 module Members
-  def description
+  def description #TODO javascriptでやるべき
     redirect_to group_path(show_description: true)
   end
 
