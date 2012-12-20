@@ -29,7 +29,6 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(params[:group])
     @group.owner = @user #TODO: super classのインスタンンス変数を参照しない
-    @group.users << @user # to model
 
     if @group.save
       redirect_to group_url(@group), notice: 'Group was successfully created.'
@@ -40,23 +39,17 @@ class GroupsController < ApplicationController
   end
 
   def update
-    params[:group].delete(:owner_user_id) #to model
-
-    Group.transaction do #remove
-      if @group.update_attributes(params[:group])
-        @group.member_requests.delete_all if @group.public? # to model
-        redirect_to @group, notice: 'Group was successfully updated.'
-      else
-        render action: "edit"
-        set_subtitle #TODO: https://github.com/lwe/page_title_helper
-      end
+    if @group.update_attributes(params[:group])
+      redirect_to @group, notice: 'Group was successfully updated.'
+    else
+      render action: "edit"
+      set_subtitle #TODO: https://github.com/lwe/page_title_helper
     end
   end
 
   # DELETE /groups/1
   def destroy
-    if @group.users.count <= 1 #TODO: 必要?
-      @group.destroy
+    if @group.destroy
       redirect_to my_url, notice: 'Group was successfully deleted.'
     else
       redirect_to :back, notice: 'Remove all users.'

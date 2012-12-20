@@ -3,10 +3,10 @@ class Group < ActiveRecord::Base
   class NotGroupManager < Exception ; end
   class NotGroupMember < Exception ; end
 
-  validates :name, :presence => true,
-                   :length => { :maximum => 32 }
-  validates :summary, :presence => true,
-                      :length => { :maximum => 100 }
+  attr_protected :owner_user_id
+
+  validates :name, :presence => true, :length => { :maximum => 32 }
+  validates :summary, :presence => true, :length => { :maximum => 100 }
   validates :description, :length => { :maximum => 4096 }
 
   has_many :events, dependent: :destroy, :order => 'started_at desc'
@@ -54,5 +54,17 @@ class Group < ActiveRecord::Base
 
   def secret?
     permission == 2
+  end
+
+  before_create do |record|
+    record.users << record.owner
+  end
+
+  before_destroy do |record|
+    record.users.size <= 1
+  end
+
+  after_update do |record|
+    record.member_requests.delete_all if record.public?
   end
 end

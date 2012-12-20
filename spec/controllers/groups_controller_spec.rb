@@ -162,12 +162,8 @@ describe GroupsController do
       let(:current) { FactoryGirl.create(:group, owner_user_id: you.id) }
       let(:edited) { FactoryGirl.attributes_for(:group, owner_user_id: other.id) }
 
-      before do
-        GroupsController.any_instance.stub(:only_group_owner) { true }
-        put :update, { id: current.to_param, group: edited }
-      end
-
-      it { subject.owner_user_id.should eq you.id }
+      before { GroupsController.any_instance.stub(:only_group_owner) { true } }
+      it { expect { put :update, {id: current.to_param, group: edited} }.to raise_error(ActiveModel::MassAssignmentSecurity::Error) }
     end
 
     context 'group#member_requestsが0件になること' do
@@ -190,23 +186,36 @@ describe GroupsController do
 
   describe "DELETE destroy" do
     let(:you) { FactoryGirl.create(:user) }
-    let!(:group) { FactoryGirl.create(:group, owner_user_id: owner.id) }
 
-    before do
-      request.session[:user_id] = you.id
-      Group.any_instance.stub_chain(:users, :count){ 1 }
+    context 'メンバーが1名以下の場合は削除できる' do
+      let!(:group) { FactoryGirl.create(:group, owner_user_id: owner.id) }
+      before do
+        request.session[:user_id] = you.id
+        Group.any_instance.stub_chain(:users, :count){ 1 }
+      end
+
+      context 'Ownerの場合は削除できること' do
+        let(:owner) { you }
+        it { expect { delete :destroy, {id: group.to_param} }.to change(Group, :count).by(-1) }
+        pending { response.should redirect_to(my_url) }
+      end
+
+      context 'Not Ownerの場合は削除できないこと' do
+        let(:owner) { FactoryGirl.create(:user) }
+        before { bypass_rescue }
+        it { expect { delete :destroy, {id: group.to_param} }.to raise_error(Group::NotGroupOwner) }
+      end
     end
 
-    context 'Ownerの場合は削除できること' do
-      let(:owner) { you }
-      it { expect { delete :destroy, {id: group.to_param} }.to change(Group, :count).by(-1) }
-      pending { response.should redirect_to(my_url) }
-    end
+    context 'メンバーが2名以上いる場合削除できないこと' do
+      let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
+      before do
+        request.env["HTTP_REFERER"] = my_url
+        request.session[:user_id] = you.id
+        Group.any_instance.stub_chain(:users, :count){ 2 }
+      end
 
-    context 'Not Ownerの場合は削除できないこと' do
-      let(:owner) { FactoryGirl.create(:user) }
-      before { bypass_rescue }
-      it { expect { delete :destroy, {id: group.to_param} }.to raise_error(Group::NotGroupOwner) }
+      it { expect { delete :destroy, {id: group.to_param} }.to change(Group, :count).by(0) }
     end
   end
 end
