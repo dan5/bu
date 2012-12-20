@@ -191,7 +191,7 @@ describe GroupsController do
       let!(:group) { FactoryGirl.create(:group, owner_user_id: owner.id) }
       before do
         request.session[:user_id] = you.id
-        Group.any_instance.stub_chain(:users, :count){ 1 }
+        Group.any_instance.stub_chain(:users, :size){ 1 }
       end
 
       context 'Ownerの場合は削除できること' do
@@ -212,7 +212,7 @@ describe GroupsController do
       before do
         request.env["HTTP_REFERER"] = my_url
         request.session[:user_id] = you.id
-        Group.any_instance.stub_chain(:users, :count){ 2 }
+        Group.any_instance.stub_chain(:users, :size){ 2 }
       end
 
       it { expect { delete :destroy, {id: group.to_param} }.to change(Group, :count).by(0) }
