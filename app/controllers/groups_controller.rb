@@ -13,7 +13,6 @@ class GroupsController < ApplicationController
   def show
     @events = @group.events.limit(7)
     session[:group_id] = @group.id #TODO: ネステッドリソースにする
-    @show_description = session.delete(:description) #TODO: javascriptにする。そもそもいるの？
     set_subtitle #TODO: https://github.com/lwe/page_title_helper
   end
 

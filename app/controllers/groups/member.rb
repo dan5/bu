@@ -1,7 +1,6 @@
 module Members
   def description
-    session[:description] = true
-    redirect_to group_path
+    redirect_to group_path(show_description: true)
   end
 
   def leave
