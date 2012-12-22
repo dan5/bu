@@ -7,4 +7,4 @@
 /coverage/
 /spec/tmp/*
 .rvmrc
-
+.bundle
