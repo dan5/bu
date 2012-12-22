@@ -26,33 +26,9 @@ describe SessionsController do
       it { should redirect_to(redirect_path) }
     end
 
-    context 'not exists' do
-      before do
-        User.should_receive(:create_with_omniauth).with(auth) do
-          User.create(provider: you[:provider], uid: you[:uid])
-        end
-        get :callback, provider: :twitter
-      end
-
-      it { should redirect_to(my_url) }
-    end
-
-    context 'exists' do
-      let(:you) { FactoryGirl.create(:user) }
-      let(:auth) do
-        {
-          'provider' => you.provider,
-          'uid' => you.uid,
-          'info' => {'nickname' => you.name, 'image' => you.image}
-        }
-      end
-
-      before do
-        User.should_not_receive(:create_with_omniauth)
-        get :callback, provider: :twitter
-      end
-
-      it { should redirect_to(my_url) }
+    context 'not redirect path' do
+      before { get :callback, provider: :twitter }
+      it { should redirect_to(my_path) }
     end
   end
 
