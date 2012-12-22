@@ -4,20 +4,10 @@ require 'spec_helper'
 describe SessionsController do
 
   describe '#callback' do
-    let(:you) { FactoryGirl.attributes_for(:user) }
-    let(:auth) do
-      {
-        'provider' => you[:provider],
-        'uid' => you[:uid],
-        'info' => {'nickname' => you[:name], 'image' => you[:image]}
-      }
-    end
+    let(:you) { FactoryGirl.create(:user) }
+    before { User.stub(:find_or_create_with_omniauth) { you } }
 
-    before do
-      request.env['omniauth.auth'] = auth
-    end
-
-    context 'set redirect path' do
+    context 'redirect_pathが設定されている場合' do
       let(:redirect_path) { root_path }
       before do
         request.session[:redirect_path] = redirect_path
@@ -26,7 +16,7 @@ describe SessionsController do
       it { should redirect_to(redirect_path) }
     end
 
-    context 'not redirect path' do
+    context 'redirect_pathが設定されていない場合' do
       before { get :callback, provider: :twitter }
       it { should redirect_to(my_path) }
     end
