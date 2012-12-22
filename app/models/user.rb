@@ -67,14 +67,6 @@ class User < ActiveRecord::Base
     atnd(event).update_attributes :state => 'maybe'
   end
 
-  def set_authinfo(auth)
-    self.screen_name = auth['info']['nickname']
-    #self.name = auth['info']['name']
-    self.name = screen_name
-    self.image = auth["info"]["image"]
-    save!
-  end
-
   def self.find_or_create_with_ominiauth(auth)
     find_by_provider_and_uid(auth['provider'], auth['uid']) || create_with_omniauth(auth)
   end
