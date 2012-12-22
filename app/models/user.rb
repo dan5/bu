@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
     atnd(event).update_attributes :state => 'maybe'
   end
 
-  def self.find_or_create_with_ominiauth(auth)
+  def self.find_or_create_with_omniauth(auth)
     find_by_provider_and_uid(auth['provider'], auth['uid']) || create_with_omniauth(auth)
   end
 
