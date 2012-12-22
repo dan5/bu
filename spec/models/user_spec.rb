@@ -3,6 +3,8 @@ require 'spec_helper'
 
 describe User do
   describe '.find_or_create_with_omniauth' do
+    subject { User.find_or_create_with_omniauth(auth) }
+
     context 'not exists' do
       let(:you) { FactoryGirl.attributes_for(:user) }
       let(:auth) do
@@ -13,9 +15,8 @@ describe User do
         }
       end
 
-      subject { User.find_or_create_with_omniauth(auth) }
-
       it { subject.uid.should eq you[:uid] }
+      it { subject.provider.should eq you[:provider] }
     end
 
     context 'exists' do
@@ -27,8 +28,6 @@ describe User do
           'info' => {'nickname' => you.name, 'image' => you.image}
         }
       end
-
-      subject { User.find_or_create_with_omniauth(auth) }
 
       it { should eq you }
     end
