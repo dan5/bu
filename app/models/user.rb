@@ -75,12 +75,16 @@ class User < ActiveRecord::Base
     save!
   end
 
-  # thx: http://d.hatena.ne.jp/kaorumori/20111113/1321155791
+  def self.find_or_create_with_ominiauth(auth)
+    find_by_provider_and_uid(auth['provider'], auth['uid']) || create_with_omniauth(auth)
+  end
+
   def self.create_with_omniauth(auth)
-    create! do |user|
+    create do |user|
       user.provider = auth['provider']
       user.uid = auth['uid']
-      user.set_authinfo(auth)
+      user.name = auth['info']['nickname']
+      user.image = auth["info"]["image"]
     end
   end
 end
