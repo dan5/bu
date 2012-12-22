@@ -78,6 +78,7 @@ class User < ActiveRecord::Base
       user.uid = auth['uid']
       user.name = auth['info']['nickname']
       user.image = auth["info"]["image"]
+      user.screen_name = auth['info']['nickname']
     end
   end
 end
