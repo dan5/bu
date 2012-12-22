@@ -7,4 +7,5 @@
 /coverage/
 /spec/tmp/*
 .rvmrc
-
+.rbenv-version
+.bundle
