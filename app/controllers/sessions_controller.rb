@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     path = session.delete(:redirect_path) || '/my'
     redirect_to path, notice: 'Login successful.'
   end
-  
+
   def destroy
     session[:user_id] = nil
     redirect_to root_path

@@ -8,7 +8,7 @@ describe "Users" do
     let(:new_user) do
       FactoryGirl.attributes_for(:user, name: Forgery::Basic.text, mail: Forgery::Email.address)
     end
-    
+
     context 'すべての領域に値を入力' do
       before do
         visit users_edit_path
