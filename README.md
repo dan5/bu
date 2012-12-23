@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/1syo/bu.png?branch=master)](https://travis-ci.org/1syo/bu)
+
 # Bu
 
 あたりまえの部活管理ツール。
