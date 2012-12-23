@@ -11,7 +11,7 @@ describe UserGroupsController do
   before { request.session[:user_id] = you.id }
 
   describe "PUT update" do #groupにおける役職名の設定
-    describe "with valid params" do
+    context "with valid params" do
       context "Managerの場合は更新できること" do
         let(:owner) { you }
         before { put :update, { id: user_group.to_param, user_group:  edited_user_group } }
@@ -31,7 +31,7 @@ describe UserGroupsController do
       end
     end
 
-    describe "with invalid params" do
+    context "with invalid params" do
       let(:owner) { you }
       before { put :update, {id: user_group.to_param, user_group: {}} }
       it { response.should redirect_to(group_users_url(group_id: group.id)) }
