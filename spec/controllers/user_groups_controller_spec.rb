@@ -23,6 +23,12 @@ describe UserGroupsController do
         before { bypass_rescue }
         it { expect { put :update, {id: user_group.to_param, user_group: edited_user_group } }.to raise_error(Group::NotGroupManager) }
       end
+
+      context 'update_attributesが呼ばれていること' do
+        let(:owner) { you }
+        before { UserGroup.any_instance.should_receive(:update_attributes).with(role: 'a') }
+        it { put :update, {id: user_group.to_param, user_group: {role: 'a'}} }
+      end
     end
 
     describe "with invalid params" do
