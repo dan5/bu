@@ -49,5 +49,11 @@ describe UserGroupsController do
       before { bypass_rescue }
       it { expect { delete :destroy, {id: user_group.to_param} }.to raise_error(Group::NotGroupManager) }
     end
+
+    context 'Owner自身は削除できること' do
+      let(:owner) { you }
+      let(:user_group_id) { UserGroup.where(user_id: you.id, group_id: group.id).first }
+      it { expect { delete :destroy, {id: user_group_id} }.to change(UserGroup, :count).by(0) }
+    end
   end
 end
