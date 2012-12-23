@@ -3,11 +3,11 @@ require 'spec_helper'
 
 describe Group do
   describe 'Validations' do
-    it { should validate_presence_of(:name).with_message(/can't be blank/)  }
-    it { should validate_presence_of(:summary).with_message(/can't be blank/)  }
-    it { should ensure_length_of(:name).is_at_most(32).with_message(/too long/) }
-    it { should ensure_length_of(:summary).is_at_most(100).with_message(/not long enough/) }
-    it { should ensure_length_of(:description).is_at_most(4096).with_message(/not long enough/) }
+    it { should validate_presence_of(:name)  }
+    it { should validate_presence_of(:summary)  }
+    it { should ensure_length_of(:name).is_at_most(32) }
+    it { should ensure_length_of(:summary).is_at_most(100) }
+    it { should ensure_length_of(:description).is_at_most(4096) }
   end
 
   describe 'Associations' do

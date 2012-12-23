@@ -5,9 +5,9 @@ describe User do
   describe "Validations" do
     # validate_uniqueness_of matcher は既存のレコードが必要
     before { FactoryGirl.create(:user) }
-    it { should validate_presence_of(:name).with_message(/can't be blank/) }
-    it { should ensure_length_of(:name).is_at_most(16).with_long_message(/too long/) }
-    it { should validate_uniqueness_of(:uid).scoped_to(:provider).with_message(/already been taken/) }
+    it { should validate_presence_of(:name) }
+    it { should ensure_length_of(:name).is_at_most(16) }
+    it { should validate_uniqueness_of(:uid).scoped_to(:provider) }
   end
 
   describe "Associations" do
