@@ -11,6 +11,12 @@ require 'headless'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+module Helpers
+  def login_as(user)
+    request.session[:user_id] = user.id 
+  end
+end
+
 RSpec.configure do |config|
   config.mock_with :rspec
   config.use_transactional_fixtures = false
@@ -21,6 +27,8 @@ RSpec.configure do |config|
 
   Capybara.current_driver = :rack_test
   Headless.new.start
+
+  config.include Helpers
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

@@ -45,7 +45,7 @@ describe UserGroupsController do
     let(:target_user_groups_id) { target.user_groups.where(:group_id => group.id).first.to_param }
 
     before do
-      request.session[:user_id] = operator.id
+      login_as(operator)
     end
 
     context '操作者がOwnerのとき' do
