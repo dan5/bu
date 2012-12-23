@@ -14,9 +14,9 @@ describe Group do
     it { should have_many(:events) }
     it { should have_many(:posts) }
     it { should have_many(:user_groups) }
-    it { should have_many(:users) }
+    it { should have_many(:users).through(:user_groups) }
     it { should have_many(:member_requests) }
-    it { should have_many(:requesting_users) }
+    it { should have_many(:requesting_users).through(:member_requests) }
   end
 
   describe "#create" do
