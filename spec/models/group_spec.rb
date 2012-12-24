@@ -3,20 +3,20 @@ require 'spec_helper'
 
 describe Group do
   describe 'Validations' do
-    it { should validate_presence_of(:name).with_message(/can't be blank/)  }
-    it { should validate_presence_of(:summary).with_message(/can't be blank/)  }
-    pending { should ensure_length_of(:name).is_at_least(132).with_message(/too long/) }
-    pending { should ensure_length_of(:summary).is_at_least(100).with_message(/not long enough/) }
-    pending { should ensure_length_of(:description).is_at_least(4096).with_message(/not long enough/) }
+    it { should validate_presence_of(:name)  }
+    it { should validate_presence_of(:summary)  }
+    it { should ensure_length_of(:name).is_at_most(32) }
+    it { should ensure_length_of(:summary).is_at_most(100) }
+    it { should ensure_length_of(:description).is_at_most(4096) }
   end
 
   describe 'Associations' do
     it { should have_many(:events) }
     it { should have_many(:posts) }
     it { should have_many(:user_groups) }
-    it { should have_many(:users) }
+    it { should have_many(:users).through(:user_groups) }
     it { should have_many(:member_requests) }
-    it { should have_many(:requesting_users) }
+    it { should have_many(:requesting_users).through(:member_requests) }
   end
 
   describe "#create" do
