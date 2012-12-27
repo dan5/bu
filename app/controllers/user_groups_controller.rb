@@ -1,6 +1,11 @@
 # coding: utf-8
 class UserGroupsController < ApplicationController
   before_filter :find_user_group, :find_group, :manager_only
+  before_filter :owner_only, only: :destroy
+
+  rescue_from Group::NotGroupOwner do
+    redirect_to group_users_url(@group.id), notice: 'Cannot remove owner.'
+  end
 
   def update
     if @user_group.update_attributes(user_group_params)
@@ -11,11 +16,6 @@ class UserGroupsController < ApplicationController
   end
 
   def destroy
-    if @group.owner?(@user_group.user) #対象がオーナーの場合は削除できない
-      redirect_to group_users_url(@group.id), notice: 'Cannot remove owner.'
-      return
-    end
-
     @user_group.destroy
     redirect_to group_users_url(@group.id), notice: 'Remeved member.'
   end
@@ -35,5 +35,10 @@ class UserGroupsController < ApplicationController
 
   def user_group_params
     { role: params[:user_group].try(:[], :role) }
+  end
+
+  private
+  def owner_only
+    raise Group::NotGroupOwner if @group.owner?(@user_group.user)
   end
 end
