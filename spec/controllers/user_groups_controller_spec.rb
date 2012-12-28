@@ -15,20 +15,33 @@ describe UserGroupsController do
       login_as(operator)
     end
 
+    shared_examples "update user_group successfully" do
+      it 'update_attributesが呼ばれていること' do
+        UserGroup.any_instance.should_receive(:update_attributes).with(role: 'a')
+        put :update, {id: target_user_groups_id, user_group: {role: 'a'}}
+      end
+      it {
+        put :update, { id: target_user_groups_id, user_group: edited_user_group_params }
+        response.should redirect_to(group_users_url(group_id: group.id))
+      }
+    end
+
     context "with valid params" do
       context "操作者がOwnerのとき" do
         let(:operator) { owner }
-        it 'update_attributesが呼ばれていること' do
-          UserGroup.any_instance.should_receive(:update_attributes).with(role: 'a')
-          put :update, {id: target_user_groups_id, user_group: {role: 'a'}}
-        end
-        it {
-          put :update, { id: target_user_groups_id, user_group: edited_user_group_params }
-          response.should redirect_to(group_users_url(group_id: group.id))
-        }
+        it_behaves_like 'update user_group successfully'
       end
 
-      context "操作者がOwnerではないとき" do
+      context "操作者がManagerのとき" do
+        let(:operator) { FactoryGirl.create(:user) }
+        before do
+          # managerにする
+          FactoryGirl.create(:user_group, user_id: operator.id, group_id: group.id, role: 'role')
+        end
+        it_behaves_like 'update user_group successfully'
+      end
+
+      context "操作者がOwnerでもManagerでもないとき" do
         let(:operator) { FactoryGirl.create(:user) }
         before { bypass_rescue }
         it { expect { put :update, {id: target_user_groups_id, user_group: edited_user_group_params } }.to raise_error(Group::NotGroupManager) }
