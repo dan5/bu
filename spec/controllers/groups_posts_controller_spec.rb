@@ -82,6 +82,18 @@ describe GroupsPostsController do
         response.should redirect_to(group_posts_url + "#" + assigns(:post).idx.to_s)
       end
     end
+    
+    context '書き込み内容に記載がないとき' do
+      before do
+        session[:user_id] = user.id
+        post :create, post: { text: '', group_id: group.id }, id: group.id, group_id: group.id
+      end
+
+      it '書き込みに失敗し、newアクションを行うこと' do
+        response.should be_success
+        response.should render_template('new')
+      end
+    end
   end
 
 end
