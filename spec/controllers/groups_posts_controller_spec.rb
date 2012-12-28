@@ -3,6 +3,8 @@ require 'spec_helper'
 
 describe GroupsPostsController do
   describe "GET 'index'" do
+    subject { assigns(:posts) }
+
     let!(:group) { FactoryGirl.create(:group) }
     let!(:post_single)      { FactoryGirl.create(:post, group: group, idx: 5) }
     let!(:post_range_lower) { FactoryGirl.create(:post, group: group, idx: 10) }
@@ -15,13 +17,12 @@ describe GroupsPostsController do
         get :index, group_id: group.id, renge: 'all'
       end
 
-      it 'すべてのpostが検出されること' do
-        assigns(:posts).should have(4).items
-        assigns(:posts).should include(post_single)
-        assigns(:posts).should include(post_range_lower)
-        assigns(:posts).should include(post_range_upper)
-        assigns(:posts).should include(post_range_u_out)
-      end
+      # すべてのpostが検出されること
+      it { should have(4).items }
+      it { should include(post_single) }
+      it { should include(post_range_lower) }
+      it { should include(post_range_upper) }
+      it { should include(post_range_u_out) }
     end
 
     context 'l+数字が指定されたとき' do
@@ -29,13 +30,12 @@ describe GroupsPostsController do
         get :index, group_id: group.id, renge: 'l2'
       end
 
-      it '新しい2件のpostが検出されること' do
-        assigns(:posts).should have(2).items
-        assigns(:posts).should_not include(post_single)
-        assigns(:posts).should_not include(post_range_lower)
-        assigns(:posts).should     include(post_range_upper)
-        assigns(:posts).should     include(post_range_u_out)
-      end
+      # 新しい2件のpostが検出されること
+      it { should have(2).items }
+      it { should_not include(post_single) }
+      it { should_not include(post_range_lower) }
+      it { should     include(post_range_upper) }
+      it { should     include(post_range_u_out) }
     end
 
     context '範囲が指定されたとき' do
@@ -43,13 +43,12 @@ describe GroupsPostsController do
         get :index, group_id: group.id, renge: "#{post_range_lower.idx}-#{post_range_upper.idx}"
       end
 
-      it '範囲内のpostが検出されること' do
-        assigns(:posts).should have(2).items
-        assigns(:posts).should_not include(post_single)
-        assigns(:posts).should     include(post_range_lower)
-        assigns(:posts).should     include(post_range_upper)
-        assigns(:posts).should_not include(post_range_u_out)
-      end
+      # 範囲内のpostが検出されること
+      it { should have(2).items }
+      it { should_not include(post_single) }
+      it { should     include(post_range_lower) }
+      it { should     include(post_range_upper) }
+      it { should_not include(post_range_u_out) }
     end
     
     context '数値が指定されたとき' do
@@ -57,13 +56,12 @@ describe GroupsPostsController do
         get :index, group_id: group.id, renge: post_single.idx.to_s
       end
 
-      it '指定されたpostだけが検出されること' do
-        assigns(:posts).should have(1).items
-        assigns(:posts).should     include(post_single)
-        assigns(:posts).should_not include(post_range_lower)
-        assigns(:posts).should_not include(post_range_upper)
-        assigns(:posts).should_not include(post_range_u_out)
-      end
+      # 指定されたpostだけが検出されること
+      it { should have(1).items }
+      it { should     include(post_single) }
+      it { should_not include(post_range_lower) }
+      it { should_not include(post_range_upper) }
+      it { should_not include(post_range_u_out) }
     end
   end
 
