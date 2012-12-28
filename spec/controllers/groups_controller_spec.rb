@@ -49,7 +49,7 @@ describe GroupsController do
   describe "GET 'edit'" do
     let(:you) { FactoryGirl.create(:user) }
     let!(:group) { FactoryGirl.create(:group, owner_user_id: owner.id) }
-    before { request.session[:user_id] = you.id }
+    before { login_as(you) }
 
     context 'Ownerの場合はアクセスできること' do
       let(:owner) { you }
@@ -71,14 +71,14 @@ describe GroupsController do
     context "with valid params" do
       context "with login" do
         context 'Groupが1件増えていること' do
-          before { request.session[:user_id] = you.id }
+          before { login_as(you) }
           it { expect{ post :create, {group: group} }.to change(Group, :count).by(1) }
         end
 
         context 'group_url(:id)にリダイレクトすること' do
           let(:new) { assigns(:group) }
           before do
-            request.session[:user_id] = you.id
+            login_as(you)
             post :create, {group: group}
           end
           it { response.should redirect_to(group_url(new)) }
@@ -88,7 +88,7 @@ describe GroupsController do
           subject { assigns(:group) }
 
           before do
-            request.session[:user_id] = you.id
+            login_as(you)
             post :create, {group: group}
           end
 
@@ -105,7 +105,7 @@ describe GroupsController do
 
     context "with invalid params" do
       before do
-        request.session[:user_id] = you.id
+        login_as(you)
         Group.any_instance.stub(:save) { false }
         post :create, {group: {}}
       end
@@ -118,7 +118,7 @@ describe GroupsController do
     let!(:you) { FactoryGirl.create(:user) }
     let(:current) { FactoryGirl.create(:group, owner_user_id: owner.id) }
 
-    before { request.session[:user_id] = you.id }
+    before { login_as(you) }
 
     describe "with valid params" do
       let(:edited) { FactoryGirl.attributes_for(:group) }
@@ -160,7 +160,7 @@ describe GroupsController do
     let(:you) { FactoryGirl.create(:user) }
     let!(:group) { FactoryGirl.create(:group, owner_user_id: owner.id) }
     before do
-      request.session[:user_id] = you.id
+      login_as(you)
       Group.any_instance.stub_chain(:users, :size){ 1 }
     end
 
