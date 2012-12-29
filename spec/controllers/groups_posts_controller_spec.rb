@@ -66,6 +66,7 @@ describe GroupsPostsController do
   end
 
   describe "POST 'create'" do
+    subject { response }
     let!(:group) { FactoryGirl.create(:group) }
     let!(:user) { FactoryGirl.create(:user) }
     let!(:user_group) { FactoryGirl.create(:user_group,group_id: group.id, user_id: user.id) }
@@ -78,8 +79,8 @@ describe GroupsPostsController do
       end
 
       it 'リダイレクトすること' do
-        response.should be_redirect
-        response.should redirect_to(group_posts_url + "#" + assigns(:post).idx.to_s)
+        should be_redirect
+        should redirect_to(group_posts_url + "#" + assigns(:post).idx.to_s)
       end
     end
     
@@ -90,8 +91,8 @@ describe GroupsPostsController do
       end
 
       it '書き込みに失敗し、newアクションを行うこと' do
-        response.should be_success
-        response.should render_template('new')
+        should be_success
+        should render_template('new')
       end
     end
   end
