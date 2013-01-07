@@ -46,4 +46,24 @@ describe Members do
       end
     end
   end
+
+  describe '#leave' do
+    let(:you) { FactoryGirl.create(:user) }
+    let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
+
+    before do
+      @routes.draw { get "anonymous/:id/leave" => "anonymous#leave" }
+    end
+
+    context 'ユーザーがメンバーの場合' do
+      before { login_as(you) }
+      it { expect { get :leave, id: group.to_param }.to change(UserGroup, :count).by(-1) }
+    end
+
+    context 'ユーザーがメンバーではない場合' do
+      let(:other) { FactoryGirl.create(:user) }
+      before { login_as(other) }
+      it { expect { get :leave, id: group.to_param }.to change(UserGroup, :count).by(0) }
+    end
+  end
 end
