@@ -8,12 +8,12 @@ describe Members do
     include Members
   end
 
+  let(:you) { FactoryGirl.create(:user) }
+
   describe '#join' do
     before do
       @routes.draw { get "anonymous/:id/join" => "anonymous#join" }
     end
-
-    let(:you) { FactoryGirl.create(:user) }
 
     context 'ログインしていない場合' do
       let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
@@ -48,7 +48,6 @@ describe Members do
   end
 
   describe '#leave' do
-    let(:you) { FactoryGirl.create(:user) }
     let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
 
     before do
@@ -68,8 +67,6 @@ describe Members do
   end
 
   describe '#request_to_join' do
-    let(:you) { FactoryGirl.create(:user) }
-
     before do
       @routes.draw { get "anonymous/:id/request_to_join" => "anonymous#request_to_join" }
     end
@@ -116,7 +113,6 @@ describe Members do
   end
 
   describe '#delete_request' do
-    let(:you) { FactoryGirl.create(:user) }
     let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
 
     before do

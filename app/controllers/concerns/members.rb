@@ -4,7 +4,7 @@ module Members
   extend ActiveSupport::Concern
 
   included do
-    before_filter :find_group, only: [:join, :leave, :request_to_join, :delete_request]
+    before_filter :_find_group, only: [:join, :leave, :request_to_join, :delete_request] #TODO インクルード先での衝突回避
     before_filter :login_required, only: [:join, :request_to_join, :delete_request]
     before_filter :member_only, only: [:leave]
   end
@@ -54,7 +54,7 @@ module Members
   end
 
   private
-  def find_group
+  def _find_group #TODO インクルード先での衝突回避
     @group = Group.find(params[:id])
   end
 
