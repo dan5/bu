@@ -4,8 +4,8 @@ module Members
   extend ActiveSupport::Concern
 
   included do
-    before_filter :find_group, only: [:join, :leave, :request_to_join]
-    before_filter :login_required, only: [:join, :request_to_join]
+    before_filter :find_group, only: [:join, :leave, :request_to_join, :delete_request]
+    before_filter :login_required, only: [:join, :request_to_join, :delete_request]
     before_filter :member_only, only: [:leave]
   end
 
@@ -45,8 +45,6 @@ module Members
   end
 
   def delete_request
-    login_required
-    @group = Group.find(params[:id])
     if @group.requesting_user?(@user)
       @group.requesting_users.delete @user
       redirect_to @group, notice: 'Deleted request.'
