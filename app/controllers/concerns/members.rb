@@ -1,9 +1,15 @@
 # coding: utf-8
 # TODO: 適正なcontrollerに再配置する
 module Members
+  extend ActiveSupport::Concern
+
+  included do
+    before_filter :find_group, only: [:join, :leave]
+    before_filter :login_required, only: [:join]
+    before_filter :member_only, only: [:leave]
+  end
+
   def leave
-    @group = Group.find(params[:id])
-    only_group_member(@group)
     @group.users.delete(@user)
     redirect_to @group, notice: 'Left.'
   end
@@ -53,5 +59,9 @@ module Members
   private
   def find_group
     @group = Group.find(params[:id])
+  end
+
+  def member_only #TODO
+    only_group_member(@group)
   end
 end
