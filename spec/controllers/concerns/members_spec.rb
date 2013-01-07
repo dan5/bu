@@ -28,12 +28,12 @@ describe Members do
       context 'グループがpublicである場合' do
         let(:permission) { 0 }
 
-        context 'ユーザーがメンバーの場合' do
+        context 'あなたがメンバーの場合' do
           before { login_as(you) }
           it { expect { get :join, id: group.to_param }.to change(UserGroup, :count).by(0) }
         end
 
-        context 'ユーザーがメンバーではない場合' do
+        context 'あなたがメンバーではない場合' do
           let(:other) { FactoryGirl.create(:user) }
           before { login_as(other) }
           it { expect { get :join, id: group.to_param }.to change(UserGroup, :count).by(+1) }
@@ -55,12 +55,12 @@ describe Members do
       @routes.draw { get "anonymous/:id/leave" => "anonymous#leave" }
     end
 
-    context 'ユーザーがメンバーの場合' do
+    context 'あなたがメンバーの場合' do
       before { login_as(you) }
       it { expect { get :leave, id: group.to_param }.to change(UserGroup, :count).by(-1) }
     end
 
-    context 'ユーザーがメンバーではない場合' do
+    context 'あなたがメンバーではない場合' do
       let(:other) { FactoryGirl.create(:user) }
       before { login_as(other) }
       it { expect { get :leave, id: group.to_param }.to change(UserGroup, :count).by(0) }
@@ -92,12 +92,12 @@ describe Members do
       context 'グループがpublicでない場合' do
         let(:permission) { 1 }
 
-        context 'ユーザーがメンバーの場合' do
+        context 'あなたがメンバーの場合' do
           before { login_as(you) }
           it { expect { get :request_to_join, id: group.to_param }.to change(MemberRequest, :count).by(0) }
         end
 
-        context 'ユーザーがメンバーリクエスト済の場合' do
+        context 'あなたがメンバーリクエスト済の場合' do
           let(:other) { FactoryGirl.create(:user) }
           before do
             login_as(other)
@@ -106,7 +106,7 @@ describe Members do
           it { expect { get :request_to_join, id: group.to_param }.to change(MemberRequest, :count).by(0) }
         end
 
-        context 'ユーザーがメンバーではない場合' do
+        context 'あなたがメンバーではない場合' do
           let(:other) { FactoryGirl.create(:user) }
           before { login_as(other) }
           it { expect { get :request_to_join, id: group.to_param }.to change(MemberRequest, :count).by(+1) }
@@ -127,12 +127,12 @@ describe Members do
       let(:other) { FactoryGirl.create(:user) }
       before { login_as(other) }
 
-      context 'ユーザーがメンバーリクエスト済の場合' do
+      context 'あなたがメンバーリクエスト済の場合' do
         before { group.requesting_users << other }
         it { expect { get :delete_request, id: group.to_param }.to change(MemberRequest, :count).by(-1) }
       end
 
-      context 'ユーザーがメンバーリクエストしていない場合' do
+      context 'あなたがメンバーリクエストしていない場合' do
         it { expect { get :delete_request, id: group.to_param }.to change(MemberRequest, :count).by(0) }
       end
     end
