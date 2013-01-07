@@ -114,4 +114,31 @@ describe Members do
       end
     end
   end
+
+  describe '#delete_request' do
+    let(:you) { FactoryGirl.create(:user) }
+    let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
+
+    before do
+      @routes.draw { get "anonymous/:id/delete_request" => "anonymous#delete_request" }
+    end
+
+    context 'ログインしている場合' do
+      let(:other) { FactoryGirl.create(:user) }
+      before { login_as(other) }
+
+      context 'ユーザーがメンバーリクエスト済の場合' do
+        before { group.requesting_users << other }
+        it { expect { get :delete_request, id: group.to_param }.to change(MemberRequest, :count).by(-1) }
+      end
+
+      context 'ユーザーがメンバーリクエストしていない場合' do
+        it { expect { get :delete_request, id: group.to_param }.to change(MemberRequest, :count).by(0) }
+      end
+    end
+
+    context 'ログインしていない場合' do
+      it { expect { get :delete_request, id: group.to_param }.to change(MemberRequest, :count).by(0) }
+    end
+  end
 end
