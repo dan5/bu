@@ -9,17 +9,16 @@ module Members
   end
 
   def join
-    login_required
-    @group = Group.find(params[:id])
-    if @group.public?
-      if @group.member?(@user)
-        redirect_to @group, notice: 'You already are a member of this group.'
-      else
-        @group.users << @user
-        redirect_to @group, notice: 'Joined.'
-      end
-    else
+    unless @group.public?
       redirect_to @group, notice: 'Not joined.'
+      return
+    end
+
+    if @group.member?(@user)
+      redirect_to @group, notice: 'You already are a member of this group.'
+    else
+      @group.users << @user
+      redirect_to @group, notice: 'Joined.'
     end
   end
 
@@ -49,5 +48,10 @@ module Members
     else
       redirect_to @group, notice: 'Not deleted request.'
     end
+  end
+
+  private
+  def find_group
+    @group = Group.find(params[:id])
   end
 end
