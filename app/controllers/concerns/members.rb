@@ -1,4 +1,5 @@
 # coding: utf-8
+# TODO: 適正なcontrollerに再配置する
 module Members
   def leave
     @group = Group.find(params[:id])
