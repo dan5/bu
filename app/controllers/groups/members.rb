@@ -1,9 +1,5 @@
 # coding: utf-8
 module Members
-  def description #TODO javascriptでやるべき
-    redirect_to group_path(show_description: true)
-  end
-
   def leave
     @group = Group.find(params[:id])
     only_group_member(@group)

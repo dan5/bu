@@ -54,6 +54,10 @@ class GroupsController < ApplicationController
     end
   end
 
+  def description #TODO javascriptでやるべき
+    redirect_to group_path(show_description: true)
+  end
+
   private
 
   def set_subtitle(title = nil) #TODO: https://github.com/lwe/page_title_helper

@@ -1,29 +1,44 @@
+# coding: utf-8
 class UserGroupsController < ApplicationController
-  before_filter {
-    @user_group = UserGroup.find(params[:id])
-    @group = @user_group.group
-    only_group_manager(@group)
-  }
+  before_filter :find_user_group, :find_group, :manager_only
+  before_filter :owner_only, only: :destroy
 
-  # PUT /user_groups/1
+  rescue_from Group::NotGroupOwner do
+    redirect_to group_users_url(@group.id), notice: 'Cannot remove owner.'
+  end
+
   def update
-    @user_group.role = params[:user_group][:role]
-    path = "/groups/#{@group.id}/users"
-    if @user_group.save
-      redirect_to path, notice: 'Role was successfully updateed.'
+    if @user_group.update_attributes(user_group_params)
+      redirect_to group_users_url(@group.id), notice: 'Role was successfully updateed.'
     else
-      redirect_to path
+      redirect_to group_users_url(@group.id)
     end
   end
 
-  # DELETE /user_groups/1
   def destroy
-    path = "/groups/#{@group.id}/users"
-    if @group.owner?(@user_group.user)
-      redirect_to path, notice: 'Cannot remove owner.'
-    else
-      @user_group.destroy
-      redirect_to path, notice: 'Remeved member.'
-    end
+    @user_group.destroy
+    redirect_to group_users_url(@group.id), notice: 'Remeved member.'
+  end
+
+  private
+  def find_user_group
+    @user_group = UserGroup.find(params[:id])
+  end
+
+  def find_group
+    @group = @user_group.group
+  end
+
+  def manager_only
+    only_group_manager(@group)
+  end
+
+  def user_group_params
+    { role: params[:user_group].try(:[], :role) }
+  end
+
+  private
+  def owner_only
+    raise Group::NotGroupOwner if @group.owner?(@user_group.user)
   end
 end
