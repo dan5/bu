@@ -4,8 +4,8 @@ module Members
   extend ActiveSupport::Concern
 
   included do
-    before_filter :find_group, only: [:join, :leave]
-    before_filter :login_required, only: [:join]
+    before_filter :find_group, only: [:join, :leave, :request_to_join]
+    before_filter :login_required, only: [:join, :request_to_join]
     before_filter :member_only, only: [:leave]
   end
 
@@ -29,19 +29,18 @@ module Members
   end
 
   def request_to_join
-    login_required
-    @group = Group.find(params[:id])
-    unless @group.public?
-      if @group.member?(@user)
-        redirect_to @group, notice: 'You already are a member of this group.'
-      elsif @group.requesting_user?(@user)
-        redirect_to @group, notice: 'You already requested to join this group.'
-      else
-        @group.requesting_users << @user
-        redirect_to @group, notice: 'Requested.'
-      end
-    else
+    if @group.public?
       redirect_to @group, notice: 'Not requested.'
+      return
+    end
+
+    if @group.member?(@user)
+      redirect_to @group, notice: 'You already are a member of this group.'
+    elsif @group.requesting_user?(@user)
+      redirect_to @group, notice: 'You already requested to join this group.'
+    else
+      @group.requesting_users << @user
+      redirect_to @group, notice: 'Requested.'
     end
   end
 
