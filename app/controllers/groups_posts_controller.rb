@@ -1,7 +1,9 @@
 class GroupsPostsController < ApplicationController
-  def index
+  before_filter :find_group, only: [:index, :create]
+  before_filter :member_only, only: [:create]
+
+  def index  #普通の実装になおすべき
     # @todo: 1001件目からを1として表示し古いpostsは過去ログとする
-    @group = Group.find(params[:group_id])
     only_group_member(@group) if @group.secret?
 
     limit = 1000
@@ -11,7 +13,7 @@ class GroupsPostsController < ApplicationController
       limit = 1000
     when /l(\d+)/
       limit = $1.to_i
-    when /(\d+)?-(\d+)?/
+    when /(\d+)?-(\d+)?/ #機能していない模様
       s = $1 || 1
       e = $2 || @group.posts.maximum(:idx)
       conditions = ['idx >= ? and idx <= ?', s, e]
@@ -28,18 +30,23 @@ class GroupsPostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(params[:post])
-    @group = @post.group
-    only_group_member(@group)
-    @post.user = @user
-    @post.idx = @group.posts.maximum('idx').to_i + 1
-    #@post.notification
+    @post = @group.posts.build(params[:post]) do |model|
+      model.user = @user
+    end
 
     if @post.save
-      path = "/groups/#{@group.id}/posts##{@post.idx}"
-      redirect_to path, notice: 'Post was successfully created.'
+      redirect_to group_posts_url(anchor: @post.idx), notice: 'Post was successfully created.'
     else
       render action: "new"
     end
+  end
+
+  private
+  def find_group
+    @group = Group.find(params[:group_id])
+  end
+
+  def member_only
+    only_group_member(@group)
   end
 end
