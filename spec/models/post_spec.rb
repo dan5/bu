@@ -18,4 +18,15 @@ describe Post do
     it { should belong_to(:user) }
     it { should belong_to(:group) }
   end
+
+  describe '#idx' do
+    let(:group) { FactoryGirl.create(:group) }
+    let(:other_group) { FactoryGirl.create(:group) }
+
+    let!(:posts) { FactoryGirl.create_list(:post, Forgery::Basic.number, group: group) }
+    let!(:other_posts) { FactoryGirl.create_list(:post, Forgery::Basic.number, group: other_group) }
+
+    subject { FactoryGirl.create(:post, group: group) }
+    it { subject.idx.should eq posts.count + 1 }
+  end
 end
