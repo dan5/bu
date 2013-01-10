@@ -1,20 +1,10 @@
 # coding: utf-8
 require 'spec_helper'
 
-describe Members do
-  include RSpec::Rails::ControllerExampleGroup
-
-  controller do
-    include Members
-  end
-
+describe GroupsController do
   let(:you) { FactoryGirl.create(:user) }
 
   describe '#join' do
-    before do
-      @routes.draw { get "anonymous/:id/join" => "anonymous#join" }
-    end
-
     context 'ログインしていない場合' do
       let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
 
@@ -50,10 +40,6 @@ describe Members do
   describe '#leave' do
     let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
 
-    before do
-      @routes.draw { get "anonymous/:id/leave" => "anonymous#leave" }
-    end
-
     context 'あなたがメンバーの場合' do
       before { login_as(you) }
       it { expect { get :leave, id: group.to_param }.to change(UserGroup, :count).by(-1) }
@@ -67,10 +53,6 @@ describe Members do
   end
 
   describe '#request_to_join' do
-    before do
-      @routes.draw { get "anonymous/:id/request_to_join" => "anonymous#request_to_join" }
-    end
-
     context 'ログインしていない場合' do
       let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
 
@@ -114,10 +96,6 @@ describe Members do
 
   describe '#delete_request' do
     let!(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
-
-    before do
-      @routes.draw { get "anonymous/:id/delete_request" => "anonymous#delete_request" }
-    end
 
     context 'ログインしている場合' do
       let(:other) { FactoryGirl.create(:user) }
