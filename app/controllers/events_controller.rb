@@ -8,15 +8,17 @@ class EventsController < ApplicationController
     only_group_member(group) if group.secret?
   }
 
+  before_filter :find_event, only: [:show]
+
   after_filter {
     if action_name == 'show'
       session[:redirect_path_after_event_show] = "/events/#{@event.id}"
     end
   }
+
   # GET /events/1
   def show
-    @event = Event.find(params[:id])
-    @comment = Comment.new(:event_id => @event.id)
+    @comment = @event.comments.build
     set_subtitle
   end
 
@@ -91,5 +93,9 @@ class EventsController < ApplicationController
 
   def set_subtitle(title = nil)
     @subtitle = ": #{@event.group.name} #{title or @event.title}"
+  end
+
+  def find_event
+    @event = Event.find(params[:id])
   end
 end
