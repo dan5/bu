@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   }
 
   before_filter :find_event, only: [:show]
-  before_filter :find_group, only: [:new]
+  before_filter :find_group, only: [:new, :edit]
 
   after_filter {
     if action_name == 'show'
@@ -31,8 +31,7 @@ class EventsController < ApplicationController
 
   # GET /events/1/edit
   def edit
-    @event = Event.find(params[:id])
-    @group = @event.group
+    @event = @group.events.find(params[:id])
     set_subtitle
   end
 

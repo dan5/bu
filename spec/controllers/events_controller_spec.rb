@@ -22,5 +22,19 @@ describe EventsController do
     end
 
     it { response.should be_success }
+    it { assigns(:event).group_id.should eq group.id }
+  end
+
+  describe "GET 'edit'" do
+    let(:group) { FactoryGirl.create(:group) }
+    let(:event) { FactoryGirl.create(:event, group_id: group.id) }
+
+    before do
+      @request.session[:group_id] = group.id
+      get :edit, id: event.id
+    end
+
+    it { response.should be_success }
+    it { assigns(:event).group_id.should eq group.id }
   end
 end
