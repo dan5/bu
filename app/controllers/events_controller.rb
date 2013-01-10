@@ -9,6 +9,7 @@ class EventsController < ApplicationController
   }
 
   before_filter :find_event, only: [:show]
+  before_filter :find_group, only: [:new]
 
   after_filter {
     if action_name == 'show'
@@ -24,10 +25,7 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
-    # todo: use hidden
-    @group = Group.find(session[:group_id])
-    @event.group = @group
+    @event = @group.events.build
     set_subtitle 'new'
   end
 
@@ -97,5 +95,9 @@ class EventsController < ApplicationController
 
   def find_event
     @event = Event.find(params[:id])
+  end
+
+  def find_group
+    @group = Group.find(session[:group_id])
   end
 end
