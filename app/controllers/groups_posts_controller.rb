@@ -2,7 +2,7 @@ class GroupsPostsController < ApplicationController
   before_filter :find_group, only: [:index, :create]
   before_filter :member_only, only: [:create]
 
-  def index  #普通の実装になおすべき
+  def index  #TODO: 実装方法については要検討
     # @todo: 1001件目からを1として表示し古いpostsは過去ログとする
     only_group_member(@group) if @group.secret?
 
@@ -13,7 +13,7 @@ class GroupsPostsController < ApplicationController
       limit = 1000
     when /l(\d+)/
       limit = $1.to_i
-    when /(\d+)?-(\d+)?/ #機能していない模様
+    when /(\d+)?-(\d+)?/ #TODO: viewと連動して機能していない模様
       s = $1 || 1
       e = $2 || @group.posts.maximum(:idx)
       conditions = ['idx >= ? and idx <= ?', s, e]
