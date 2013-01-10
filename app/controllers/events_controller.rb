@@ -1,20 +1,13 @@
 class EventsController < ApplicationController
-  include Attendees
+  include ::Attendees
   rescue_from ActiveRecord::RecordInvalid, :with => -> { redirect_to :back, :notice => 'error' }
 
-  before_filter { # for secret group
-    params[:id] or return
-    group = Event.find(params[:id]).group
-    only_group_member(group) if group.secret?
-  }
-
+  before_filter :find_group, only: [:new, :edit, :show]
+  before_filter :member_only, only: [:new, :edit, :show]
   before_filter :find_event, only: [:show]
-  before_filter :find_group, only: [:new, :edit]
 
-  after_filter {
-    if action_name == 'show'
-      session[:redirect_path_after_event_show] = "/events/#{@event.id}"
-    end
+  after_filter(only: :show) {
+    session[:redirect_path_after_event_show] = event_url(@event.id)
   }
 
   # GET /events/1
@@ -93,10 +86,14 @@ class EventsController < ApplicationController
   end
 
   def find_event
-    @event = Event.find(params[:id])
+    @event = @group.events.find(params[:id])
   end
 
   def find_group
     @group = Group.find(session[:group_id])
+  end
+
+  def member_only #TODO
+    only_group_member(@group) if @group.secret?
   end
 end
