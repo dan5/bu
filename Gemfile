@@ -18,17 +18,17 @@ gem 'omniauth-twitter'
 group :test, :development do
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem "rspec-rails"
-  gem 'rails_best_practices', ">= 1.2.0", :require => false
-  gem "database_cleaner"
+  gem 'rspec-rails', '2.12.0'
+  gem 'rails_best_practices', '>= 1.2.0', :require => false
+  gem 'database_cleaner'
   gem 'forgery'
   gem 'pry-rails'
   gem 'pry-nav'
   gem 'pry-coolline'
-  gem "capybara"
-  gem "launchy"
+  gem 'capybara'
+  gem 'launchy'
   gem 'headless'
-  gem "shoulda-matchers", :git => 'git://github.com/thoughtbot/shoulda-matchers.git', :ref => 'fd4aa5'
+  gem 'shoulda-matchers', :git => 'git://github.com/thoughtbot/shoulda-matchers.git', :ref => 'fd4aa5'
   gem 'simplecov', require: false
-  #gem "rails-erd"
+  #gem 'rails-erd'
 end
