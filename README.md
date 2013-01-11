@@ -17,7 +17,6 @@ $ rails server
 # 開発に参加するには
 
 - [buktdev - Lingr](http://lingr.com/room/buktdev) に開発の相談ができるチャットルームを設置しています。
-- `rake erd` で ERD 図が生成できます。(要 graphviz / brew 等でインストール可)
 - `rake routes` でルートの一覧を表示できます。
 - `rake spec` を実行し、既存のテストを壊していないことを確認してください。
 - git に不慣れな方は以下を参考にしてください。わからないところは気軽に Lingr で聞いてください。
