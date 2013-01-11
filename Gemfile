@@ -14,6 +14,7 @@ gem 'haml-rails'
 gem 'execjs'
 gem 'omniauth'
 gem 'omniauth-twitter'
+gem 'hikidoc'
 
 group :test, :development do
   gem 'factory_girl'
