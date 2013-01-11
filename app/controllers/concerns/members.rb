@@ -5,7 +5,7 @@ module Members
 
   included do
     before_filter :_find_group, only: [:join, :leave, :request_to_join, :delete_request] #TODO インクルード先での衝突回避
-    before_filter :login_user_only, only: [:join, :request_to_join, :delete_request] #よくわからん
+    before_filter :login_required, only: [:join, :request_to_join, :delete_request]
     before_filter :member_only, only: [:leave]
   end
 
@@ -60,9 +60,5 @@ module Members
 
   def member_only #TODO
     only_group_member(@group)
-  end
-
-  def login_user_only
-    login_required
   end
 end
