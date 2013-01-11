@@ -2,8 +2,9 @@ class EventsController < ApplicationController
   include ::Attendees
   rescue_from ActiveRecord::RecordInvalid, :with => -> { redirect_to :back, :notice => 'error' }
 
-  before_filter :find_group, only: [:new, :edit, :show]
+  before_filter :find_group, only: [:new, :edit, :show, :create]
   before_filter :member_only, only: [:new, :edit, :show]
+  before_filter :member_only_for_create, only: [:create]
   before_filter :find_event, only: [:show]
 
   after_filter(only: :show) {
@@ -30,12 +31,9 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
-    # todo: use hidden
-    params[:event].delete(:group_id)
-    group = Group.find(session[:group_id])
-    only_group_member(group)
-    @event = group.events.new(params[:event])
-    @event.owner = @user
+    @event = @group.events.new(params[:event]) do |model|
+      model.owner = current_user
+    end
 
     if @event.save
       redirect_to @event, notice: 'Event was successfully created.'
@@ -95,5 +93,13 @@ class EventsController < ApplicationController
 
   def member_only #TODO
     only_group_member(@group) if @group.secret?
+  end
+
+  def member_only_for_create #TODO
+    only_group_member(@group)
+  end
+
+  def current_user
+    @user
   end
 end
