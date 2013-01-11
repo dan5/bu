@@ -1,6 +1,21 @@
 # coding: utf-8
 # TODO: 適正なcontrollerに再配置する
 module Attendees
+
+  def cancel
+    @event = Event.find(params[:id])
+    only_event_manager(@event)
+    @event.cancel
+    redirect_to @event, notice: 'Event was successfully canceled.'
+  end
+
+  def be_active
+    @event = Event.find(params[:id])
+    only_event_manager(@event)
+    @event.be_active
+    redirect_to @event, notice: 'Event is active.'
+  end
+
   def delete
     event = Event.find(params[:id])
     if atnd = @user.atnd(event)

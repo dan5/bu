@@ -56,11 +56,13 @@ describe EventsController do
     let(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
     let(:event) { FactoryGirl.attributes_for(:event) }
 
-    before { @request.session[:group_id] = group.id }
+    before do
+      @request.session[:group_id] = group.id
+      @request.session[:user_id] = you.id
+    end
 
     context 'あなたがメンバーではない場合' do
       before do
-        @request.session[:user_id] = you.id
         EventsController.any_instance.stub(:current_user) { you }
         Group.any_instance.stub(:member?) { false }
         bypass_rescue
@@ -75,7 +77,6 @@ describe EventsController do
 
     context 'あなたがメンバーの場合' do
       before do
-        @request.session[:user_id] = you.id
         EventsController.any_instance.stub(:current_user) { you }
         Group.any_instance.stub(:member?) { true }
       end
@@ -93,6 +94,86 @@ describe EventsController do
           post :create, {event: event}
         end
         it { should render_template :new }
+      end
+    end
+  end
+
+  describe 'PUT update' do
+    let(:you) { FactoryGirl.create(:user) }
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you.to_param) }
+    let(:event) { FactoryGirl.create(:event, group_id: group.to_param, owner_user_id: you.to_param) }
+
+    before do
+      @request.session[:user_id] = you.id
+      @request.session[:group_id] = group.to_param
+    end
+
+    context 'あなたがイベント管理者ではない場合' do
+      before do
+        Event.any_instance.stub(:manager?) { false }
+        bypass_rescue
+      end
+
+      it 'NotEventManagerになること' do
+        expect { 
+          put :update, event: {}, id: event.to_param
+        }.to raise_error(Event::NotEventManager)
+      end
+    end
+
+    context 'あなたがイベント管理者の場合' do
+      before { Event.any_instance.stub(:manager?) { true } }
+      
+      context '有効なパラメータが送信された時' do
+        before do
+          Event.any_instance.stub(:update_attributes) { true }
+          put :update, event: event, id: event.to_param
+        end
+        it { should redirect_to event_url(event.to_param) }
+      end
+
+      context '無効なパラメータが送信された時' do
+        before do
+          Event.any_instance.stub(:update_attributes) { false }
+          put :update, event: event, id: event.to_param
+        end
+        it { should render_template :edit }
+      end
+    end
+  end
+
+  describe "DELETE destroy" do
+    let(:you) { FactoryGirl.create(:user) }
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you.to_param) }
+    let!(:event) { FactoryGirl.create(:event, group_id: group.to_param, owner_user_id: you.to_param) }
+
+    before do
+      @request.session[:user_id] = you.id
+      @request.session[:group_id] = group.to_param
+    end
+
+    context 'あなたがイベントマネージャーの場合' do
+      before do
+        Event.any_instance.stub(:manager?) { true }
+      end
+
+      it '削除できる' do 
+        expect {
+          delete :destroy, id: event.to_param
+        }.to change(Event, :count).by(-1)
+      end
+    end
+
+    context 'あなたがイベントマネージャーではない場合' do
+      before do
+        Event.any_instance.stub(:manager?) { false }
+        bypass_rescue
+      end
+
+      it 'NotEventManagerになること' do
+        expect { 
+          delete :destroy, id: event.to_param
+        }.to raise_error(Event::NotEventManager)
       end
     end
   end

@@ -2,10 +2,11 @@ class EventsController < ApplicationController
   include ::Attendees
   rescue_from ActiveRecord::RecordInvalid, :with => -> { redirect_to :back, :notice => 'error' }
 
-  before_filter :find_group, only: [:new, :edit, :show, :create]
+  before_filter :find_group, only: [:new, :edit, :show, :create, :update, :destroy]
   before_filter :member_only, only: [:new, :edit, :show]
   before_filter :member_only_for_create, only: [:create]
-  before_filter :find_event, only: [:show]
+  before_filter :find_event, only: [:show, :update, :destroy]
+  before_filter :event_manager_only, only: [:update, :destroy]
 
   after_filter(only: :show) {
     session[:redirect_path_after_event_show] = event_url(@event.id)
@@ -44,9 +45,6 @@ class EventsController < ApplicationController
 
   # PUT /events/1
   def update
-    @event = Event.find(params[:id])
-    only_event_manager(@event)
-
     if @event.update_attributes(params[:event])
       redirect_to @event, notice: 'Event was successfully updated.'
     else
@@ -56,25 +54,8 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
-    @event = Event.find(params[:id])
-    only_event_manager(@event)
     @event.destroy
-
     redirect_to @event.group
-  end
-
-  def cancel
-    @event = Event.find(params[:id])
-    only_event_manager(@event)
-    @event.cancel
-    redirect_to @event, notice: 'Event was successfully canceled.'
-  end
-
-  def be_active
-    @event = Event.find(params[:id])
-    only_event_manager(@event)
-    @event.be_active
-    redirect_to @event, notice: 'Event is active.'
   end
 
   private
@@ -97,6 +78,10 @@ class EventsController < ApplicationController
 
   def member_only_for_create #TODO
     only_group_member(@group)
+  end
+
+  def event_manager_only #TODO
+    only_event_manager(@event)
   end
 
   def current_user
