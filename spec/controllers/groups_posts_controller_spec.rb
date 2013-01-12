@@ -75,27 +75,22 @@ describe GroupsPostsController do
       before do
         session[:user_id] = user.id
         # FIXME このURLをどうにかできないかな。group.idが3つも出てくる
-        post :create, post: { text: Forgery::Basic.text, group_id: group.id }, id: group.id, group_id: group.id
+        #post :create, post: { text: Forgery::Basic.text, group_id: group.id }, id: group.id, group_id: group.id
+        post :create, post: { text: Forgery::Basic.text }, group_id: group.id
       end
 
-      it 'リダイレクトすること' do
-        should be_redirect
-        should redirect_to(group_posts_url + "#" + assigns(:post).idx.to_s)
-      end
+      it { should be_redirect }
+      it { should redirect_to(group_posts_url(anchor: assigns(:post).idx)) }
     end
     
     context '書き込み内容に記載がないとき' do
       before do
         session[:user_id] = user.id
-        post :create, post: { text: '', group_id: group.id }, id: group.id, group_id: group.id
+        post :create, post: { text: '' }, group_id: group.id
       end
 
-      it '書き込みに失敗し、newアクションを行うこと' do
-        should be_success
-        should render_template('new')
-      end
+      it { should be_success }
+      it { should render_template('new') }
     end
   end
-
 end
-
