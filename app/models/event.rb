@@ -3,12 +3,12 @@ class Event < ActiveRecord::Base
   class NotEventManager < Exception ; end
 
   belongs_to :group
+
   has_many :comments, dependent: :destroy
   has_many :user_events, dependent: :destroy, order: :updated_at
   has_many :users, :through => :user_events
 
-  validates :title, :presence => true,
-                   :length => { :maximum => 32 }
+  validates :title, :presence => true, :length => { :maximum => 32 }
 
   def img
     src = image_src
