@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118151213) do
+ActiveRecord::Schema.define(:version => 20130118151722) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -86,6 +86,9 @@ ActiveRecord::Schema.define(:version => 20130118151213) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "user_events", ["event_id"], :name => "index_user_events_on_event_id"
+  add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
 
   create_table "user_groups", :force => true do |t|
     t.integer  "user_id"
