@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118144343) do
+ActiveRecord::Schema.define(:version => 20130118145747) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(:version => 20130118144343) do
     t.string   "image_url"
     t.boolean  "canceled",      :default => false
   end
+
+  add_index "events", ["group_id"], :name => "index_events_on_group_id"
 
   create_table "groups", :force => true do |t|
     t.integer  "owner_user_id"
