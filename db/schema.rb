@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425074614) do
+ActiveRecord::Schema.define(:version => 20130118152149) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(:version => 20120425074614) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "comments", ["event_id"], :name => "index_comments_on_event_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "events", :force => true do |t|
     t.integer  "group_id"
@@ -37,6 +40,8 @@ ActiveRecord::Schema.define(:version => 20120425074614) do
     t.string   "image_url"
     t.boolean  "canceled",      :default => false
   end
+
+  add_index "events", ["group_id"], :name => "index_events_on_group_id"
 
   create_table "groups", :force => true do |t|
     t.integer  "owner_user_id"
@@ -57,6 +62,9 @@ ActiveRecord::Schema.define(:version => 20120425074614) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "member_requests", ["group_id"], :name => "index_member_requests_on_group_id"
+  add_index "member_requests", ["user_id"], :name => "index_member_requests_on_user_id"
+
   create_table "posts", :force => true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
@@ -68,6 +76,9 @@ ActiveRecord::Schema.define(:version => 20120425074614) do
     t.datetime "updated_at",   :null => false
   end
 
+  add_index "posts", ["group_id"], :name => "index_posts_on_group_id"
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
+
   create_table "user_events", :force => true do |t|
     t.integer  "user_id"
     t.integer  "event_id"
@@ -75,6 +86,9 @@ ActiveRecord::Schema.define(:version => 20120425074614) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "user_events", ["event_id"], :name => "index_user_events_on_event_id"
+  add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
 
   create_table "user_groups", :force => true do |t|
     t.integer  "user_id"
@@ -84,6 +98,9 @@ ActiveRecord::Schema.define(:version => 20120425074614) do
     t.datetime "updated_at", :null => false
     t.string   "role"
   end
+
+  add_index "user_groups", ["group_id"], :name => "index_user_groups_on_group_id"
+  add_index "user_groups", ["user_id"], :name => "index_user_groups_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
