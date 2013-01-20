@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
 
   def img
     src = image_src
-    src = group.image_src if src.empty? 
+    src = group.image_src if src.empty?
     src = 'rails.png' if src.empty?
     src
   end
