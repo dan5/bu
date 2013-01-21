@@ -6,7 +6,7 @@
       %td= month_day(event.started_at)
       %td== (#{hour_min(event.started_at)})
       - unless controller_name == 'groups'
-        %td 
+        %td
           - src = event.group.image_src
           - src = 'rails.png' if src.nil? or src.empty?
           =# image_tag src, :width => 16

@@ -10,7 +10,7 @@
     - @groups.each do |group|
       - next if group.hidden?
       %tr
-        %td 
+        %td
           - src = group.image_src
           - src = 'twitter-icon.png' if src.nil? or src.empty?
           = image_tag src, :class => :group_icon_small

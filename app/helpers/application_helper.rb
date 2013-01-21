@@ -2,7 +2,7 @@
 require 'hikidoc'
 
 module ApplicationHelper
-  def user_name(user, size = :small) 
+  def user_name(user, size = :small)
     user_icon(user, size) + link_to(user.name, user)
   end
 
