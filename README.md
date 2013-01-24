@@ -2,6 +2,7 @@
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/1syo/bu)
 [![Dependency Status](https://gemnasium.com/1syo/bu.png)](https://gemnasium.com/1syo/bu)
 [Rails Best Practices](http://railsbp.com/repositories/304-1syo-bu)
+[Coverage](http://bukt-coverage.herokuapp.com/#_AllFiles)
 
 # Bu
 
