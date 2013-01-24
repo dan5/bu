@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/1syo/bu.png?branch=master)](https://travis-ci.org/1syo/bu)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/1syo/bu)
+[![Dependency Status](https://gemnasium.com/1syo/bu.png)](https://gemnasium.com/1syo/bu)
 [Rails Best Practices](http://railsbp.com/repositories/304-1syo-bu)
 
 # Bu
