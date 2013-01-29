@@ -82,7 +82,7 @@ describe Attendees do
 
   describe '#delete' do
     before do
-      @routes.draw { get "anonymous/:id/join" => "anonymous#delete" }
+      @routes.draw { get "anonymous/:id/delete" => "anonymous#delete" }
       @request.env['HTTP_REFERER'] = 'http://test.host/'
       login_as(you)
     end
@@ -100,6 +100,32 @@ describe Attendees do
       let(:other) { FactoryGirl.create(:user) }
       let(:user_id) { other.id }
       it { expect { get :delete, id: event.to_param }.to change(UserEvent, :count).by(0) }
+    end
+  end
+
+  describe '#cancel' do
+    before do
+      @routes.draw { get "anonymous/:id/cancel" => "anonymous#cancel" }
+    end
+
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
+    let(:event) { FactoryGirl.create(:event, group_id: group.id) }
+
+    context 'あなたがeventマネージャーの場合' do
+      before do
+        login_as(you)
+        get :cancel, id: event.to_param
+      end
+      it { event.canceled.should be_false }
+    end
+
+    context 'eventマネージャーではない場合' do
+      let(:other) { FactoryGirl.create(:user) }
+      before do
+        bypass_rescue
+        login_as(other)
+      end
+      it { expect { get :cancel, id: event.to_param }.to raise_error(Event::NotEventManager) }
     end
   end
 end

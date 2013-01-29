@@ -5,15 +5,14 @@ module Attendees
 
   included do
     before_filter :login_required, only: [:attend]
-    before_filter :_find_event, only: [:attend, :delete]
+    before_filter :_find_event, only: [:attend, :delete, :cancel]
     before_filter :_find_group, only: [:attend]
     before_filter :_member_only, only: [:attend]
+    before_filter :_event_manager_only, only: [:cancel]
   end
 
   def cancel
-    @event = Event.find(params[:id])
-    only_event_manager(@event)
-    @event.cancel
+    @event.cancel #TODO 失敗のケースを追加する
     redirect_to @event, notice: 'Event was successfully canceled.'
   end
 
@@ -36,7 +35,7 @@ module Attendees
     if @user.atnd(@event)
       notice = 'atnd already is exist.'
     else
-      @user.attend(@event)
+      @user.attend(@event) #TODO 失敗のケースを追加する
     end
 
     redirect_to session[:redirect_path_after_event_show] || :back, notice: notice
@@ -57,11 +56,11 @@ module Attendees
   end
 
   private
-  def _find_event
+  def _find_event #TODO
     @event = Event.find(params[:id])
   end
 
-  def _find_group
+  def _find_group #TODO
     @group = Group.find(@event.group_id)
   end
 
@@ -71,5 +70,9 @@ module Attendees
     end
 
     only_group_member(@group)
+  end
+
+  def _event_manager_only #TODO
+    only_event_manager(@event)
   end
 end
