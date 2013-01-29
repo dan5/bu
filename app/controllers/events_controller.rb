@@ -6,7 +6,8 @@ class EventsController < ApplicationController
   before_filter :member_only, only: [:new, :edit, :show]
   before_filter :member_only_for_create, only: [:create]
   before_filter :find_event, only: [:show, :update, :destroy]
-  before_filter :event_manager_only, only: [:update, :destroy]
+  before_filter :find_event_from_event_id, only: [:cancel, :be_active]
+  before_filter :event_manager_only, only: [:update, :destroy, :cancel, :be_active]
 
   after_filter(only: :show) {
     session[:redirect_path_after_event_show] = event_url(@event.id)
@@ -58,6 +59,16 @@ class EventsController < ApplicationController
     redirect_to @event.group
   end
 
+  def cancel
+    @event.cancel #TODO 失敗のケースを追加する
+    redirect_to @event, notice: 'Event was successfully canceled.'
+  end
+
+  def be_active
+    @event.be_active #TODO 失敗のケースを追加する
+    redirect_to @event, notice: 'Event is active.'
+  end
+
   private
 
   def set_subtitle(title = nil)
@@ -86,5 +97,9 @@ class EventsController < ApplicationController
 
   def current_user
     @user
+  end
+
+  def find_event_from_event_id #TODO
+    @event = Event.find(params[:id])
   end
 end
