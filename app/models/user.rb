@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
 
   def be_absent(event)
     events << event
-    atnd(event).update_attributes :state => 'absence'
+    user_events.find_by_event_id(event.id).update_attributes :state => 'absence'
   end
 
   def be_maybe(event)

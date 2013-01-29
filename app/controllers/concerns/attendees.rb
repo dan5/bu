@@ -5,9 +5,10 @@ module Attendees
 
   included do
     before_filter :login_required, only: [:attend]
-    before_filter :_find_event, only: [:attend, :delete]
+    before_filter :_find_event, only: [:attend, :delete, :absent]
     before_filter :_find_group, only: [:attend]
     before_filter :_member_only, only: [:attend]
+    before_filter :_group_member_only, only: [:absent]
   end
 
   def delete
@@ -29,9 +30,7 @@ module Attendees
   end
 
   def absent
-    event = Event.find(params[:id])
-    only_group_member(event.group)
-    atnd = @user.be_absent(event)
+    @user.be_absent(@event) #TODO 失敗のケースを追加する
     redirect_to :back
   end
 
@@ -57,5 +56,9 @@ module Attendees
     end
 
     only_group_member(@group)
+  end
+
+  def _group_member_only
+    only_group_member(@event.group)
   end
 end
