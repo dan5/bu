@@ -5,10 +5,10 @@ module Attendees
 
   included do
     before_filter :login_required, only: [:attend]
-    before_filter :_find_event, only: [:attend, :delete, :cancel]
+    before_filter :_find_event, only: [:attend, :delete, :cancel, :be_active]
     before_filter :_find_group, only: [:attend]
     before_filter :_member_only, only: [:attend]
-    before_filter :_event_manager_only, only: [:cancel]
+    before_filter :_event_manager_only, only: [:cancel, :be_active]
   end
 
   def cancel
@@ -17,9 +17,7 @@ module Attendees
   end
 
   def be_active
-    @event = Event.find(params[:id])
-    only_event_manager(@event)
-    @event.be_active
+    @event.be_active #TODO 失敗のケースを追加する
     redirect_to @event, notice: 'Event is active.'
   end
 

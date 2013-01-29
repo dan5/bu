@@ -109,14 +109,14 @@ describe Attendees do
     end
 
     let(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
-    let(:event) { FactoryGirl.create(:event, group_id: group.id) }
+    let(:event) { FactoryGirl.create(:event, group_id: group.id, canceled: false) }
 
     context 'あなたがeventマネージャーの場合' do
       before do
         login_as(you)
         get :cancel, id: event.to_param
       end
-      it { event.canceled.should be_false }
+      it { assigns(:event).canceled.should be_true }
     end
 
     context 'eventマネージャーではない場合' do
@@ -126,6 +126,32 @@ describe Attendees do
         login_as(other)
       end
       it { expect { get :cancel, id: event.to_param }.to raise_error(Event::NotEventManager) }
+    end
+  end
+
+  describe '#be_active' do
+    before do
+      @routes.draw { get "anonymous/:id/be_active" => "anonymous#be_active" }
+    end
+
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
+    let(:event) { FactoryGirl.create(:event, group_id: group.id, canceled: true) }
+
+    context 'あなたがeventマネージャーの場合' do
+      before do
+        login_as(you)
+        get :be_active, id: event.to_param
+      end
+      it { assigns(:event).canceled.should be_false }
+    end
+
+    context 'eventマネージャーではない場合' do
+      let(:other) { FactoryGirl.create(:user) }
+      before do
+        bypass_rescue
+        login_as(other)
+      end
+      it { expect { get :be_active, id: event.to_param }.to raise_error(Event::NotEventManager) }
     end
   end
 end
