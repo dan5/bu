@@ -1,16 +1,11 @@
 class GroupsUsersController < ApplicationController
-  before_filter { # for secret group
-    @group = Group.find(params[:group_id])
-    only_group_member(@group) if @group.secret?
-  }
+  before_filter :find_group, :group_member_only
 
   def index
-    @group ||= Group.find(params[:group_id])
     @events = @group.events
   end
 
   def show
-    @group ||= Group.find(params[:group_id])
     @current_user = @group.users.find(params[:id])
     @user_group = @current_user.user_group(@group)
 
@@ -19,5 +14,14 @@ class GroupsUsersController < ApplicationController
       time = oldst if oldst < time
     end
     @events = @group.events.where('created_at >= ?', time)
+  end
+
+  private
+  def find_group
+    @group = Group.find(params[:group_id])
+  end
+
+  def group_member_only
+    only_group_member(@group) if @group.secret?
   end
 end
