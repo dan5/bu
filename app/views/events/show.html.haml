@@ -116,7 +116,7 @@
 
 %h2=_ 'Comments and Logs'
 - if @user and group.member?(@user)
-  = render 'comments/form'
+  = render 'comments/form', comment: @comment
 
 %table.comments
   - @event.comments.order('created_at desc').each do |comment|

@@ -4,10 +4,10 @@
       %th
       %th=_ 'group name'
       %th=_ 'state'
-      - if @current_user
+      - if current_user
         %th=_ 'role'
         %th=_ 'summary'
-    - @groups.each do |group|
+    - groups.each do |group|
       - next if group.hidden?
       %tr
         %td
@@ -15,12 +15,12 @@
           - src = 'twitter-icon.png' if src.nil? or src.empty?
           = image_tag src, :class => :group_icon_small
         %td.nowrap= link_to to_short(group.name, 16), group
-        - if @current_user
-          %td.nowrap=_ @current_user.status(group)
+        - if current_user
+          %td.nowrap=_ current_user.status(group)
           %td.nowrap
-            - if group.owner?(@current_user)
+            - if group.owner?(current_user)
               =_ :owner
-            = @current_user.role(group)
+            = current_user.role(group)
         %td= to_short group.summary, 50
 
 = javascript_tag '$("#resize_group_icons img").MyThumbnail({ thumbWidth:40, thumbHeight:40, backgroundColor:"#fff", imageDivClass:"group_icon_small" });'

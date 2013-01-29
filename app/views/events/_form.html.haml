@@ -1,38 +1,38 @@
 - last = Group.find(session[:group_id]).events.find(:first, :order => 'id desc')
 - last ||= Event.new
-- is_hidden = @group.hidden?
-= form_for @event do |f|
-  -if @event.errors.any?
+- is_hidden = group.hidden?
+= form_for event do |f|
+  -if event.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@event.errors.count, "error")} prohibited this event from being saved:"
+      %h2= "#{pluralize(event.errors.count, "error")} prohibited this event from being saved:"
       %ul
-        - @event.errors.full_messages.each do |msg|
+        - event.errors.full_messages.each do |msg|
           %li= msg
 
   %table
     %tr.field
       %td= f.label :title
       %td
-        = f.text_field :title, :value => @event.title
+        = f.text_field :title, :value => event.title
         - unless is_hidden
           %span.gray== 過去の入力:#{last.title}
           %span.gray @todo:クリックで過去の入力を選択
     %tr.field
       %td= f.label :limit
       %td
-        = f.number_field :limit, :value => @event.limit
+        = f.number_field :limit, :value => event.limit
         - unless is_hidden
           %span.gray== 過去の入力:#{last.limit}
     %tr.field
       %td= f.label :place
       %td
-        = f.text_field :place, :value => @event.place || last.place
+        = f.text_field :place, :value => event.place || last.place
         - unless is_hidden
           %span.gray== 過去の入力:#{last.place}
     %tr.field
       %td= f.label :address
       %td
-        = f.text_field :address, :value => @event.address || last.address
+        = f.text_field :address, :value => event.address || last.address
         - unless is_hidden
           %span.gray== 過去の入力:#{last.address}
     %tr.field
@@ -47,7 +47,7 @@
     %tr.field
       %td= f.label :image_url
       %td
-        = f.text_field :image_url, :value => @event.image_url || last.image_url
+        = f.text_field :image_url, :value => event.image_url || last.image_url
         - unless is_hidden
           %span.gray== 過去の入力:#{last.image_url}
   .actions

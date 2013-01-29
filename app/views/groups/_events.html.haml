@@ -1,5 +1,5 @@
 %table
-  - @events.each do |event|
+  - events.each do |event|
     %tr
       %td
         = link_to image_tag(event.img, :class => :event_icon_small), event
@@ -19,12 +19,12 @@
         - else
           = event.attendances.count
 
-      - if @user.nil?
+      - if user.nil?
       - elsif event.canceled?
         %td{:colspan => 2}
           .notice_cancel=_ 'This event is canceled!'
       - else
-        - atnd = @user.atnd(event)
+        - atnd = user.atnd(event)
         - if atnd
           %td.atnd=_ atnd.state.capitalize
 
@@ -32,7 +32,7 @@
           %td.gray=_'ended'
         - elsif atnd
           %td.update= link_to _('cancel'), event_path(event) + '/delete'
-        - elsif event.group.member?(@user)
+        - elsif event.group.member?(user)
           %td.update.atnd
             = link_to _('attend'), event_path(event) + '/attend'
             = link_to _('absent'), event_path(event) + '/absent'
