@@ -79,4 +79,27 @@ describe Attendees do
       it { expect { get :attend, id: event.to_param }.to raise_error(User::UnAuthorized) }
     end
   end
+
+  describe '#delete' do
+    before do
+      @routes.draw { get "anonymous/:id/join" => "anonymous#delete" }
+      @request.env['HTTP_REFERER'] = 'http://test.host/'
+      login_as(you)
+    end
+
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
+    let(:event) { FactoryGirl.create(:event, group_id: group.id) }
+    let!(:user_event) { FactoryGirl.create(:user_event, event_id: event.id, user_id: user_id) }
+
+    context 'あなたがattendしている場合' do
+      let(:user_id) { you.id }
+      it { expect { get :delete, id: event.to_param }.to change(UserEvent, :count).by(-1) }
+    end
+
+    context 'あなたがattendしていない場合' do
+      let(:other) { FactoryGirl.create(:user) }
+      let(:user_id) { other.id }
+      it { expect { get :delete, id: event.to_param }.to change(UserEvent, :count).by(0) }
+    end
+  end
 end

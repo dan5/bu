@@ -5,7 +5,7 @@ module Attendees
 
   included do
     before_filter :login_required, only: [:attend]
-    before_filter :_find_event, only: [:attend]
+    before_filter :_find_event, only: [:attend, :delete]
     before_filter :_find_group, only: [:attend]
     before_filter :_member_only, only: [:attend]
   end
@@ -25,9 +25,7 @@ module Attendees
   end
 
   def delete
-    event = Event.find(params[:id])
-    if atnd = @user.atnd(event)
-      atnd.destroy
+    if @event.users.destroy(@user)
       redirect_to :back
     else
       redirect_to :back, :notice => 'error: Not deleted.'
