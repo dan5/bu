@@ -126,4 +126,28 @@ describe Attendees do
       it { expect{ get :absent, id: event.to_param }.to raise_error(Group::NotGroupMember) }
     end
   end
+
+  describe '#maybe' do
+    before do
+      @routes.draw { get "anonymous/:id/maybe" => "anonymous#maybe" }
+      @request.env['HTTP_REFERER'] = 'http://test.host/'
+    end
+
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you.id, permission: 1) }
+    let(:event) { FactoryGirl.create(:event, group_id: group.id) }
+
+    context 'あなたがグループメンバーの場合' do
+      before { login_as(you) }
+      it { expect { get :maybe, id: event.to_param }.to change(UserEvent, :count).by(+1) }
+    end
+
+    context 'あなたがグループメンバーではない場合' do
+      let(:other) { FactoryGirl.create(:user) }
+      before do
+        login_as(other)
+        bypass_rescue
+      end
+      it { expect{ get :maybe, id: event.to_param }.to raise_error(Group::NotGroupMember) }
+    end
+  end
 end
