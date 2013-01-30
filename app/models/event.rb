@@ -96,6 +96,6 @@ class Event < ActiveRecord::Base
   def self.be_ended_all
     t = Time.now
     events = where("started_at < ? and ended_at < ? and ended = ?", t, t, false)
-    events.each &:be_ended
+    events.each(&:be_ended)
   end
 end
