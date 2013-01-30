@@ -69,21 +69,21 @@ class Event < ActiveRecord::Base
   end
 
   def cancel
-    update_attributes(:canceled => true)
+    update_attributes!(:canceled => true)
   end
 
   def be_active
-    update_attributes(:canceled => false)
+    update_attributes!(:canceled => false)
   end
 
   def be_ended
     raise if ended?
     transaction do
-      update_attributes(:ended => true)
+      update_attributes!(:ended => true)
 
       waitings.each do |user_event|
         user_event.state = 'absence'
-        user_event.save
+        user_event.save!
       end
 
       group.users.each do |user|
