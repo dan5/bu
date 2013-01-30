@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
     if @group.save
       redirect_to group_url(@group), notice: 'Group was successfully created.'
     else
-      render action: "new"
+      render :new
       set_subtitle 'new group'
     end
   end
@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
     if @group.update_attributes(params[:group])
       redirect_to group_url(@group), notice: 'Group was successfully updated.'
     else
-      render action: "edit"
+      render :edit
       set_subtitle
     end
   end
