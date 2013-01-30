@@ -37,7 +37,7 @@ class GroupsPostsController < ApplicationController
     if @post.save
       redirect_to group_posts_url(anchor: @post.idx), notice: 'Post was successfully created.'
     else
-      render action: "new"
+      render :new
     end
   end
 

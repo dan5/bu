@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to @comment.event, notice: 'Comment was successfully created.'
     else
-      render action: "new"
+      render :new
     end
   end
 
