@@ -1,3 +1,4 @@
+# coding: utf-8
 class Event < ActiveRecord::Base
   class NotEventOwner < Exception ; end
   class NotEventManager < Exception ; end
@@ -81,12 +82,12 @@ class Event < ActiveRecord::Base
     transaction do
       update_attributes(:ended => true)
 
-      waitings.each do |user_event|
+      waitings.each do |user_event| #なぜこの処理をしているのかよくわかりません
         user_event.state = 'absence'
         user_event.save
       end
 
-      group.users.each do |user|
+      group.users.each do |user| #なぜこの処理をしているのかよくわかりません
         next if user.user_events.find_by_event_id(self.id)
         user.user_events.create(:event_id => self.id, :state => 'no answer')
       end

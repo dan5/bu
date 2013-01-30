@@ -15,7 +15,8 @@ describe Event do
 
   describe '.be_ended_all' do
     let(:group) { FactoryGirl.create(:group, limit: 1) }
-    let!(:events) { FactoryGirl.create_list(:event, 10, started_at: 1.day.ago, ended_at: 1.week.ago) }
+    let!(:events) { FactoryGirl.create_list(:event, 9, started_at: 1.day.ago, ended_at: 1.week.ago) }
+    let!(:unclosed_events) { FactoryGirl.create_list(:event, 11, started_at: 1.day.since, ended_at: 1.week.since) }
 
     before do
       @count = 0
@@ -25,7 +26,9 @@ describe Event do
 
     subject { @count }
 
-    it { should be events.count }
+    it 'close対象のeventの数だけ処理されていること' do
+      should be events.count
+    end
   end
 
   describe '.be_ended' do
@@ -42,6 +45,8 @@ describe Event do
       event.be_ended
     end
 
-    it { event.ended.should be_true }
+    it 'endedがtrueになること' do
+      event.ended.should be_true
+    end
   end
 end
