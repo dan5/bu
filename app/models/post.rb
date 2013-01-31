@@ -1,4 +1,6 @@
 class Post < ActiveRecord::Base
+  attr_accessible :group_id, :idx, :notification, :subject, :text
+
   belongs_to :user
   belongs_to :group
   validates_uniqueness_of :idx, :scope => [:group_id]
