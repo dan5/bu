@@ -1,7 +1,7 @@
-= render 'menu'
+= render 'menu', group: @group
 %hr
 
 %h1
   =@group.name
   New post
-= render 'form'
+= render 'form', post: @post

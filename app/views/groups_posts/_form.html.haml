@@ -1,9 +1,9 @@
-= form_for @post, :url => group_posts_path do |f|
-  -if @post.errors.any?
+= form_for post, :url => group_posts_path do |f|
+  -if post.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+      %h2= "#{pluralize(post.errors.count, "error")} prohibited this post from being saved:"
       %ul
-        - @post.errors.full_messages.each do |msg|
+        - post.errors.full_messages.each do |msg|
           %li= msg
 
   .actions

@@ -21,4 +21,4 @@
 
 %h2=_'Groups'
 
-= render 'groups/groups'
+= render 'groups/groups', { groups: @groups, current_user: @current_user }

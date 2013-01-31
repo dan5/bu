@@ -1,6 +1,6 @@
 %h1 Editing event
 
-= render 'form'
+= render 'form', { event: @event, group: @group }
 
 .bottom_menu
   = link_to 'Back', @event

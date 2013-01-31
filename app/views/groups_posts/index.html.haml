@@ -1,5 +1,6 @@
 
-= render 'menu'
+= render 'menu', group: @group
+'
 
 %hr
 
@@ -18,7 +19,7 @@
 
 %hr
 
-= render 'menu'
+= render 'menu', group: @group
 
 - if @group.member?(@user)
-  = render 'form'
+  = render 'form', post: @post

@@ -15,4 +15,4 @@
 
 %h2=_'Groups'
 - @groups = @current_user.groups
-= render '/groups/groups'
+= render '/groups/groups', { groups: @groups, current_user: @current_user }
