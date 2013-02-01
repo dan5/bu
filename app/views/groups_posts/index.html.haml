@@ -11,7 +11,7 @@
 - @posts.each do |post|
   .post
     .head{:id => post.idx}
-      == #{post.idx} : #{post.user.name} :
+      == #{post.idx} : #{post.user_name} :
       = link_to date_time(post.created_at), "/groups/#{@group.id}/posts/#{post.idx}"
     .body
       %h3= post.subject
