@@ -124,7 +124,7 @@
       %td
         = user_icon comment.user, :middle
       %td.bold
-        = link_to comment.user.name, comment.user
+        = link_to comment.user_name, comment.user
       %td
         != comment_html_compiler(comment.text)
         %span.small= link_to date_time(comment.created_at), comment
