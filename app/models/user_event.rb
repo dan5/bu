@@ -1,5 +1,5 @@
 class UserEvent < ActiveRecord::Base
-  attr_accessible :state
+  attr_accessible :state, :event_id
 
   belongs_to :user
   belongs_to :event
