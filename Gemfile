@@ -1,7 +1,14 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.11'
-gem 'sqlite3'
+
+group :development, :test, :production do
+  gem 'sqlite3'
+end
+group :preview do
+  gem 'pg'
+  gem 'thin'
+end
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.1'
