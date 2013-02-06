@@ -63,5 +63,7 @@ module Bu
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    configatron.configure_from_hash(YAML.load(ERB.new(File.read("#{Rails.root}/config/config.yml")).result)[Rails.env])
   end
 end
