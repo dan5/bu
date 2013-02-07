@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/1syo/bu.png?branch=master)](https://travis-ci.org/1syo/bu)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/1syo/bu)
 [![Dependency Status](https://gemnasium.com/1syo/bu.png)](https://gemnasium.com/1syo/bu)
-[Rails Best Practices](http://railsbp.com/repositories/304-1syo-bu)
-[Coverage](http://bukt-coverage.herokuapp.com/#_AllFiles)
 
 # Bu
 
@@ -17,6 +15,14 @@ $ rake db:setup
 $ rails server
 ```
 
+# 情報
+
+- [Preview Site](http://bukt-preview.herokuapp.com)
+- [Latest Coverage](http://bukt-coverage.herokuapp.com/#_AllFiles)
+- [Rails Best Practices](http://railsbp.com/repositories/304-1syo-bu)
+- [Build Status](https://travis-ci.org/1syo/bu)
+- [Code Climate](https://codeclimate.com/github/1syo/bu)
+- [Dependency Status](https://gemnasium.com/1syo/bu)
 
 # 開発に参加するには
 

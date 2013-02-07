@@ -1,7 +1,18 @@
 source 'http://rubygems.org'
 
+# hack to make heroku cedar not install special groups
+# http://soupmatt.com/fixing-bundlewithout-on-heroku-cedar
+
+def hg(g)
+  (ENV['HOME'].gsub('/','') == 'app' ? :test : g)
+end
+
 gem 'rails', '3.2.11'
-gem 'sqlite3'
+
+group :preview do
+  gem 'pg'
+  gem 'thin'
+end
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.1'
@@ -9,6 +20,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'configatron'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'execjs'
@@ -16,7 +28,12 @@ gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'hikidoc'
 
+group hg(:production) do
+  gem 'sqlite3'
+end
+
 group :test, :development do
+  gem 'sqlite3'
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'rspec-rails', '2.12.0'
