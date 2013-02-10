@@ -5,6 +5,11 @@ describe Event do
   describe "Validations" do
     it { should validate_presence_of(:title) }
     it { should ensure_length_of(:title).is_at_most(32) }
+    it { should validate_numericality_of(:limit) }
+    it { should_not allow_value(-1).for(:limit) }
+    it { should_not  allow_value(0).for(:limit) }
+    it { should      allow_value(1).for(:limit) }
+    it { should      allow_value(2).for(:limit) }
   end
 
   describe "Associations" do
