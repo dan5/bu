@@ -9,9 +9,12 @@ class Event < ActiveRecord::Base
   has_many :user_events, dependent: :destroy, order: :updated_at
   has_many :users, :through => :user_events
 
-  validates :title, :presence => true, :length => { :maximum => 32 }
-  validates :limit, numericality: { greater_than_or_equal_to:    1,
-                                    less_than_or_equal_to:    1000 }
+  validates :title,   presence: true,
+                      length: { maximum:  32 }
+  validates :place,   length: { maximum: 255 }
+  validates :address, length: { maximum: 255 }
+  validates :limit,   numericality: { greater_than_or_equal_to:    1,
+                                      less_than_or_equal_to:    1000 }
 
   def img
     src = image_src
