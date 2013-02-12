@@ -10,6 +10,7 @@ describe "Events" do
     before do
       visit new_event_path
       fill_in 'event[title]', with: title
+      fill_in 'event[limit]', with: 1
       click_on 'Save'
     end
 
