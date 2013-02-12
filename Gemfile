@@ -7,7 +7,7 @@ def hg(g)
   (ENV['HOME'].gsub('/','') == 'app' ? :test : g)
 end
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 group :preview do
   gem 'pg'
@@ -36,7 +36,7 @@ group :test, :development do
   gem 'sqlite3'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '2.12.0'
+  gem 'rspec-rails'
   gem 'rails_best_practices', '>= 1.2.0', :require => false
   gem 'database_cleaner'
   gem 'forgery'
