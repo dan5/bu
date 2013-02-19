@@ -48,5 +48,6 @@ group :test, :development do
   gem 'headless'
   gem 'shoulda-matchers', :git => 'git://github.com/thoughtbot/shoulda-matchers.git', :ref => 'fd4aa5'
   gem 'simplecov', require: false
+  gem 'heroq', :git => 'git://github.com/1syo/heroq.git', :tag => 'v0.0.1'
   #gem 'rails-erd'
 end
