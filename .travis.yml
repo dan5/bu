@@ -1,7 +1,13 @@
 language: ruby
 rvm: 1.9.3
-env: DB=sqlite
-bundler_args: --without development:production
+env:
+  global:
+  - secure: "ICOFQV3pd2XAEm9iTLzA9qAohW30ztki54U0RBr/FhsyqHqyugfWWa45a8pQ\nbtlP4CuWPMHj9uA+Mq1teHwi/nBSBmQGZ5vBPjfw3xc3ULE0qLed9ms6NwrH\nYbmauSnK1+p77t6znMagWs28ezaImVhUVFeHyq0Nj7ROpKXfuTo="
+  - DB=sqlite
+  - DEPLOY_TO=bukt-coverage.git
+bundler_args: --binstubs --without development:production
 before_install: gem update bundler
 before_script:
-  - RAILS_ENV=test rake db:create db:test:load --quiet
+- RAILS_ENV=test rake db:create db:test:load --quiet
+after_script:
+- ./bin/heroq
