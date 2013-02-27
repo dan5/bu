@@ -1,6 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require "active_record/railtie"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "sprockets/railtie"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -17,6 +20,9 @@ module Bu
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
+    config.autoload_paths += %W(
+      #{config.root}/app/controllers/concerns
+    )
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
@@ -57,5 +63,7 @@ module Bu
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    configatron.configure_from_hash(YAML.load(ERB.new(File.read("#{Rails.root}/config/config.yml")).result)[Rails.env])
   end
 end

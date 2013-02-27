@@ -7,10 +7,10 @@
 
 %h2=_'Events'
 - @events = @user.groups.map(&:events).flatten.sort_by(&:started_at).reverse
-= render '/groups/events'
+= render '/groups/events', { events: @events, user: @user }
 
 %h2=_'Your Groups'
 
 - @groups = @user.groups
 - @current_user = @user
-= render '/groups/groups'
+= render '/groups/groups', { groups: @groups, current_user: @current_user }

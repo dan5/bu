@@ -1,18 +1,24 @@
+# coding: utf-8
 class Event < ActiveRecord::Base
   class NotEventOwner < Exception ; end
   class NotEventManager < Exception ; end
 
   belongs_to :group
+
   has_many :comments, dependent: :destroy
   has_many :user_events, dependent: :destroy, order: :updated_at
   has_many :users, :through => :user_events
 
-  validates :title, :presence => true,
-                   :length => { :maximum => 32 }
+  validates :title,   presence: true,
+                      length: { maximum:  32 }
+  validates :place,   length: { maximum: 255 }
+  validates :address, length: { maximum: 255 }
+  validates :limit,   numericality: { greater_than_or_equal_to:    1,
+                                      less_than_or_equal_to:    1000 }
 
   def img
     src = image_src
-    src = group.image_src if src.empty? 
+    src = group.image_src if src.empty?
     src = 'rails.png' if src.empty?
     src
   end
@@ -69,24 +75,24 @@ class Event < ActiveRecord::Base
   end
 
   def cancel
-    update_attributes(:canceled => true)
+    update_attributes!(:canceled => true)
   end
 
   def be_active
-    update_attributes(:canceled => false)
+    update_attributes!(:canceled => false)
   end
 
   def be_ended
     raise if ended?
     transaction do
-      update_attributes(:ended => true)
+      update_attributes!(:ended => true)
 
-      waitings.each do |user_event|
+      waitings.each do |user_event| #なぜこの処理をしているのかよくわかりません
         user_event.state = 'absence'
-        user_event.save
+        user_event.save!
       end
 
-      group.users.each do |user|
+      group.users.each do |user| #なぜこの処理をしているのかよくわかりません
         next if user.user_events.find_by_event_id(self.id)
         user.user_events.create(:event_id => self.id, :state => 'no answer')
       end
@@ -96,6 +102,6 @@ class Event < ActiveRecord::Base
   def self.be_ended_all
     t = Time.now
     events = where("started_at < ? and ended_at < ? and ended = ?", t, t, false)
-    events.each &:be_ended
+    events.each(&:be_ended)
   end
 end

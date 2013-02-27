@@ -12,16 +12,16 @@
       %h1= @group.name
       %p.summary
         = @group.summary
-        - if !is_secret and @group.description? and !@show_description
+        - if !is_secret and @group.description? and !params[:show_description]
           &#187;
           = link_to 'もっと詳しく', group_path + '/description'
       .description
-        - if !is_secret and @show_description
+        - if !is_secret and params[:show_description]
           %p
             &#171;
             = link_to '説明を閉じる', group_path
           != html_compiler(@group.description)
-      
+
       .status.right
         %span.gray
           == #{_ :permission}:
@@ -29,7 +29,7 @@
           \/
           == #{_ :owner}:
           %b= link_to @group.owner.name, @group.owner
-      
+
 - is_member = @group.member?(@user)
 - if !is_member and !@group.hidden?
   - if @group.public?
@@ -42,12 +42,11 @@
 - unless is_secret
   .events
     %h2=_ :Events
-    = render 'events'
-  
+    = render 'events', { events: @events, user: @user }
   .events_new
     - if is_member
       %p= link_to _('new event'), "/events/new"
-  
+
   - unless @group.hidden?
     .posts
       %h2=_ :Posts
@@ -62,7 +61,7 @@
                 \:
               = to_short post.text, 75
       %p= link_to _(@group.posts.count == 0 ? 'new post' : 'read more'), "/groups/#{@group.id}/posts"
-    
+
     .users
       %h2
         =_ :Users
@@ -100,7 +99,7 @@
         - if @group.manager?(@user) and !@group.public?
           - text = "#{_('listing requests')}(#{@group.requesting_users.count})"
           = link_to text, group_path + '/member_requests'
-        
+
   .bottom_menu
     - if is_member and !@group.owner?(@user) and !@group.hidden?
       %p.update= link_to _('leave this group'), "#{@group.id}/leave"

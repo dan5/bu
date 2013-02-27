@@ -3,7 +3,7 @@
   %h3= link_to group.name, group
 %h1=_'New event'
 
-= render 'form'
+= render 'form', { event: @event, group: @group }
 
 .bottom_menu
   = link_to 'Back', group ? group : events_path
