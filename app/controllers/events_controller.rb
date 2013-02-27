@@ -80,7 +80,12 @@ class EventsController < ApplicationController
   end
 
   def find_group
-    @group = Group.find(session[:group_id])
+    if session[:group_id].blank?
+      @group = Event.find(params[:id]).group #TODO ネステッドリソースに変更したあかつきにはこの実装直す
+      session[:group_id] = @group.id
+    else
+      @group = Group.find(session[:group_id])
+    end
   end
 
   def member_only #TODO

@@ -67,4 +67,14 @@ describe "Events" do
     end
     it { page.should have_content('あなたの出欠 : 未入力') }
   end
+
+  describe "GET /events/1" do
+    let(:you) { FactoryGirl.create(:user) }
+    let(:group) { FactoryGirl.create(:group, owner_user_id: you.id) }
+    let(:event) { FactoryGirl.create(:event, group: group) }
+
+    context 'Group.idセッッション変数が空でもActiveRecord::RecordNotFoundにならないこと' do
+      it { expect { visit event_path(event.id) }.to_not raise_error(ActiveRecord::RecordNotFound) }
+    end
+  end
 end
